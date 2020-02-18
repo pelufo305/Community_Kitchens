@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { TypeUserEnum, TypeSupplierEnum } from 'src/app/shared/util/enum';
 
 @Component({
     selector: 'app-sidebar',
@@ -12,6 +13,8 @@ export class SidebarComponent implements OnInit {
     collapsed: boolean;
     showMenu: string;
     pushRightClass: string;
+    public boolTypeUser = false;
+    public boolTypeSupplier = false;
 
     @Output() collapsedEvent = new EventEmitter<boolean>();
 
@@ -25,6 +28,9 @@ export class SidebarComponent implements OnInit {
                 this.toggleSidebar();
             }
         });
+
+        this.boolTypeUser = localStorage.getItem('TypeUser') == TypeUserEnum.Supplier.toString()  ? true: false;
+        this.boolTypeSupplier = localStorage.getItem('TypeSupplier') == TypeSupplierEnum.Transport.toString() ? true: false;
     }
 
     ngOnInit() {
