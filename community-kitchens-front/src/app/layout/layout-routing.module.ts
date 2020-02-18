@@ -9,9 +9,6 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
-            { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
-            { path: 'forms', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
-            { path: 'grid', loadChildren: () => import('./grid/grid.module').then(m => m.GridModule) },
             { path: 'blank-page', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) }
         ]
     }
