@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { SupplierRoutingModule } from './supplier-routing.module';
+import { SuppliersComponent } from './pages/suppliers/suppliers.component';
+import { TransportsComponent } from './pages/transports/transports.component';
+import { AvailabilityProductsComponent } from './pages/availability-products/availability-products.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [SuppliersComponent, TransportsComponent, AvailabilityProductsComponent],
   imports: [
-    CommonModule,
-    SupplierRoutingModule
+    CommonModule
   ]
 })
 export class SupplierModule { }

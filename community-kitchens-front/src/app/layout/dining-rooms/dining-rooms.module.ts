@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DiningRoomsRoutingModule } from './dining-rooms-routing.module';
+import { DiningRoomsComponent } from './pages/dining-rooms/dining-rooms.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [DiningRoomsComponent],
   imports: [
-    CommonModule,
-    DiningRoomsRoutingModule
+    CommonModule
   ]
 })
 export class DiningRoomsModule { }
