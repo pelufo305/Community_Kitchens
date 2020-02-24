@@ -42,5 +42,20 @@
     "Products": "Productos",
     "Transport": "Transporte",
     "Users": "Usuarios",
-    "AvailabilityProducts": "Disponibilidad"
+    "AvailabilityProducts": "Disponibilidad",
+    "Code": "Codigo",
+    "Name": "Nombre",
+    "Phone": "Telefono",
+    "E-mail": "Email",
+    "Country": "Pais",
+    "Department": "Departamento",
+    "City": "Ciudad",
+    "Direction": "Direccion",
+    "Contact": "Contacto",
+    "EmailContact": "Email Contacto",
+    "TelephoneContact": "Telefono Contacto",
+    "NumberChildren": "Numero Niños",
+    "ZoneReception": "Horario recepción"
+
+
 }

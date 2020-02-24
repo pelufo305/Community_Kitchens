@@ -42,5 +42,19 @@
     "Products": "Products",
     "Transport": "Transport",
     "Users": "Users",
-    "AvailabilityProducts": "Availability"
+    "AvailabilityProducts": "Availability",
+    "Code": "Code",
+    "Name": "Name",
+    "Phone": "Phone",
+    "E-mail": "E-mail",
+    "Country": "Country",
+    "Department": "Department",
+    "City": "City",
+    "Direction": "Direction",
+    "Contact": "Contact",
+    "EmailContact": "Email contact",
+    "TelephoneContact": "Telephone contact",
+    "NumberChildren": "Number children",
+    "ZoneReception": "Zone reception"
+
 }
