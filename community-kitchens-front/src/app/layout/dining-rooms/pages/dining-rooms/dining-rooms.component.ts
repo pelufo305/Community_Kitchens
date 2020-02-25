@@ -141,7 +141,7 @@ export class DiningRoomsComponent implements OnInit {
     }
   }
 
-  async onCellPrepared(e) {
+  onCellPrepared(e) {
     if (
       !this.isAllowDeleting &&
       e.column.command === 'edit' &&
@@ -151,15 +151,43 @@ export class DiningRoomsComponent implements OnInit {
       e.cellElement.hidden = true;
     }
     if (e.column.dataField === 'Department' && e.rowType === 'data') {
+      let lst =  locates.getStatesOfCountry(e.row.data.Country.toString());
+      let reformattedlst = lst.map(function(obj){ 
+        var rObj = {};
+        rObj[obj.id] = obj.name;
+        return rObj;
+     });
+      e.column.lookup.valueExpr='id' 
+      e.column.lookup.displayExpr='name'
       e.column.lookup.dataSource = {
-         store: locates.getStatesOfCountry(e.row.data.Country.toString()),
+         store: lst,
          paginate: true,
          loadMode: 'raw'
-       };
-       console.log(e.column.lookup);
+      };
+      e.column.lookup.items = lst;
+      e.column.lookup.valueMap = {47: "Farah"};      
+      console.log(e.column.lookup.valueMap);
     }
 
   }
+  //https://supportcenter.devexpress.com/Ticket/Details/T580399/dxdatagrid-bind-lookup-dynamically
+  
+  onRowPrepared(e){
+     /*if (e.rowType === 'data') {
+      const row = e.columns[5].lookup;
+      row.valueExpr='id' 
+      row.displayExpr='name'
+      row.dataSource = {
+         store: locates.getStatesOfCountry('2'),
+         paginate: true,
+         loadMode: 'raw'
+       };
+     }*/
+  }
+
+
+
+
   createObjectConfiguration(e, updated: boolean): any {
     const model = {
       ID: updated ? e.data.ID : -1,
@@ -242,6 +270,7 @@ export class DiningRoomsComponent implements OnInit {
 
 
   getFilteredDepartment(options: any) {
+    console.log(options);
     return {
       store: [],
       paginate: true,
@@ -324,24 +353,9 @@ export class DiningRoomsComponent implements OnInit {
       /*e.editorName = 'dxTextBox';
       e.editorOptions.mask = '00:00';*/
     }
-    if (e.dataField === 'Department' && e.parentType === 'dataRow') {
-      e.lookup.dataSource = {
-        store: locates.getStatesOfCountry(e.row.data.Country.toString()),
-        paginate: true,
-        loadMode: 'raw'
-      };
-    }
-
   }
 
   onEditorPrepared(e) {
-  if (e.dataField === 'Department' && e.parentType === 'dataRow') {
-      e.lookup.dataSource = {
-        store: locates.getStatesOfCountry(e.row.data.Country.toString()),
-        paginate: true,
-        loadMode: 'raw'
-      };
-    }
   }
 
   calculateSortValue(data) {
