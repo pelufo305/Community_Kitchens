@@ -5,12 +5,13 @@ import {
   OnInit
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { DxDataGridComponent } from 'devextreme-angular';
+import { DxDataGridComponent, DxLookupComponent } from 'devextreme-angular';
 import locates from 'country-state-city';
 import { Router } from '@angular/router';
 // Lenguaje
 import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-dining-rooms',
@@ -18,8 +19,7 @@ import * as esMessages from 'devextreme/localization/messages/es.json';
   styleUrls: ['./dining-rooms.component.scss']
 })
 export class DiningRoomsComponent implements OnInit {
-  @ViewChild('gridConfig', {static: false}) gridConfig: DxDataGridComponent;
-  myjson: any = JSON;
+  @ViewChild('gridConfig') gridConfig: DxDataGridComponent;
   public textFilterReset;
   public textSaveRow;
   public textCancelRow;
@@ -43,8 +43,6 @@ export class DiningRoomsComponent implements OnInit {
     public translate: TranslateService,
     private router: Router) {
     this.refreshMode = 'reshape';
-    this.getFilteredDepartment = this.getFilteredDepartment.bind(this);
-    this.getFilteredCity = this.getFilteredCity.bind(this);
     this.translate.get('DiningRooms').subscribe((res: string) => {
       this.excelTitle = res;
     });
@@ -84,10 +82,9 @@ export class DiningRoomsComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
-
-
-
-   }
+    this.loadCatalog();
+    this.getFilteredDepartment = this.getFilteredDepartment.bind(this);
+  }
 
   onRowUpdating(e) {
     if (!this.valRowCell(e)) {
@@ -108,7 +105,7 @@ export class DiningRoomsComponent implements OnInit {
     this.isAllowDeleting = false;
     let maxid = 0;
     const grid: any = this.gridConfig.dataSource;
-    grid.map(function(obj) {
+    grid.map(function (obj) {
       if (obj.ID > maxid) {
         maxid = obj.ID;
       }
@@ -117,11 +114,13 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   async onRowUpdated(e) {
-
+    const model = this.createObjectConfiguration(e, true);
+    console.log(model);
   }
 
   async onRowInserted(e) {
-
+    const model = this.createObjectConfiguration(e, false);
+    console.log(model);
   }
 
   async onKeyDown(e) {
@@ -151,9 +150,17 @@ export class DiningRoomsComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-  }
+    if (e.column.dataField === 'Department' && e.rowType === 'data') {
+      e.column.lookup.dataSource = {
+         store: locates.getStatesOfCountry(e.row.data.Country.toString()),
+         paginate: true,
+         loadMode: 'raw'
+       };
+       console.log(e.column.lookup);
+    }
 
-  createObjectConfiguration(e, updated): any {
+  }
+  createObjectConfiguration(e, updated: boolean): any {
     const model = {
       ID: updated ? e.data.ID : -1,
       Code: e.data.Code,
@@ -168,7 +175,8 @@ export class DiningRoomsComponent implements OnInit {
       ScheduleReception: e.data.ScheduleReception,
       Department: e.data.Department,
       City: e.data.City,
-      Country: e.data.Country };
+      Country: e.data.Country
+    };
     return model;
   }
 
@@ -185,14 +193,14 @@ export class DiningRoomsComponent implements OnInit {
       Code = e.newData.Code
         ? e.newData.Code
         : e.oldData.Code;
-     }
-  if (
+    }
+    if (
       this.valRowGrid(
         ID,
         Code
       )
     ) {
-    boolState = false;
+      boolState = false;
     }
     return boolState;
   }
@@ -202,9 +210,9 @@ export class DiningRoomsComponent implements OnInit {
     Code): boolean {
     const grid: any = this.gridConfig.dataSource;
     const gridValidate = grid.filter(
-    item =>
-        item.MagneticMediaSettingsId !== ID &&
-        item.AcAccount.ACAccountID === Code );
+      item =>
+        item.ID !== ID &&
+        item.Code === Code);
     if (gridValidate.length >= 1) {
       return true;
     } else {
@@ -213,37 +221,42 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadCatalog();
+
   }
 
   async loadCatalog() {
     await this.getData();
-   }
+  }
 
-  async getDataCountry() {
-  this.lstCountry = await locates.getAllCountries();
+  getDataCountry() {
     return {
-      store: this.lstCountry,
+      store: locates.getAllCountries(),
       paginate: true,
       loadMode: 'raw'
     };
   }
 
- getFilteredDepartment(options) {
-  return {
-    store: locates.getStatesOfCountry(options.data.Country.toString()),
-    paginate: true,
-    loadMode: 'raw'
-  };
- }
+  onValueChanged(e) {
+    this.lstState = locates.getStatesOfCountry(e.value);
+  }
 
- getFilteredCity(options) {
-  return {
-    store: locates.getCitiesOfState(options.data.Department.toString()),
-    paginate: true,
-    loadMode: 'raw'
-  };
-}
+
+  getFilteredDepartment(options: any) {
+    return {
+      store: [],
+      paginate: true,
+      loadMode: 'raw'
+    };
+  }
+
+  getFilteredCity(options) {
+    const self = this as any;
+    return {
+      store: self.lstState,
+      paginate: true,
+      loadMode: 'raw'
+    };
+  }
 
   setStateValueCountry(rowData: any, value: any): void {
     rowData.Department = null;
@@ -272,9 +285,10 @@ export class DiningRoomsComponent implements OnInit {
       ContactPhone: 123466,
       ChildNumber: 45,
       ScheduleReception: '12:10',
-      Department: 1,
-      City: 1,
-      Country: 1
+      Department: null,
+      City: null,
+      Country: 1,
+      Neighborhood: 'Fatima'
     },
     {
       ID: 13,
@@ -288,12 +302,12 @@ export class DiningRoomsComponent implements OnInit {
       ContactPhone: 123466,
       ChildNumber: 45,
       ScheduleReception: '12:10',
-      Department: 1,
-      City: 1,
-      Country: 1
+      Department: 47,
+      City: null,
+      Country: 2,
+      Neighborhood: 'San Nicolas'
     }
-  ];
-  this.lstSetting = this.data;
+    ];
 
     /*
     let response
@@ -306,6 +320,28 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   onEditorPreparing(e) {
+    if (e.dataField === 'ScheduleReception' && e.parentType === 'dataRow') {
+      /*e.editorName = 'dxTextBox';
+      e.editorOptions.mask = '00:00';*/
+    }
+    if (e.dataField === 'Department' && e.parentType === 'dataRow') {
+      e.lookup.dataSource = {
+        store: locates.getStatesOfCountry(e.row.data.Country.toString()),
+        paginate: true,
+        loadMode: 'raw'
+      };
+    }
+
+  }
+
+  onEditorPrepared(e) {
+  if (e.dataField === 'Department' && e.parentType === 'dataRow') {
+      e.lookup.dataSource = {
+        store: locates.getStatesOfCountry(e.row.data.Country.toString()),
+        paginate: true,
+        loadMode: 'raw'
+      };
+    }
   }
 
   calculateSortValue(data) {

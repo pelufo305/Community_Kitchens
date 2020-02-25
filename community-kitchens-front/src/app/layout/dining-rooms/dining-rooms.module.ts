@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DiningRoomsComponent } from './pages/dining-rooms/dining-rooms.component';
 import {  DxDataGridModule, DxPieChartModule,  DxSelectBoxModule,  DxCheckBoxModule,  DxAutocompleteModule,
   DxTemplateModule } from 'devextreme-angular';
+  import { DxLookupModule } from 'devextreme-angular';
   import { BrowserModule } from '@angular/platform-browser';
   import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
   import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +18,7 @@ import { DiningRoomsRoutingModule } from './dining-rooms-routing.module';
     CommonModule,
     RouterModule,
     FormsModule,
+    DxLookupModule,
     ReactiveFormsModule,
     DxDataGridModule,
     DxPieChartModule,
