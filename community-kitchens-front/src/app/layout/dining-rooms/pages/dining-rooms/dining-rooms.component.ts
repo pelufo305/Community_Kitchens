@@ -82,7 +82,8 @@ export class DiningRoomsComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
-    this.loadCatalog();
+
+
     this.getFilteredDepartment = this.getFilteredDepartment.bind(this);
   }
 
@@ -151,38 +152,38 @@ export class DiningRoomsComponent implements OnInit {
       e.cellElement.hidden = true;
     }
     if (e.column.dataField === 'Department' && e.rowType === 'data') {
-      let lst =  locates.getStatesOfCountry(e.row.data.Country.toString());
-      let reformattedlst = lst.map(function(obj){ 
-        var rObj = {};
+      const lst = locates.getStatesOfCountry(e.row.data.Country.toString());
+      const reformattedlst = lst.map(function (obj) {
+        const rObj = {};
         rObj[obj.id] = obj.name;
         return rObj;
-     });
-      e.column.lookup.valueExpr='id' 
-      e.column.lookup.displayExpr='name'
+      });
+      e.column.lookup.valueExpr = 'id';
+      e.column.lookup.displayExpr = 'name';
       e.column.lookup.dataSource = {
-         store: lst,
-         paginate: true,
-         loadMode: 'raw'
+        store: lst,
+        paginate: true,
+        loadMode: 'raw'
       };
       e.column.lookup.items = lst;
-      e.column.lookup.valueMap = {47: "Farah"};      
+      e.column.lookup.valueMap = { 47: 'Farah' };
       console.log(e.column.lookup.valueMap);
     }
 
   }
-  //https://supportcenter.devexpress.com/Ticket/Details/T580399/dxdatagrid-bind-lookup-dynamically
-  
-  onRowPrepared(e){
-     /*if (e.rowType === 'data') {
-      const row = e.columns[5].lookup;
-      row.valueExpr='id' 
-      row.displayExpr='name'
-      row.dataSource = {
-         store: locates.getStatesOfCountry('2'),
-         paginate: true,
-         loadMode: 'raw'
-       };
-     }*/
+  // https://supportcenter.devexpress.com/Ticket/Details/T580399/dxdatagrid-bind-lookup-dynamically
+
+  onRowPrepared(e) {
+    /*if (e.rowType === 'data') {
+     const row = e.columns[5].lookup;
+     row.valueExpr='id'
+     row.displayExpr='name'
+     row.dataSource = {
+        store: locates.getStatesOfCountry('2'),
+        paginate: true,
+        loadMode: 'raw'
+      };
+    }*/
   }
 
 
@@ -249,7 +250,11 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.lstCountry = [{ id: 1, name: 'Colombia' }, { id: 2, name: 'Venezuela' }];
+    setTimeout(obj => {
 
+    }, 1000);
+    this.loadCatalog();
   }
 
   async loadCatalog() {
@@ -258,7 +263,7 @@ export class DiningRoomsComponent implements OnInit {
 
   getDataCountry() {
     return {
-      store: locates.getAllCountries(),
+      store: this.lstCountry,
       paginate: true,
       loadMode: 'raw'
     };
@@ -269,10 +274,10 @@ export class DiningRoomsComponent implements OnInit {
   }
 
 
-  getFilteredDepartment(options: any) {
-    console.log(options);
+  getFilteredDepartment(options) {
+    const lst = locates.getStatesOfCountry(options.data.Country.toString());
     return {
-      store: [],
+      store: lst,
       paginate: true,
       loadMode: 'raw'
     };
