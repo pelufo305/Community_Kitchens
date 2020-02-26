@@ -1,39 +1,41 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group">
-        <a routerLink="/dining-rooms" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a routerLink="/dining-rooms" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-address-card"></i>&nbsp;
             <span>{{ 'DiningRooms' | translate }}</span>
         </a>
-        <a [routerLink]="['/charts']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/products']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-product-hunt"></i>&nbsp;
             <span>{{ 'Products' | translate }}</span>
         </a>
-        <div class="nested-menu">
+        <div class="nested-menu" [hidden]="boolTypeUser">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <i class="fa fa-handshake-o"></i>&nbsp;
                 <span>{{ 'Suppliers' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
-                    <li [hidden]="boolTypeUser">
+                    <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-handshake-o"></i>&nbsp;
                             <span>{{ 'Suppliers' | translate }}</span>
                         </a>
                     </li>
-                    <li [hidden]="boolTypeSupplier">
+                    <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-cart-plus"></i>&nbsp;
                             <span>{{ 'AvailabilityProducts' | translate }}</span>
                         </a>
                     </li>
-                    <li [hidden]="!boolTypeSupplier">
+                    <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-truck"></i>&nbsp;
                             <span>{{ 'Transport' | translate }}</span>
                         </a>
                     </li>
-                    <li [hidden]="boolTypeUser">
+                    <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-truck"></i>&nbsp;
                             <span>{{ 'Transport' | translate }}</span>

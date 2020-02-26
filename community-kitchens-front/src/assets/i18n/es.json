@@ -56,7 +56,28 @@
     "TelephoneContact": "Telefono Contacto",
     "NumberChildren": "Numero Niños",
     "ZoneReception": "Horario recepción",
-    "Neighborhood": "Barrio"
-
-
+    "Neighborhood": "Barrio",
+    "Description": "Descripción",
+    "Preservation": "Preservación",
+    "UnitMeasure": "Unidad medida",
+    "Cooled": "Refrigerado",
+    "Normal": "Normal",
+    "Kilo": "Kilo",
+    "At": "Arroba",
+    "Gram": "Gramo",
+    "Pound": "Libra",
+    "Lot": "Lote",
+    "Package": "Paquete",
+    "Container": "Container",
+    "Shooting": "Disparo",
+    "Group": "Grupo",
+    "Ton": "Tonelada",
+    "Pipe": "Pipa",
+    "Barrel": "Barril",
+    "Reel": "Carrete",
+    "Strip": "Tira",
+    "Roll": "Rollo",
+    "Milligram": "Miligramo",
+    "Box": "Caja",
+    "Ration": "Ración"
 }

@@ -31,10 +31,6 @@ export class DiningRoomsComponent implements OnInit {
   public refreshMode: string;
   public data;
   public Viewdisabled = true;
-  public lstItems = [];
-  public lstSetting = [];
-  public lstCountry = [];
-  public lstState = [];
   public lstCity = [];
   public excelTitle = '';
   public isAllowDeleting = true;
@@ -82,9 +78,6 @@ export class DiningRoomsComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
-
-
-    this.getFilteredDepartment = this.getFilteredDepartment.bind(this);
   }
 
   onRowUpdating(e) {
@@ -151,43 +144,12 @@ export class DiningRoomsComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-    if (e.column.dataField === 'Department' && e.rowType === 'data') {
-      const lst = locates.getStatesOfCountry(e.row.data.Country.toString());
-      const reformattedlst = lst.map(function (obj) {
-        const rObj = {};
-        rObj[obj.id] = obj.name;
-        return rObj;
-      });
-      e.column.lookup.valueExpr = 'id';
-      e.column.lookup.displayExpr = 'name';
-      e.column.lookup.dataSource = {
-        store: lst,
-        paginate: true,
-        loadMode: 'raw'
-      };
-      e.column.lookup.items = lst;
-      e.column.lookup.valueMap = { 47: 'Farah' };
-      console.log(e.column.lookup.valueMap);
-    }
+   }
 
-  }
-  // https://supportcenter.devexpress.com/Ticket/Details/T580399/dxdatagrid-bind-lookup-dynamically
 
   onRowPrepared(e) {
-    /*if (e.rowType === 'data') {
-     const row = e.columns[5].lookup;
-     row.valueExpr='id'
-     row.displayExpr='name'
-     row.dataSource = {
-        store: locates.getStatesOfCountry('2'),
-        paginate: true,
-        loadMode: 'raw'
-      };
-    }*/
+
   }
-
-
-
 
   createObjectConfiguration(e, updated: boolean): any {
     const model = {
@@ -250,10 +212,6 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lstCountry = [{ id: 1, name: 'Colombia' }, { id: 2, name: 'Venezuela' }];
-    setTimeout(obj => {
-
-    }, 1000);
     this.loadCatalog();
   }
 
@@ -261,49 +219,18 @@ export class DiningRoomsComponent implements OnInit {
     await this.getData();
   }
 
-  getDataCountry() {
+  getDataCity() {
     return {
-      store: this.lstCountry,
-      paginate: true,
-      loadMode: 'raw'
-    };
-  }
-
-  onValueChanged(e) {
-    this.lstState = locates.getStatesOfCountry(e.value);
-  }
-
-
-  getFilteredDepartment(options) {
-    const lst = locates.getStatesOfCountry(options.data.Country.toString());
-    return {
-      store: lst,
-      paginate: true,
-      loadMode: 'raw'
-    };
-  }
-
-  getFilteredCity(options) {
-    const self = this as any;
-    return {
-      store: self.lstState,
+      store: [{ id: 1, name: 'Bogota' }],
       paginate: true,
       loadMode: 'raw'
     };
   }
 
   setStateValueCountry(rowData: any, value: any): void {
-    rowData.Department = null;
-    rowData.City = null;
+     rowData.Neighborhood = null;
     (<any>this).defaultSetCellValue(rowData, value);
   }
-
-
-  setStateValueDepartment(rowData: any, value: any): void {
-    rowData.City = null;
-    (<any>this).defaultSetCellValue(rowData, value);
-  }
-
 
   async getData() {
 
@@ -319,9 +246,7 @@ export class DiningRoomsComponent implements OnInit {
       ContactPhone: 123466,
       ChildNumber: 45,
       ScheduleReception: '12:10',
-      Department: null,
-      City: null,
-      Country: 1,
+      City: 1,
       Neighborhood: 'Fatima'
     },
     {
@@ -336,9 +261,7 @@ export class DiningRoomsComponent implements OnInit {
       ContactPhone: 123466,
       ChildNumber: 45,
       ScheduleReception: '12:10',
-      Department: 47,
-      City: null,
-      Country: 2,
+      City: 1,
       Neighborhood: 'San Nicolas'
     }
     ];
@@ -354,10 +277,7 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   onEditorPreparing(e) {
-    if (e.dataField === 'ScheduleReception' && e.parentType === 'dataRow') {
-      /*e.editorName = 'dxTextBox';
-      e.editorOptions.mask = '00:00';*/
-    }
+   
   }
 
   onEditorPrepared(e) {

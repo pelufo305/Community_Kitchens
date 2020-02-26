@@ -10,7 +10,8 @@ const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'blank-page', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) },
-            { path: 'dining-rooms', loadChildren: () => import('./dining-rooms/dining-rooms.module').then(m => m.DiningRoomsModule) }
+            { path: 'dining-rooms', loadChildren: () => import('./dining-rooms/dining-rooms.module').then(m => m.DiningRoomsModule) },
+            { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) }
         ]
     }
 ];
