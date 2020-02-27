@@ -79,5 +79,8 @@
     "Roll": "Rollo",
     "Milligram": "Miligramo",
     "Box": "Caja",
-    "Ration": "Ración"
+    "Ration": "Ración",
+    "Recipes": "Recetas",
+    "Ingredients": "Ingredientes",
+    "Quantity": "Cantidad"
 }

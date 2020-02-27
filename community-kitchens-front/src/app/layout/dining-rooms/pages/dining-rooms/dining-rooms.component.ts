@@ -164,9 +164,8 @@ export class DiningRoomsComponent implements OnInit {
       ContactPhone: e.data.ContactPhone,
       ChildNumber: e.data.ChildNumber,
       ScheduleReception: e.data.ScheduleReception,
-      Department: e.data.Department,
       City: e.data.City,
-      Country: e.data.Country
+      Neighborhood: e.data.Neighborhood
     };
     return model;
   }
@@ -177,7 +176,7 @@ export class DiningRoomsComponent implements OnInit {
     let boolState = true;
 
     if (e.data) {
-      Code = e.data.AcAccount ? e.data.Code : null;
+      Code = e.data.Code ? e.data.Code : null;
 
     } else {
       ID = e.oldData.ID;

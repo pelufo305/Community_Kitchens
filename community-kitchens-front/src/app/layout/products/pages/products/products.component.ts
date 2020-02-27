@@ -42,7 +42,7 @@ export class ProductsComponent implements OnInit {
     public translate: TranslateService,
     private router: Router) {
     this.refreshMode = 'reshape';
-    this.translate.get('DiningRooms').subscribe((res: string) => {
+    this.translate.get('Products').subscribe((res: string) => {
       this.excelTitle = res;
     });
     if (
@@ -163,19 +163,12 @@ export class ProductsComponent implements OnInit {
       ID: updated ? e.data.ID : -1,
       Code: e.data.Code,
       Name: e.data.Name,
-      Address: e.data.Address,
-      Phone: e.data.Phone,
-      Email: e.data.Email,
-      Contact: e.data.Contact,
-      ContactEmail: e.data.ContactEmail,
-      ContactPhone: e.data.ContactPhone,
-      ChildNumber: e.data.ChildNumber,
-      ScheduleReception: e.data.ScheduleReception,
-      Department: e.data.Department,
-      City: e.data.City,
-      Country: e.data.Country
+      Description: e.data.Description,
+      Preservation: e.data.Preservation,
+      MeasurementUnit: e.data.MeasurementUnit
     };
     return model;
+
   }
 
   valRowCell(e): boolean {
@@ -184,7 +177,7 @@ export class ProductsComponent implements OnInit {
     let boolState = true;
 
     if (e.data) {
-      Code = e.data.AcAccount ? e.data.Code : null;
+      Code = e.data.Code ? e.data.Code : null;
 
     } else {
       ID = e.oldData.ID;
@@ -267,6 +260,8 @@ export class ProductsComponent implements OnInit {
     */
 
   }
+
+
 
   onEditorPreparing(e) {
   }

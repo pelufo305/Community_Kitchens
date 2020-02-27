@@ -41,12 +41,12 @@
               <dxi-column dataField="Description" [caption]="'Description' | translate">
                   <dxi-validation-rule type="required"></dxi-validation-rule>
                </dxi-column>
-              <dxi-column dataField="Preservation" [caption]="'Preservation' | translate" >
+              <dxi-column dataField="Preservation" [caption]="'Preservation' | translate"  [calculateSortValue]="calculateSortValue" >
                   <dxo-lookup [dataSource]="lstPreservation" valueExpr="code" displayExpr="name">
                   </dxo-lookup>
                   <dxi-validation-rule type="required"></dxi-validation-rule>
               </dxi-column>
-              <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate">
+              <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate"  [calculateSortValue]="calculateSortValue">
                 <dxo-lookup [dataSource]="lstUnitMeasure" valueExpr="code" displayExpr="name">
                 </dxo-lookup>
                 <dxi-validation-rule type="required"></dxi-validation-rule>

@@ -10,6 +10,11 @@
             <i class="fa fa-product-hunt"></i>&nbsp;
             <span>{{ 'Products' | translate }}</span>
         </a>
+        <a [routerLink]="['/recipes']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
+            <i class="fa fa-coffee"></i>&nbsp;
+            <span>{{ 'Recipes' | translate }}</span>
+        </a>
         <div class="nested-menu" [hidden]="boolTypeUser">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <i class="fa fa-handshake-o"></i>&nbsp;
@@ -29,13 +34,7 @@
                             <span>{{ 'AvailabilityProducts' | translate }}</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-truck"></i>&nbsp;
-                            <span>{{ 'Transport' | translate }}</span>
-                        </a>
-                    </li>
-                    <li>
+                   <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-truck"></i>&nbsp;
                             <span>{{ 'Transport' | translate }}</span>
