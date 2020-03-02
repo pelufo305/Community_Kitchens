@@ -41,6 +41,7 @@
     "Suppliers": "Suppliers",
     "Products": "Products",
     "Transport": "Transport",
+    "Donations": "Donations",
     "Users": "Users",
     "AvailabilityProducts": "Availability",
     "Code": "Code",
@@ -85,5 +86,9 @@
     "Quantity": "Quantity",
     "UserName": "User Name",
     "LastName": "Lastname",
-    "UserType": "User Type"
+    "UserType": "User Type",
+    "EnterpriseMail": "Enterprise Email",
+    "Type": "Type",
+    "UnitValue": "Unit Value",
+    "ExpirationDate": "Expiration Date"
 }

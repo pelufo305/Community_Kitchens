@@ -40,6 +40,7 @@
     "DiningRooms": "Comedores",
     "Suppliers": "Proveedores",
     "Products": "Productos",
+    "Donations": "Donaciones",
     "Transport": "Transporte",
     "Users": "Usuarios",
     "AvailabilityProducts": "Disponibilidad",
@@ -85,5 +86,10 @@
     "Quantity": "Cantidad",
     "UserName": "Nombre Usuario",
     "LastName": "Apellido",
-    "UserType": "Tipo usuario"
+    "UserType": "Tipo usuario",
+    "EnterpriseMail": "Email empresarial",
+    "Type": "Tipo",
+    "UnitValue": "Valor unitario",
+    "ExpirationDate": "Fecha vencimiento"
+
 }

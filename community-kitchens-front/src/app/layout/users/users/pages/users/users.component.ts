@@ -41,7 +41,7 @@ export class UsersComponent implements OnInit {
     public translate: TranslateService,
     private router: Router) {
     this.refreshMode = 'reshape';
-    this.translate.get('Products').subscribe((res: string) => {
+    this.translate.get('Users').subscribe((res: string) => {
       this.excelTitle = res;
     });
     if (
