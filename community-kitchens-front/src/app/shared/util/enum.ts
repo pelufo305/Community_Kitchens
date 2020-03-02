@@ -1,6 +1,7 @@
 export enum TypeUserEnum {
     Normal = 0,
-    Supplier = 1
+    Suppliers = 1,
+    DiningRooms = 2
 }
 export enum TypeTransportEnum {
     Normal = 0,

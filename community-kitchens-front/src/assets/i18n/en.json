@@ -82,5 +82,8 @@
     "Ration": "Ration",
     "Recipes": "Recipes",
     "Ingredients": "Ingredients",
-    "Quantity": "Quantity"
+    "Quantity": "Quantity",
+    "UserName": "User Name",
+    "LastName": "Lastname",
+    "UserType": "User Type"
 }

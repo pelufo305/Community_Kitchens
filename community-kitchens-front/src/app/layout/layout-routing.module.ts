@@ -13,7 +13,8 @@ const routes: Routes = [
             { path: 'blank-page', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) },
             { path: 'dining-rooms', loadChildren: () => import('./dining-rooms/dining-rooms.module').then(m => m.DiningRoomsModule) },
             { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
-            { path: 'recipes', loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule) }
+            { path: 'recipes', loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule) },
+            { path: 'users', loadChildren: () => import('./users/users/users.module').then(m => m.UsersModule) }
         ]
     }
 ];

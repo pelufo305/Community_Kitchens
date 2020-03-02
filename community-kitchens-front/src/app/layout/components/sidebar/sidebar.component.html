@@ -1,19 +1,20 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group">
-        <a routerLink="/dining-rooms" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
-            class="list-group-item">
+        <a routerLink="/dining-rooms" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-address-card"></i>&nbsp;
             <span>{{ 'DiningRooms' | translate }}</span>
         </a>
-        <a [routerLink]="['/products']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
-            class="list-group-item">
+        <a [routerLink]="['/products']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-product-hunt"></i>&nbsp;
             <span>{{ 'Products' | translate }}</span>
         </a>
-        <a [routerLink]="['/recipes']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
-            class="list-group-item">
+        <a [routerLink]="['/recipes']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-coffee"></i>&nbsp;
             <span>{{ 'Recipes' | translate }}</span>
+        </a>
+        <a [routerLink]="['/users']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-users"></i>&nbsp;
+            <span>{{ 'Users' | translate }}</span>
         </a>
         <div class="nested-menu" [hidden]="boolTypeUser">
             <a class="list-group-item" (click)="addExpandClass('pages')">
@@ -34,7 +35,7 @@
                             <span>{{ 'AvailabilityProducts' | translate }}</span>
                         </a>
                     </li>
-                   <li>
+                    <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-truck"></i>&nbsp;
                             <span>{{ 'Transport' | translate }}</span>
