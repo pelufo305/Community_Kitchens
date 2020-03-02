@@ -26,7 +26,7 @@
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                     <dxi-validation-rule type="email"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="Password" [formItem]="{visible: true}" [caption]="'Password' | translate">
+                <dxi-column dataField="Password" [formItem]="{visible: true}" [caption]="'Password' | translate" [customizeText]="customizeText">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
                 <dxi-column dataField="Name" [caption]="'Name' | translate">

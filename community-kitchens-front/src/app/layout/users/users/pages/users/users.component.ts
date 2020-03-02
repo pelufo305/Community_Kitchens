@@ -151,7 +151,7 @@ export class UsersComponent implements OnInit {
 
 
   onRowPrepared(e) {
- 
+
   }
 
 
@@ -264,9 +264,13 @@ export class UsersComponent implements OnInit {
 
 
   onEditorPreparing(e) {
-    if( e.parentType == 'dataRow' && e.dataField == 'Password') {
+    if ( e.parentType === 'dataRow' && e.dataField === 'Password') {
       e.editorOptions.mode = 'password';
     }
+  }
+
+  customizeText(e) {
+    return '*****';
   }
 
 
