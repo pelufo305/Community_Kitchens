@@ -36,5 +36,7 @@ export enum TypeUnitMeasureEnum {
     Roll= 14,
     Milligram = 5,
     Box = 6,
-    Ration = 7
+    Ration = 7,
+    Kilometer = 8,
+    Meter = 9
 }

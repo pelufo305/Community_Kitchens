@@ -90,6 +90,17 @@
     "EnterpriseMail": "Email empresarial",
     "Type": "Tipo",
     "UnitValue": "Valor unitario",
-    "ExpirationDate": "Fecha vencimiento"
+    "ExpirationDate": "Fecha vencimiento",
+    "Plate": "Placa",
+    "Brand": "Marca",
+    "Year": "Año",
+    "TransportType": "Tipo transporte",
+    "PaymentUnity": "Unidad pago",
+    "PaymentMeasurement": "Medida pago",
+    "Value": "Valor",
+    "Kilometer": "Kilometro",
+    "Meter": "Metro",
+    "Active": "Activo",
+    "PersonInCharge": "Conductor"
 
 }

@@ -90,5 +90,18 @@
     "EnterpriseMail": "Enterprise Email",
     "Type": "Type",
     "UnitValue": "Unit Value",
-    "ExpirationDate": "Expiration Date"
+    "ExpirationDate": "Expiration Date",
+    "Plate": "Plate",
+    "Brand": "Brand",
+    "Year": "Year",
+    "TransportType": "Transport Type",
+    "PaymentUnity": "Payment Unity",
+    "PaymentMeasurement": "Payment Measurement",
+    "Value": "Value",
+    "Kilometer": "Kilometer",
+    "Meter": "Meter",
+    "Active": "Active",
+    "PersonInCharge": "Person In Charge"
+
+
 }
