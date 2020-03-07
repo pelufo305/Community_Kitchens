@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { routerTransition } from '../router.animations';
+import { LoginServiceService } from '../shared/services/managers/login-service.service';
 
 @Component({
     selector: 'app-login',
@@ -9,16 +10,39 @@ import { routerTransition } from '../router.animations';
     animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
+    @ViewChild('username') username: ElementRef;
+    @ViewChild('password') password: ElementRef;
     constructor(
-      public router: Router
+      public router: Router,
+      protected loginService: LoginServiceService
     ) {}
 
     ngOnInit() {}
 
+    AuthUser(user) {
+        this.loginService
+          .AuthUser(user)
+          .then(response => {
+                localStorage.setItem('UserName', response.Username );
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('TypeUser', response.UserType);
+                localStorage.setItem('TypeSupplier', response.provider != null ? response.provider.Type : null);
+                localStorage.setItem('isLoggedin', 'true');
+                this.router.navigateByUrl('/dashboard');
+            })
+          .catch(error => {
+            localStorage.setItem('isLoggedin', 'false');
+            alert('Usuario con datos incorrectos');
+            console.error(error);
+          });
+      }
+
     onLoggedin() {
-        localStorage.setItem('isLoggedin', 'true');
-        localStorage.setItem('UserName', 'Jhonatang2');
-        localStorage.setItem('TypeUser', '0' );
-        localStorage.setItem('TypeSupplier', '0' );
+
+       const user = {
+            username: this.username.nativeElement.value,
+            Password: this.password.nativeElement.value
+        };
+        this.AuthUser(user);
     }
 }
