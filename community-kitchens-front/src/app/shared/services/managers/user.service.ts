@@ -33,15 +33,11 @@ GetAll() {
   ).toPromise();
  }
 
- GetByCode(code) {
-    return this.http.get<any>(
-      this.api + 'GetByCode?code=' + code, { headers: this.headers }
-    ).toPromise();
-}
+
 
   GetByID(ID) {
   return this.http.get<any>(
-    this.api + 'GetByID?code=' + ID, { headers: this.headers }
+    this.api + 'GetByID?ID=' + ID, { headers: this.headers }
   ).toPromise();
 }
 
