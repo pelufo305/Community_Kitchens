@@ -199,7 +199,7 @@ export class UsersComponent implements OnInit {
       LastName: e.data.LastName,
       Password: e.data.Password,
       UserType: e.data.UserType,
-      ProviderID: e.dataProviderID
+      ProviderID: e.data.ProviderID
     };
     return model;
 
@@ -251,21 +251,13 @@ export class UsersComponent implements OnInit {
 
   async loadCatalog() {
     this.loadEnumUserType();
+    await this.getProvider();
     await this.getData();
   }
   onValueChanged(e) {
   }
 
-  async getData() {
-    await this.userService
-      .GetAll()
-      .then(response => {
-        this.data = response;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
+  async getProvider() {
     await this.providerService
       .GetAll()
       .then(response => {
@@ -274,10 +266,27 @@ export class UsersComponent implements OnInit {
       .catch(error => {
         console.error(error);
       });
-
   }
-
-
+  async getData() {
+  await this.userService
+      .GetAll().then(response => {
+      const reformattedArray = response.map(function(obj){
+          const rObj = {};
+          rObj['ID'] = obj.ID;
+          rObj['Username'] = obj.Username;
+          rObj['Name'] = obj.Name;
+          rObj['LastName'] = obj.LastName;
+          rObj['Password'] = obj.Password;
+          rObj['UserType'] = obj.UserType;
+          rObj['ProviderID'] = obj.Provider ? obj.Provider.ID : null;
+           return rObj;
+       });
+         this.data = reformattedArray;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 
   onEditorPreparing(e) {
     if (e.parentType === 'dataRow' && e.dataField === 'Password') {

@@ -5,28 +5,40 @@
             <div style="position:initial;">
             </div>
 
-            <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%" [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true" [dataSource]="data" (onRowInserting)="onRowInserting($event)"
-                (onEditorPreparing)="onEditorPreparing($event)" (onRowUpdating)="onRowUpdating($event)" (onRowPrepared)="onRowPrepared($event)" (onRowUpdated)="onRowUpdated($event)" (onEditorPreparing)="onEditorPreparing($event)" (onEditorPrepared)="onEditorPrepared($event)"
-                (onRowInserted)="onRowInserted($event)" (onInitNewRow)="onInitNewRow($event)" (onRowRemoved)="onRowRemoved($event)" (onCellPrepared)="onCellPrepared($event)" (onKeyDown)="onKeyDown($event)" class="dataGridSettings" #gridConfig>
+            <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
+                [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
+                [dataSource]="data" (onRowInserting)="onRowInserting($event)"
+                (onEditorPreparing)="onEditorPreparing($event)" (onRowUpdating)="onRowUpdating($event)"
+                (onRowPrepared)="onRowPrepared($event)" (onRowUpdated)="onRowUpdated($event)"
+                (onEditorPreparing)="onEditorPreparing($event)" (onEditorPrepared)="onEditorPrepared($event)"
+                (onRowInserted)="onRowInserted($event)" (onInitNewRow)="onInitNewRow($event)"
+                (onRowRemoved)="onRowRemoved($event)" (onCellPrepared)="onCellPrepared($event)"
+                (onKeyDown)="onKeyDown($event)" class="dataGridSettings" #gridConfig>
                 <!-- 'batch' | 'cell' | 'form' | 'popup' -->
-                <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true">
-                    <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
+                <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
+                    [allowDeleting]="true">
+                    <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow"
+                        [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow"
+                        [cancelRowChanges]="textCancelRow">
                     </dxo-texts>
                 </dxo-editing>
-                <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow" [resetOperationText]="textFilterReset"></dxo-filter-row>
+                <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow"
+                    [resetOperationText]="textFilterReset"></dxo-filter-row>
                 <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
                 <dxo-export [enabled]="true" [fileName]="excelTitle"></dxo-export>
                 <dxo-paging [pageSize]="100"></dxo-paging>
                 <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
                 </dxo-pager>
                 <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
-                <dxi-column dataField="ID" [visible]="false" sortOrder="desc" [allowEditing]="false" [allowSorting]="false">
+                <dxi-column dataField="ID" [visible]="false" sortOrder="desc" [allowEditing]="false"
+                    [allowSorting]="false">
                 </dxi-column>
                 <dxi-column dataField="Username" [caption]="'UserName' | translate">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                     <dxi-validation-rule type="email"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="Password" [formItem]="{visible: true}" [caption]="'Password' | translate" [customizeText]="customizeText">
+                <dxi-column dataField="Password" [formItem]="{visible: true}" [caption]="'Password' | translate"
+                    [customizeText]="customizeText">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
                 <dxi-column dataField="Name" [caption]="'Name' | translate">
@@ -35,15 +47,17 @@
                 <dxi-column dataField="LastName" [caption]="'LastName' | translate">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="UserType" [caption]="'UserType' | translate" [calculateSortValue]="calculateSortValue">
+                <dxi-column dataField="UserType" [caption]="'UserType' | translate"
+                    [calculateSortValue]="calculateSortValue">
                     <dxo-lookup [dataSource]="lstUserType" valueExpr="code" displayExpr="name">
                     </dxo-lookup>
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="ProviderID" [caption]="'UserType' | translate" [calculateSortValue]="calculateSortValue">
-                    <dxo-lookup [dataSource]="getDataProvider" valueExpr="code" displayExpr="name">
+                <dxi-column dataField="ProviderID" [caption]="'Suppliers' | translate"
+                    [calculateSortValue]="calculateSortValue">
+                    <dxo-lookup [dataSource]="getDataProvider" valueExpr="ID" displayExpr="Name">
                     </dxo-lookup>
-                 </dxi-column>
+                </dxi-column>
             </dx-data-grid>
         </div>
     </div>
