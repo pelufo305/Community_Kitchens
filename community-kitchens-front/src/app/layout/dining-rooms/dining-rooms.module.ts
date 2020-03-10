@@ -1,3 +1,4 @@
+import { DinnersService } from './../../shared/services/managers/dinners.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DiningRoomsComponent } from './pages/dining-rooms/dining-rooms.component';
@@ -11,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { DiningRoomsRoutingModule } from './dining-rooms-routing.module';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [DiningRoomsComponent],
@@ -27,7 +29,9 @@ import { DiningRoomsRoutingModule } from './dining-rooms-routing.module';
     TranslateModule,
     DxAutocompleteModule,
     DxTemplateModule,
-    DiningRoomsRoutingModule
- ]
+    DiningRoomsRoutingModule,
+    HttpClientModule
+ ],
+ providers: [DinnersService],
 })
 export class DiningRoomsModule { }

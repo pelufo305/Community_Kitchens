@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { DinnersService } from 'src/app/shared/services/managers/dinners.service';
 
 @Component({
   selector: 'app-dining-rooms',
@@ -37,7 +38,8 @@ export class DiningRoomsComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private dinnersService: DinnersService) {
     this.refreshMode = 'reshape';
     this.translate.get('DiningRooms').subscribe((res: string) => {
       this.excelTitle = res;
@@ -109,12 +111,27 @@ export class DiningRoomsComponent implements OnInit {
 
   async onRowUpdated(e) {
     const model = this.createObjectConfiguration(e, true);
-    console.log(model);
+    await this.dinnersService
+      .Update(model)
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInserted(e) {
     const model = this.createObjectConfiguration(e, false);
     console.log(model);
+    await this.dinnersService
+      .Insert(model)
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onKeyDown(e) {
@@ -131,7 +148,14 @@ export class DiningRoomsComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
-
+      await this.dinnersService
+        .Delete(settingsId)
+        .then(response => {
+          this.data = response;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }
 
@@ -144,7 +168,7 @@ export class DiningRoomsComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-   }
+  }
 
 
   onRowPrepared(e) {
@@ -227,56 +251,22 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   setStateValueCountry(rowData: any, value: any): void {
-     rowData.Neighborhood = null;
+    rowData.Neighborhood = null;
     (<any>this).defaultSetCellValue(rowData, value);
   }
 
   async getData() {
-
-    this.data = [{
-      ID: 12,
-      Code: 'Comedor1',
-      Name: 'Comedor Prueba 1',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactEmail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      ChildNumber: 45,
-      ScheduleReception: '12:10',
-      City: 1,
-      Neighborhood: 'Fatima'
-    },
-    {
-      ID: 13,
-      Code: 'Comedor2',
-      Name: 'Comedor Prueba 1',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactEmail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      ChildNumber: 45,
-      ScheduleReception: '12:10',
-      City: 1,
-      Neighborhood: 'San Nicolas'
-    }
-    ];
-
-    /*
-    let response
-    if (response != null) {
-      this.data = response;
-      this.lstSetting = this.data;
-    }
-    */
-
+    await this.dinnersService
+      .GetAll()
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   onEditorPreparing(e) {
-   
   }
 
   onEditorPrepared(e) {

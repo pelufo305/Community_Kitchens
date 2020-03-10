@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,9 @@ export class DisponibilityService {
   headers: any;
   constructor(protected http: HttpClient) {
   this.api = 'http://localhost:64119/api/Disponibility/';
-  const headers = new Headers({
+  this.headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': localStorage.getItem('token')
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
   });
 }
 
