@@ -189,7 +189,7 @@ export class DiningRoomsComponent implements OnInit {
       ChildNumber: e.data.ChildNumber,
       ScheduleReception: e.data.ScheduleReception,
       City: e.data.City,
-      Neighborhood: e.data.Neighborhood
+      Neiborhood: e.data.Neiborhood
     };
     return model;
   }
