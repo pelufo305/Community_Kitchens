@@ -6,13 +6,12 @@
         <div class="col-xs-12" id="data-container">
           <div style="position:initial;">
           </div>
-          <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false"
-            height="100%" [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
-            [hoverStateEnabled]="true" (onKeyDown)="onKeyDown($event)" [dataSource]="data"
-            (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-            (onCellPrepared)="onCellPrepared($event)" (onRowUpdated)="onRowUpdated($event)"
-            (onRowInserted)="onRowInserted($event)" (onInitNewRow)="onInitNewRow($event)"
-            (onRowRemoved)="onRowRemoved($event)" class="dataGridSettings"
+          <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
+            [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
+            (onKeyDown)="onKeyDown($event)" [dataSource]="data" (onRowInserting)="onRowInserting($event)"
+            (onRowUpdating)="onRowUpdating($event)" (onCellPrepared)="onCellPrepared($event)"
+            (onRowUpdated)="onRowUpdated($event)" (onRowInserted)="onRowInserted($event)"
+            (onInitNewRow)="onInitNewRow($event)" (onRowRemoved)="onRowRemoved($event)" class="dataGridSettings"
             [masterDetail]="{ enabled: true, template: 'detail' }" #gridConfig>
             <!-- 'batch' | 'cell' | 'form' | 'popup' -->
             <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
@@ -42,6 +41,7 @@
                 <table class="table">
                   <thead class="thead-inverse">
                     <tr>
+                      <th>{{ 'Code' | translate }}</th>
                       <th>{{ 'Name' | translate }}</th>
                       <th>{{ 'UnitMeasure' | translate }}</th>
                       <th>{{ 'Quantity' | translate }}</th>
@@ -49,6 +49,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of getIngredient(recipes.data.ID)">
+                      <td>{{item.Code}}</td>
                       <td>{{item.Name}}</td>
                       <td>{{item.MeasurementUnit}}</td>
                       <td>{{item.Quantity}}</td>
@@ -63,48 +64,44 @@
     </mat-tab>
     <mat-tab label="{{ 'Ingredients' | translate }}">
       <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
-              [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
-              [dataSource]="lstIngredient" (onRowInserting)="onRowInsertingIngredients($event)" (onRowUpdating)="onRowUpdatingIngredients($event)"
-              (onRowUpdated)="onRowUpdatedIngredients($event)" (onRowInserted)="onRowInsertedIngredients($event)" (onInitNewRow)="onInitNewRowIngredients($event)"
-              (onRowRemoved)="onRowRemovedIngredients($event)" (onCellPrepared)="onCellPrepared($event)"
-              (onKeyDown)="onKeyDown($event)" class="dataGridSettings" #gridConfigIng>
-              <!-- 'batch' | 'cell' | 'form' | 'popup' -->
-              <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
-                  [allowDeleting]="true">
-                  <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow"
-                      [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow"
-                      [cancelRowChanges]="textCancelRow">
-                  </dxo-texts>
-              </dxo-editing>
-              <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow"
-                  [resetOperationText]="textFilterReset"></dxo-filter-row>
-              <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
-              <dxo-export [enabled]="true" [fileName]="excelTitle"></dxo-export>
-              <dxo-paging [pageSize]="100"></dxo-paging>
-              <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
-              </dxo-pager>
-              <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
-              <dxi-column dataField="ID" [visible]="false" sortOrder="desc" [allowEditing]="false"
-                  [allowSorting]="false">
-              </dxi-column>
-              <dxi-column dataField="IDRecipe" [caption]="'Recipes' | translate"  [calculateSortValue]="calculateSortValue">
-                  <dxo-lookup [dataSource]="data" valueExpr="ID" displayExpr="Name">
-                  </dxo-lookup>
-                  <dxi-validation-rule type="required"></dxi-validation-rule>
-              </dxi-column>
-              <dxi-column dataField="Product.ID" [caption]="'Name' | translate"  [calculateSortValue]="calculateSortValue">
-                <dxo-lookup [dataSource]="getDataProducts" valueExpr="ID" displayExpr="Name">
-                </dxo-lookup>
-                <dxi-validation-rule type="required"></dxi-validation-rule>
-            </dxi-column>
-            <dxi-column dataField="Quantity" [caption]="'Quantity' | translate">
-              <dxi-validation-rule type="required"></dxi-validation-rule>
-              <dxi-validation-rule type="numeric"></dxi-validation-rule>
-          </dxi-column>
-          </dx-data-grid>
+        [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
+        [dataSource]="lstIngredient" (onRowInserting)="onRowInsertingIngredients($event)"
+        (onRowUpdating)="onRowUpdatingIngredients($event)" (onRowUpdated)="onRowUpdatedIngredients($event)"
+        (onRowInserted)="onRowInsertedIngredients($event)" (onInitNewRow)="onInitNewRowIngredients($event)"
+        (onRowRemoved)="onRowRemovedIngredients($event)" (onCellPrepared)="onCellPrepared($event)"
+        (onKeyDown)="onKeyDown($event)" class="dataGridSettings" #gridConfigIng>
+        <!-- 'batch' | 'cell' | 'form' | 'popup' -->
+        <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
+          [allowDeleting]="true">
+          <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow"
+            [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
+          </dxo-texts>
+        </dxo-editing>
+        <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow"
+          [resetOperationText]="textFilterReset"></dxo-filter-row>
+        <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
+        <dxo-export [enabled]="true" [fileName]="excelTitle"></dxo-export>
+        <dxo-paging [pageSize]="100"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
+        </dxo-pager>
+        <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
+        <dxi-column dataField="ID" [visible]="false" sortOrder="desc" [allowEditing]="false" [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="IDRecipe.ID" [caption]="'Recipes' | translate" [calculateSortValue]="calculateSortValue">
+          <dxo-lookup [dataSource]="data" valueExpr="ID" displayExpr="Name">
+          </dxo-lookup>
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="IDProduct.ID" [caption]="'Name' | translate" [calculateSortValue]="calculateSortValue">
+          <dxo-lookup [dataSource]="getFilterProducts" valueExpr="ID" displayExpr="Name">
+          </dxo-lookup>
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="Quantity" [caption]="'Quantity' | translate">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+          <dxi-validation-rule type="numeric"></dxi-validation-rule>
+        </dxi-column>
+      </dx-data-grid>
     </mat-tab>
-  </mat-tab-group>  
+  </mat-tab-group>
 </div>
-
-
-

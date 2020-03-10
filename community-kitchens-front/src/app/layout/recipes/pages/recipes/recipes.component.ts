@@ -1,3 +1,6 @@
+import { ProductService } from 'src/app/shared/services/managers/product.service';
+import { IngredientService } from './../../../../shared/services/managers/ingredient.service';
+import { RecipeService } from './../../../../shared/services/managers/recipe.service';
 import {
   Component,
   ViewChild,
@@ -37,12 +40,16 @@ export class RecipesComponent implements OnInit {
   public lstIngredient = [];
   public excelTitle = '';
   public ingTitle = '';
+  public lstProducts = [];
   public lstUnitMeasure = [];
   public isAllowDeleting = true;
 
   constructor(
     public translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private recipeService: RecipeService,
+    private ingredientService: IngredientService,
+    private productService: ProductService) {
     this.refreshMode = 'reshape';
     this.translate.get('Recipes').subscribe((res: string) => {
       this.excelTitle = res;
@@ -88,6 +95,7 @@ export class RecipesComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
+    this.getFilterProducts = this.getFilterProducts.bind(this);
 
   }
 
@@ -123,12 +131,24 @@ export class RecipesComponent implements OnInit {
 
   async onRowUpdatedIngredients(e) {
     const model = this.createObjectIngredients(e, true);
-    console.log(model);
+    await this.ingredientService
+      .Update(model)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInsertedIngredients(e) {
     const model = this.createObjectIngredients(e, false);
-    console.log(model);
+    await this.ingredientService
+      .Insert(model)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowRemovedIngredients(e) {
@@ -138,7 +158,13 @@ export class RecipesComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
-
+      await this.ingredientService
+        .Delete(settingsId)
+        .then(response => {
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }
 
@@ -150,17 +176,17 @@ export class RecipesComponent implements OnInit {
 
 
     if (e.data) {
-      IDProduct = e.data.Product ? e.data.Product.ID : null;
-      IDRecipe = e.data.IDRecipe ? e.data.IDRecipe : null;
+      IDProduct = e.data.IDProduct ? e.data.IDProduct.ID : null;
+      IDRecipe = e.data.IDRecipe ? e.data.IDRecipe.ID : null;
 
     } else {
       ID = e.oldData.ID;
-      IDProduct = e.newData.Product
-        ? e.newData.Product.ID
-        : e.oldData.Product.ID;
+      IDProduct = e.newData.IDProduct
+        ? e.newData.IDProduct.ID
+        : e.oldData.IDProduct.ID;
       IDRecipe = e.newData.IDRecipe
-        ? e.newData.IDRecipe
-        : e.oldData.IDRecipe;
+        ? e.newData.IDRecipe.ID
+        : e.oldData.IDRecipe.ID;
     }
     if (
       this.valRowGridIngredients(
@@ -182,8 +208,8 @@ export class RecipesComponent implements OnInit {
     const gridValidate = grid.filter(
       item =>
         item.ID !== ID &&
-        item.Product.ID === IDProduct &&
-        item.IDRecipe === IDRecipe);
+        item.IDProduct.ID === IDProduct &&
+        item.IDRecipe.ID === IDRecipe);
     if (gridValidate.length >= 1) {
       return true;
     } else {
@@ -194,8 +220,8 @@ export class RecipesComponent implements OnInit {
   createObjectIngredients(e, updated: boolean): any {
     const model = {
       ID: updated ? e.data.ID : -1,
-      IDRecipe: e.data.IDRecipe,
-      IDProduct: e.data.Product.ID,
+      IDRecipe: e.data.IDRecipe.ID,
+      IDProduct: e.data.IDProduct.ID,
       Quantity: e.data.Quantity
     };
     return model;
@@ -231,12 +257,24 @@ export class RecipesComponent implements OnInit {
 
   async onRowUpdated(e) {
     const model = this.createObjectConfiguration(e, true);
-    console.log(model);
+    await this.recipeService
+      .Update(model)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInserted(e) {
     const model = this.createObjectConfiguration(e, false);
-    console.log(model);
+    await this.recipeService
+      .Insert(model)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowRemoved(e) {
@@ -246,6 +284,13 @@ export class RecipesComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
+      await this.recipeService
+        .Delete(settingsId)
+        .then(response => {
+        })
+        .catch(error => {
+          console.error(error);
+        });
 
     }
   }
@@ -322,59 +367,64 @@ export class RecipesComponent implements OnInit {
   }
 
   async loadCatalog() {
+    await this.loadProducts();
+    await this.getDataIngredients();
     await this.getData();
   }
   onValueChanged(e) {
   }
 
 
-  getDataProducts() {
+  getFilterProducts() {
     return {
-      store: [{ ID: 1, Name: 'Mazorca-01', MeasurementUnit: 3 },
-      { ID: 2, Name: 'Pollo-02', MeasurementUnit: 3 },
-      { ID: 4, Name: 'Arroz-04', MeasurementUnit: 3 },
-      { ID: 3, Name: 'Guascas-03', MeasurementUnit: 3 },
-      { ID: 5, Name: 'Papa-06', MeasurementUnit:  0}],
+      store: this.lstProducts,
       paginate: true,
       loadMode: 'raw'
     };
   }
-  async getData() {
-    this.lstIngredient = [
-      { ID: 2, Product: { ID: 1, Name: 'Mazorca-01', MeasurementUnit: 3 }, IDRecipe: 1, Quantity: 5 },
-      { ID: 3, Product: { ID: 2, Name: 'Pollo-02', MeasurementUnit: 3 }, IDRecipe: 1, Quantity: 7 },
-      { ID: 4, Product: { ID: 3, Name: 'Guascas-03', MeasurementUnit: 3 }, IDRecipe: 1, Quantity: 9 },
-      { ID: 5, Product: { ID: 1, Name: 'Mazorca-01', MeasurementUnit: 3 }, IDRecipe: 2, Quantity: 6 },
-      { ID: 6, Product: { ID: 2, Name: 'Pollo-02', MeasurementUnit: 3 }, IDRecipe: 2, Quantity: 5 },
-      { ID: 7, Product: { ID: 4, Name: 'Arroz-04', MeasurementUnit: 3 }, IDRecipe: 2, Quantity: 4 }];
 
-    this.data = [{
-      ID: 1,
-      Code: '01',
-      Name: 'Ajiaco1'
-    },
-    {
-      ID: 2,
-      Code: '02',
-      Name: 'Ajiaco2'
-    }
-    ];
-
-    /*
-    let response
-    if (response != null) {
-      this.data = response;
-      this.lstSetting = this.data;
-    }
-    */
+  async loadProducts() {
+    await this.productService
+      .GetAll()
+      .then(response => {
+        this.lstProducts = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
   }
+
+  async getDataIngredients() {
+    await this.ingredientService
+      .GetAll()
+      .then(response => {
+        this.lstIngredient = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+
+  async getData() {
+    await this.recipeService
+      .GetAll()
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   getIngredient(recipesID: number) {
-    const lst = this.lstIngredient.filter(recipe => recipe.IDRecipe === recipesID);
+    const lst = this.lstIngredient.filter(recipe => recipe.IDRecipe.ID === recipesID);
     const lstingredients = lst.map(obj => {
       const rObj = {
-        Name: obj.Product.Name,
-        MeasurementUnit: this.lstUnitMeasure.filter(objs => objs.code === obj.Product.MeasurementUnit)[0].name,
+        Code: obj.IDProduct.Code,
+        Name: obj.IDProduct.Name,
+        MeasurementUnit: this.lstUnitMeasure.filter(objs => objs.code === obj.IDProduct.MeasurementUnit)[0].name,
         Quantity: obj.Quantity
       };
       return rObj;
