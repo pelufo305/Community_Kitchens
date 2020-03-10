@@ -22,12 +22,12 @@
                 <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
                 <dxi-column dataField="ID" [visible]="false" sortOrder="desc" [allowEditing]="false" [allowSorting]="false">
                 </dxi-column>
-                <dxi-column dataField="IDProvider" [caption]="'Suppliers' | translate" [calculateSortValue]="calculateSortValue">
+                <dxi-column dataField="IDProvider.ID" [caption]="'Suppliers' | translate" [calculateSortValue]="calculateSortValue">
                     <dxo-lookup [dataSource]="getFilterSuppliers" valueExpr="ID" displayExpr="Name">
                     </dxo-lookup>
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="IDProduct" [caption]="'Products' | translate" [calculateSortValue]="calculateSortValue">
+                <dxi-column dataField="IDProduct.ID" [caption]="'Products' | translate" [calculateSortValue]="calculateSortValue">
                     <dxo-lookup [dataSource]="getFilterProducts" valueExpr="ID" displayExpr="Name">
                     </dxo-lookup>
                     <dxi-validation-rule type="required"></dxi-validation-rule>
@@ -40,7 +40,7 @@
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                     <dxi-validation-rule type="numeric"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="ExpirationDate" [caption]="'ExpirationDate' | translate" dataType="date" format="yyyy/MM/dd">
+                <dxi-column dataField="ExpirationDate" [caption]="'ExpirationDate' | translate" dataType="date" format="yyyy-MM-dd">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
 

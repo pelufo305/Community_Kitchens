@@ -298,7 +298,9 @@ export class TransportsComponent implements OnInit {
   }
 
   customizeText(e) {
-    return '$' + e.value;
+    if (e.value) {
+      return '$' + e.value;
+     }
   }
   async loadEnumUnitMeasure() {
     const enumT = TypeUnitMeasureEnum;

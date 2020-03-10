@@ -1,3 +1,5 @@
+import { DisponibilityService } from './../../../../shared/services/managers/disponibility.service';
+import { ProductService } from './../../../../shared/services/managers/product.service';
 import {
   Component,
   ViewChild,
@@ -12,6 +14,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { TypeUserEnum, TypeSupplierEnum, TypePreservationEnum, TypeUnitMeasureEnum } from 'src/app/shared/util/enum';
+import { ProviderService } from 'src/app/shared/services/managers/provider.service';
 
 @Component({
   selector: 'app-availability-products',
@@ -39,7 +42,10 @@ export class AvailabilityProductsComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private providerService: ProviderService,
+    private productService: ProductService,
+    private disponibilityService: DisponibilityService) {
     this.refreshMode = 'reshape';
     this.translate.get('AvailabilityProducts').subscribe((res: string) => {
       this.excelTitle = res;
@@ -100,7 +106,9 @@ export class AvailabilityProductsComponent implements OnInit {
   }
 
   customizeText(e) {
+   if (e.value) {
     return '$' + e.value;
+   }
   }
 
   onInitNewRow(e) {
@@ -117,12 +125,26 @@ export class AvailabilityProductsComponent implements OnInit {
 
   async onRowUpdated(e) {
     const model = this.createObjectConfiguration(e, true);
-    console.log(model);
+    await this.disponibilityService
+      .Update(model)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInserted(e) {
     const model = this.createObjectConfiguration(e, false);
-    console.log(model);
+    await this.disponibilityService
+      .Insert(model)
+      .then(response => {
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
   }
 
   async onKeyDown(e) {
@@ -139,6 +161,14 @@ export class AvailabilityProductsComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
+      await this.disponibilityService
+        .Delete(settingsId)
+        .then(response => {
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
 
     }
   }
@@ -152,7 +182,7 @@ export class AvailabilityProductsComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-     }
+  }
 
 
   onRowPrepared(e) {
@@ -165,8 +195,8 @@ export class AvailabilityProductsComponent implements OnInit {
   createObjectConfiguration(e, updated: boolean): any {
     const model = {
       ID: updated ? e.data.ID : -1,
-      IDProvider: e.data.IDProvider,
-      IDProduct: e.data.IDProduct,
+      IDProvider: e.data.IDProvider.ID,
+      IDProduct: e.data.IDProduct.ID,
       Quantity: e.data.Quantity,
       UnitValue: e.data.UnitValue,
       ExpirationDate: e.data.ExpirationDate
@@ -182,17 +212,17 @@ export class AvailabilityProductsComponent implements OnInit {
     let boolState = true;
 
     if (e.data) {
-      IDProvider = e.data.IDProvider ? e.data.IDProvider : null;
-      IDProduct = e.data.IDProduct ? e.data.IDProduct : null;
+      IDProvider = e.data.IDProvider ? e.data.IDProvider.ID : null;
+      IDProduct = e.data.IDProduct ? e.data.IDProduct.ID : null;
 
     } else {
       ID = e.oldData.ID;
       IDProvider = e.newData.IDProvider
-        ? e.newData.IDProvider
-        : e.oldData.IDProvider;
-        IDProduct = e.newData.IDProduct
-        ? e.newData.IDProduct
-        : e.oldData.IDProduct;
+        ? e.newData.IDProvider.ID
+        : e.oldData.IDProvider.ID;
+      IDProduct = e.newData.IDProduct
+        ? e.newData.IDProduct.ID
+        : e.oldData.IDProduct.ID;
     }
     if (
       this.valRowGrid(
@@ -213,8 +243,8 @@ export class AvailabilityProductsComponent implements OnInit {
     const gridValidate = grid.filter(
       item =>
         item.ID !== ID &&
-        item.IDProvider === IDProvider &&
-        item.IDProduct === IDProduct);
+        item.IDProvider.ID === IDProvider &&
+        item.IDProduct.ID === IDProduct);
     if (gridValidate.length >= 1) {
       return true;
     } else {
@@ -223,53 +253,27 @@ export class AvailabilityProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.loadCatalog();
+    this.loadCatalog();
   }
 
   async loadCatalog() {
-    this.loadSuppliers();
-    this.loadProducts();
+    await this.loadSuppliers();
+    await this.loadProducts();
     await this.getData();
   }
 
-   onValueChanged(e) {
-   }
+  onValueChanged(e) {
+  }
 
   async getData() {
-  this.data = [{
-    ID: 1,
-    IDProvider: 12,
-    IDProduct: 1,
-    Quantity: 23,
-    UnitValue: 12000,
-    ExpirationDate: '2020/08/05'
-  },
-  {
-    ID: 2,
-    IDProvider: 12,
-    IDProduct: 2,
-    Quantity: 12,
-    UnitValue: 1200,
-    ExpirationDate: '2020/09/05'
-  },
-  {
-    ID: 2,
-    IDProvider: 13,
-    IDProduct: 3,
-    Quantity: 13,
-    UnitValue: 1200,
-    ExpirationDate: '2020/09/06'
-  },
-];
-
-    /*
-    let response
-    if (response != null) {
-      this.data = response;
-      this.lstSetting = this.data;
-    }
-    */
-
+    await this.disponibilityService
+      .GetAll()
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
 
@@ -281,33 +285,16 @@ export class AvailabilityProductsComponent implements OnInit {
   }
 
 
-
   async loadProducts() {
-   this.lstProducts = [{
-    ID: 1,
-    Code: '01',
-    Name: 'Producto1',
-    Description: 'Producto1',
-    Preservation: 0,
-    MeasurementUnit: 1
-  },
-  {
-    ID: 2,
-    Code: '02',
-    Name: 'Producto2',
-    Description: 'Producto2',
-    Preservation: 1,
-    MeasurementUnit: 2
-  },
-  {
-    ID: 3,
-    Code: '03',
-    Name: 'Producto3',
-    Description: 'Producto3',
-    Preservation: 0,
-    MeasurementUnit: 3
-  }
-  ];
+    await this.productService
+      .GetAll()
+      .then(response => {
+        this.lstProducts = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
   }
 
   getFilterProducts() {
@@ -325,42 +312,20 @@ export class AvailabilityProductsComponent implements OnInit {
     };
   }
 
-
   async loadSuppliers() {
-    this.lstSupplier = [{
-      ID: 12,
-      Code: 'PROV1',
-      Name: 'Proveedor1',
-      NIT: '1022388263',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactMail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      EnterpriseMail: 'Jhonatan@hagonfnm.com',
-      City: 1,
-      Neighborhood: 'Fatima',
-      Type: 0
-    },
-    {
-      ID: 13,
-      Code: 'PROV2',
-      Name: 'Proveedor2',
-      NIT: '1022388264',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactMail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      EnterpriseMail: 'Jhonatan@hagonfnm.com',
-      City: 1,
-      Neighborhood: 'Fatima',
-      Type: 1
-    }
-    ];
+    await this.providerService
+      .GetAll()
+      .then(response => {
+        this.lstSupplier = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
   }
+
+
+
 
   calculateSortValue(data) {
     const column = this as any;
