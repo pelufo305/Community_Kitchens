@@ -202,9 +202,6 @@ export class RecipesComponent implements OnInit {
   }
   /*Ingredientes*/
 
-
-
-
   onRowUpdating(e) {
     if (!this.valRowCell(e)) {
       e.cancel = true;

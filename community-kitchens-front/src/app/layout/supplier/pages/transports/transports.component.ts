@@ -1,3 +1,4 @@
+import { TransportService } from './../../../../shared/services/managers/transport.service';
 import {
   Component,
   ViewChild,
@@ -12,6 +13,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { TypeUnitMeasureEnum, TypePreservationEnum } from 'src/app/shared/util/enum';
+import { ProviderService } from 'src/app/shared/services/managers/provider.service';
 
 @Component({
   selector: 'app-transports',
@@ -40,7 +42,9 @@ export class TransportsComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private providerService: ProviderService,
+    private transportService: TransportService) {
     this.refreshMode = 'reshape';
     this.translate.get('Transport').subscribe((res: string) => {
       this.excelTitle = res;
@@ -114,12 +118,24 @@ export class TransportsComponent implements OnInit {
 
   async onRowUpdated(e) {
     const model = this.createObjectConfiguration(e, true);
-    console.log(model);
+    await this.transportService
+      .Update(model)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInserted(e) {
     const model = this.createObjectConfiguration(e, false);
-    console.log(model);
+    await this.transportService
+      .Insert(model)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onKeyDown(e) {
@@ -136,7 +152,13 @@ export class TransportsComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
-
+      await this.transportService
+      .Delete(settingsId)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
     }
   }
 
@@ -149,7 +171,7 @@ export class TransportsComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-     }
+  }
 
 
   onRowPrepared(e) {
@@ -162,7 +184,7 @@ export class TransportsComponent implements OnInit {
   createObjectConfiguration(e, updated: boolean): any {
     const model = {
       ID: updated ? e.data.ID : -1,
-      IDProvider: e.data.IDProvider,
+      IDProvider: e.data.IDProvider.ID,
       Code: e.data.Code,
       CarPlate: e.data.CarPlate,
       Brand: e.data.Brand,
@@ -195,7 +217,7 @@ export class TransportsComponent implements OnInit {
       Code = e.newData.Code
         ? e.newData.Code
         : e.oldData.Code;
-        CarPlate = e.newData.CarPlate
+      CarPlate = e.newData.CarPlate
         ? e.newData.CarPlate
         : e.oldData.CarPlate;
     }
@@ -229,7 +251,7 @@ export class TransportsComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.loadCatalog();
+    this.loadCatalog();
   }
 
   async loadCatalog() {
@@ -238,57 +260,19 @@ export class TransportsComponent implements OnInit {
     await this.loadSuppliers();
     await this.getData();
   }
-   onValueChanged(e) {
-   }
-
-  async getData() {
-
-    this.data = [
-      {
-        ID: 1,
-        IDProvider: 12,
-        Code: 'TRANS1',
-        CarPlate: 'UGR48D',
-        Brand: 'AKT',
-        Year: 2015,
-        TransportType: 0,
-        PersonInCharge: 'PRUEBA1',
-        PhonePersonInCharge: 3043375088,
-        MailPersonInCharge: '1111@1111.com',
-        PaymentUnity: 1,
-        PaymentMeasurement: 9,
-        PaymentValue: 5000,
-        Availability: 1
-      },
-    {
-        ID: 2,
-        IDProvider: 13,
-        Code: 'TRANS2',
-        CarPlate: 'UGR49D',
-        Brand: 'AKT',
-        Year: 2016,
-        TransportType: 1,
-        PersonInCharge: 'PRUEBA1',
-        PhonePersonInCharge: 3043375088,
-        MailPersonInCharge: '1111@1111.com',
-        PaymentUnity: 1,
-        PaymentMeasurement: 10,
-        PaymentValue: 5000,
-        Availability: 0
-      }
-    ];
-
-    /*
-    let response
-    if (response != null) {
-      this.data = response;
-      this.lstSetting = this.data;
-    }
-    */
-
+  onValueChanged(e) {
   }
 
-
+  async getData() {
+    await this.transportService
+      .GetAll()
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 
   onEditorPreparing(e) {
   }
@@ -346,39 +330,15 @@ export class TransportsComponent implements OnInit {
     };
   }
   async loadSuppliers() {
-    this.lstSupplier = [{
-      ID: 12,
-      Code: 'PROV1',
-      Name: 'Proveedor1',
-      NIT: '1022388263',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactMail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      EnterpriseMail: 'Jhonatan@hagonfnm.com',
-      City: 1,
-      Neighborhood: 'Fatima',
-      Type: 0
-    },
-    {
-      ID: 13,
-      Code: 'PROV2',
-      Name: 'Proveedor2',
-      NIT: '1022388264',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactMail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      EnterpriseMail: 'Jhonatan@hagonfnm.com',
-      City: 1,
-      Neighborhood: 'Fatima',
-      Type: 1
-    }
-    ];
+    await this.providerService
+      .GetAll()
+      .then(response => {
+        this.lstSupplier = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
   }
 
 }
