@@ -1,3 +1,4 @@
+import { ProviderService } from 'src/app/shared/services/managers/provider.service';
 import {
   Component,
   ViewChild,
@@ -39,7 +40,8 @@ export class SuppliersComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private providerService: ProviderService) {
     this.refreshMode = 'reshape';
     this.translate.get('Suppliers').subscribe((res: string) => {
       this.excelTitle = res;
@@ -111,12 +113,26 @@ export class SuppliersComponent implements OnInit {
 
   async onRowUpdated(e) {
     const model = this.createObjectConfiguration(e, true);
-    console.log(model);
+    await this.providerService
+      .Update(model)
+      .then(response => {
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInserted(e) {
     const model = this.createObjectConfiguration(e, false);
-    console.log(model);
+    await this.providerService
+      .Insert(model)
+      .then(response => {
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onKeyDown(e) {
@@ -133,7 +149,14 @@ export class SuppliersComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
+      await this.providerService
+        .Delete(settingsId)
+        .then(response => {
 
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }
 
@@ -146,7 +169,7 @@ export class SuppliersComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-   }
+  }
 
 
   onRowPrepared(e) {
@@ -168,7 +191,7 @@ export class SuppliersComponent implements OnInit {
       Type: e.data.Type,
       City: e.data.City,
       EnterpriseMail: e.data.EnterpriseMail,
-      Neighborhood: e.data.Neighborhood
+      Neiborhood: e.data.Neiborhood
     };
     return model;
   }
@@ -232,54 +255,19 @@ export class SuppliersComponent implements OnInit {
   }
 
   setStateValueCountry(rowData: any, value: any): void {
-     rowData.Neighborhood = null;
+    rowData.Neighborhood = null;
     (<any>this).defaultSetCellValue(rowData, value);
   }
 
   async getData() {
-
-    this.data = [{
-      ID: 12,
-      Code: 'PROV1',
-      Name: 'Proveedor1',
-      NIT: '1022388263',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactMail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      EnterpriseMail: 'Jhonatan@hagonfnm.com',
-      City: 1,
-      Neighborhood: 'Fatima',
-      Type: 0
-    },
-    {
-      ID: 13,
-      Code: 'PROV2',
-      Name: 'Proveedor2',
-      NIT: '1022388264',
-      Address: 'Calle falsa 123',
-      Phone: 1234545,
-      Email: 'Jhonatan@hagonfnm.com',
-      Contact: 'Jhonatan',
-      ContactMail: 'Jhonatan@hagonfnm.com',
-      ContactPhone: 123466,
-      EnterpriseMail: 'Jhonatan@hagonfnm.com',
-      City: 1,
-      Neighborhood: 'Fatima',
-      Type: 1
-    }
-    ];
-
-    /*
-    let response
-    if (response != null) {
-      this.data = response;
-      this.lstSetting = this.data;
-    }
-    */
-
+    await this.providerService
+      .GetAll()
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   onEditorPreparing(e) {

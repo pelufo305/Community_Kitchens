@@ -1,3 +1,4 @@
+import { ProviderService } from './../../../shared/services/managers/provider.service';
 import { UserService } from './../../../shared/services/managers/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -33,6 +34,6 @@ import { HttpClientModule} from '@angular/common/http';
     UsersRoutingModule,
     HttpClientModule
   ],
-  providers: [UserService]
+  providers: [UserService, ProviderService ]
 })
 export class UsersModule { }

@@ -1,3 +1,4 @@
+import { ProductService } from 'src/app/shared/services/managers/product.service';
 import {
   Component,
   ViewChild,
@@ -40,7 +41,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private productService: ProductService) {
     this.refreshMode = 'reshape';
     this.translate.get('Products').subscribe((res: string) => {
       this.excelTitle = res;
@@ -113,12 +115,26 @@ export class ProductsComponent implements OnInit {
 
   async onRowUpdated(e) {
     const model = this.createObjectConfiguration(e, true);
-    console.log(model);
+    await this.productService
+      .Update(model)
+      .then(response => {
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInserted(e) {
     const model = this.createObjectConfiguration(e, false);
-    console.log(model);
+    await this.productService
+      .Insert(model)
+      .then(response => {
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onKeyDown(e) {
@@ -135,7 +151,14 @@ export class ProductsComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
+      await this.productService
+        .Delete(settingsId)
+        .then(response => {
 
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }
 
@@ -148,11 +171,11 @@ export class ProductsComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-     }
+  }
 
 
   onRowPrepared(e) {
- 
+
   }
 
 
@@ -212,7 +235,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.loadCatalog();
+    this.loadCatalog();
   }
 
   async loadCatalog() {
@@ -220,44 +243,19 @@ export class ProductsComponent implements OnInit {
     this.loadEnumUnitMeasure();
     await this.getData();
   }
-   onValueChanged(e) {
-   }
+  onValueChanged(e) {
+  }
 
   async getData() {
 
-    this.data = [{
-      ID: 1,
-      Code: '01',
-      Name: 'Producto1',
-      Description: 'Producto1',
-      Preservation: 0,
-      MeasurementUnit: 1
-    },
-    {
-      ID: 2,
-      Code: '02',
-      Name: 'Producto2',
-      Description: 'Producto2',
-      Preservation: 1,
-      MeasurementUnit: 2
-    },
-    {
-      ID: 3,
-      Code: '03',
-      Name: 'Producto3',
-      Description: 'Producto3',
-      Preservation: 0,
-      MeasurementUnit: 3
-    }
-    ];
-
-    /*
-    let response
-    if (response != null) {
-      this.data = response;
-      this.lstSetting = this.data;
-    }
-    */
+    await this.productService
+      .GetAll()
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
   }
 

@@ -1,3 +1,5 @@
+import { ProviderService } from './../../../../../shared/services/managers/provider.service';
+import { UserService } from './../../../../../shared/services/managers/user.service';
 import {
   Component,
   ViewChild,
@@ -32,6 +34,7 @@ export class UsersComponent implements OnInit {
   public nameFiltersRow = {};
   public refreshMode: string;
   public data;
+  public dataProvider = [];
   public Viewdisabled = true;
   public lstUserType = [];
   public excelTitle = '';
@@ -39,7 +42,9 @@ export class UsersComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private userService: UserService,
+    private providerService: ProviderService) {
     this.refreshMode = 'reshape';
     this.translate.get('Users').subscribe((res: string) => {
       this.excelTitle = res;
@@ -80,7 +85,7 @@ export class UsersComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
-
+    this.getDataProvider = this.getDataProvider.bind(this);
   }
 
   onRowUpdating(e) {
@@ -112,12 +117,26 @@ export class UsersComponent implements OnInit {
 
   async onRowUpdated(e) {
     const model = this.createObjectConfiguration(e, true);
-    console.log(model);
+    await this.userService
+      .Update(model)
+      .then(response => {
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onRowInserted(e) {
     const model = this.createObjectConfiguration(e, false);
-    console.log(model);
+    await this.userService
+      .Insert(model)
+      .then(response => {
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async onKeyDown(e) {
@@ -126,6 +145,13 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  getDataProvider() {
+    return {
+      store: this.dataProvider,
+      paginate: true,
+      loadMode: 'raw'
+    };
+  }
 
   async onRowRemoved(e) {
     const settingsId = e.data.ID;
@@ -134,6 +160,14 @@ export class UsersComponent implements OnInit {
       error: 'Error1'
     };
     if (settingsId > 0) {
+      await this.userService
+        .Delete(settingsId)
+        .then(response => {
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
 
     }
   }
@@ -147,7 +181,7 @@ export class UsersComponent implements OnInit {
     ) {
       e.cellElement.hidden = true;
     }
-     }
+  }
 
 
   onRowPrepared(e) {
@@ -160,11 +194,12 @@ export class UsersComponent implements OnInit {
   createObjectConfiguration(e, updated: boolean): any {
     const model = {
       ID: updated ? e.data.ID : -1,
-      UserName: e.data.UserName,
+      Username: e.data.Username,
       Name: e.data.Name,
       LastName: e.data.LastName,
       Password: e.data.Password,
-      UserType: e.data.UserType
+      UserType: e.data.UserType,
+      ProviderID: e.dataProviderID
     };
     return model;
 
@@ -176,13 +211,13 @@ export class UsersComponent implements OnInit {
     let boolState = true;
 
     if (e.data) {
-      UserName = e.data.UserName ? e.data.UserName : null;
+      UserName = e.data.Username ? e.data.Username : null;
 
     } else {
       ID = e.oldData.ID;
-      UserName = e.newData.UserName
-        ? e.newData.UserName
-        : e.oldData.UserName;
+      UserName = e.newData.Username
+        ? e.newData.Username
+        : e.oldData.Username;
     }
     if (
       this.valRowGrid(
@@ -197,12 +232,12 @@ export class UsersComponent implements OnInit {
 
   valRowGrid(
     ID,
-    UserName): boolean {
+    Username): boolean {
     const grid: any = this.gridConfig.dataSource;
     const gridValidate = grid.filter(
       item =>
         item.ID !== ID &&
-        item.UserName === UserName);
+        item.Username === Username);
     if (gridValidate.length >= 1) {
       return true;
     } else {
@@ -211,60 +246,41 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.loadCatalog();
+    this.loadCatalog();
   }
 
   async loadCatalog() {
     this.loadEnumUserType();
     await this.getData();
   }
-   onValueChanged(e) {
-   }
+  onValueChanged(e) {
+  }
 
   async getData() {
+    await this.userService
+      .GetAll()
+      .then(response => {
+        this.data = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
-    this.data = [{
-      ID: 1,
-      UserName: '1111@1111.com',
-      Name: 'Prueba',
-      LastName: 'Prueba',
-      Password: '1111',
-      UserType: 0
-    },
-    {
-      ID: 2,
-      UserName: '2222@2222.com',
-      Name: 'Prueba',
-      LastName: 'Prueba',
-      Password: '1111',
-      UserType: 1
-    },
-    {
-      ID: 3,
-      UserName: '3333@3333.com',
-      Name: 'Prueba',
-      LastName: 'Prueba',
-      Password: '1111',
-      UserType: 2
-    },
-
-
-    ];
-
-    /*
-    let response
-    if (response != null) {
-      this.data = response;
-      this.lstSetting = this.data;
-    }
-    */
+    await this.providerService
+      .GetAll()
+      .then(response => {
+        this.dataProvider = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
   }
 
 
 
   onEditorPreparing(e) {
-    if ( e.parentType === 'dataRow' && e.dataField === 'Password') {
+    if (e.parentType === 'dataRow' && e.dataField === 'Password') {
       e.editorOptions.mode = 'password';
     }
   }
