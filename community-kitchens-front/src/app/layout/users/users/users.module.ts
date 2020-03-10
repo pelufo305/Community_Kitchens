@@ -1,3 +1,4 @@
+import { UserService } from './../../../shared/services/managers/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +13,7 @@ import {  DxDataGridModule, DxPieChartModule,  DxSelectBoxModule,  DxCheckBoxMod
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [UsersComponent],
@@ -28,7 +30,9 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     DxAutocompleteModule,
     DxTemplateModule,
-    UsersRoutingModule
-  ]
+    UsersRoutingModule,
+    HttpClientModule
+  ],
+  providers: [UserService]
 })
 export class UsersModule { }

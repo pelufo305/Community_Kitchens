@@ -1,3 +1,6 @@
+import { ProductService } from './../../shared/services/managers/product.service';
+import { DisponibilityService } from './../../shared/services/managers/disponibility.service';
+import { TransportService } from './../../shared/services/managers/transport.service';
 
 import { SuppliersComponent } from './pages/suppliers/suppliers.component';
 import { TransportsComponent } from './pages/transports/transports.component';
@@ -14,6 +17,8 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { SupplierRoutingModule } from './supplier-routing.module';
+import { HttpClientModule} from '@angular/common/http';
+import { ProviderService } from 'src/app/shared/services/managers/provider.service';
 @NgModule({
   declarations: [SuppliersComponent, TransportsComponent, AvailabilityProductsComponent],
   imports: [
@@ -29,7 +34,9 @@ import { SupplierRoutingModule } from './supplier-routing.module';
     TranslateModule,
     DxAutocompleteModule,
     DxTemplateModule,
-    SupplierRoutingModule
-  ]
+    SupplierRoutingModule,
+    HttpClientModule
+  ],
+  providers: [ProviderService, TransportService, DisponibilityService, ProductService]
 })
 export class SupplierModule { }

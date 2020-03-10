@@ -1,3 +1,6 @@
+import { ProductService } from './../../shared/services/managers/product.service';
+import { IngredientService } from './../../shared/services/managers/ingredient.service';
+import { RecipeService } from './../../shared/services/managers/recipe.service';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RecipesComponent } from './pages/recipes/recipes.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTabsModule } from '@angular/material/tabs';
+import { HttpClientModule} from '@angular/common/http';
 
 
 
@@ -33,8 +37,10 @@ import { MatTabsModule } from '@angular/material/tabs';
     DxAutocompleteModule,
     DxTemplateModule,
     RecipesRoutingModule,
-    MatTabsModule
+    MatTabsModule,
+    HttpClientModule
   ],
-  bootstrap: [RecipesComponent]
+  bootstrap: [RecipesComponent],
+  providers: [RecipeService, IngredientService, ProductService],
 })
 export class RecipesModule { }
