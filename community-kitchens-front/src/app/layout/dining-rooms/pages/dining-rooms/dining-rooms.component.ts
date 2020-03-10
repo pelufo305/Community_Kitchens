@@ -114,7 +114,7 @@ export class DiningRoomsComponent implements OnInit {
     await this.dinnersService
       .Update(model)
       .then(response => {
-        this.data = response;
+
       })
       .catch(error => {
         console.error(error);
@@ -127,7 +127,7 @@ export class DiningRoomsComponent implements OnInit {
     await this.dinnersService
       .Insert(model)
       .then(response => {
-        this.data = response;
+
       })
       .catch(error => {
         console.error(error);
@@ -151,7 +151,7 @@ export class DiningRoomsComponent implements OnInit {
       await this.dinnersService
         .Delete(settingsId)
         .then(response => {
-          this.data = response;
+
         })
         .catch(error => {
           console.error(error);
