@@ -63,7 +63,7 @@
       </div>
     </mat-tab>
     <mat-tab label="{{ 'Ingredients' | translate }}">
-      <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
+      <dx-data-grid [repaintChangesOnly]="true" keyExpr="Id" [allowColumnReordering]="false" height="100%"
         [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
         [dataSource]="lstIngredient" (onRowInserting)="onRowInsertingIngredients($event)"
         (onRowUpdating)="onRowUpdatingIngredients($event)" (onRowUpdated)="onRowUpdatedIngredients($event)"

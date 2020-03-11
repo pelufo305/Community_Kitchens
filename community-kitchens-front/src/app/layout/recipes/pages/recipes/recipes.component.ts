@@ -106,11 +106,11 @@ export class RecipesComponent implements OnInit {
     let maxid = 0;
     const grid: any = this.gridConfigIng.dataSource;
     grid.map(function (obj) {
-      if (obj.ID > maxid) {
-        maxid = obj.ID;
+      if (obj.Id > maxid) {
+        maxid = obj.Id;
       }
     });
-    e.data.ID = maxid + 1;
+    e.data.Id = maxid + 1;
 
   }
 
@@ -152,7 +152,7 @@ export class RecipesComponent implements OnInit {
   }
 
   async onRowRemovedIngredients(e) {
-    const settingsId = e.data.ID;
+    const settingsId = e.data.Id;
     const messages = {
       success: 'Msg10',
       error: 'Error1'
@@ -180,7 +180,7 @@ export class RecipesComponent implements OnInit {
       IDRecipe = e.data.IDRecipe ? e.data.IDRecipe.ID : null;
 
     } else {
-      ID = e.oldData.ID;
+      ID = e.oldData.Id;
       IDProduct = e.newData.IDProduct
         ? e.newData.IDProduct.ID
         : e.oldData.IDProduct.ID;
@@ -207,7 +207,7 @@ export class RecipesComponent implements OnInit {
     const grid: any = this.gridConfigIng.dataSource;
     const gridValidate = grid.filter(
       item =>
-        item.ID !== ID &&
+        item.Id !== ID &&
         item.IDProduct.ID === IDProduct &&
         item.IDRecipe.ID === IDRecipe);
     if (gridValidate.length >= 1) {
@@ -219,7 +219,7 @@ export class RecipesComponent implements OnInit {
 
   createObjectIngredients(e, updated: boolean): any {
     const model = {
-      ID: updated ? e.data.ID : -1,
+      Id: updated ? e.data.Id : -1,
       IDRecipe: e.data.IDRecipe.ID,
       IDProduct: e.data.IDProduct.ID,
       Quantity: e.data.Quantity
