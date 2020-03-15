@@ -44,6 +44,10 @@
                 </ul>
             </li>
         </div>
+        <a routerLink="/order/preorder" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-address-card"></i>&nbsp;
+            <span>{{ 'PreOrder' | translate }}</span>
+        </a>
         <div class="header-fields">
             <div class="nested-menu">
                 <a class="list-group-item" (click)="addExpandClass('languages')">
