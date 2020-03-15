@@ -26,7 +26,10 @@ import ArrayStore from 'devextreme/data/array_store';
   styleUrls: ['./preorders.component.scss']
 })
 export class PreordersComponent implements OnInit {
-
+  public lstRoom = [];
+  public lsRecipe = [];
+  public selectRoom: any;
+  public selectRecipe: any ;
   constructor(public translate: TranslateService,
               private router: Router,
               private recipeService: RecipeService,
@@ -36,6 +39,41 @@ export class PreordersComponent implements OnInit {
               private dinnersService: DinnersService) { }
 
   ngOnInit() {
+    this.loadCatalog();
+  }
+
+  onValueRoom(e) {
+  }
+
+  onValueRecipe(e) {
+  }
+
+ async loadCatalog() {
+  await this.getDataRoom();
+  await this.getDataRecipes();
+ }
+
+
+  async getDataRoom() {
+    await this.dinnersService
+      .GetAll()
+      .then(response => {
+        this.selectRoom = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  async getDataRecipes() {
+    await this.recipeService
+      .GetAll()
+      .then(response => {
+        this.selectRecipe = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
 }

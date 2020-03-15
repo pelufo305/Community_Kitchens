@@ -1,3 +1,23 @@
-<p>
-  preorders works!
-</p>
+<div class="contenedor">
+    <h2 class="text-dark">{{ 'PreOrder' | translate }}</h2>
+    <div class="row">
+        <div class="col-xs-12" id="data-container">
+            <div style="position:initial;">
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-label">{{ 'DiningRooms' | translate }}</div>
+                <div class="dx-field-value">
+                    <dx-autocomplete [placeholder]="'SelectRoom' | translate" [(value)]="selectRoom" [dataSource]="lstRoom" (onValueChanged)="onValueRoom($event)" displayValue="Name" searchMode="contains" [searchTimeout]="500" [showClearButton]="true">
+                    </dx-autocomplete>
+                </div>
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-label">{{ 'Recipes' | translate }}</div>
+                <div class="dx-field-value">
+                    <dx-autocomplete [placeholder]="'SelectRecipe' | translate" [(value)]="selectRecipe" [dataSource]="lsRecipe" (onValueChanged)="onValueRecipe($event)" displayValue="Name" searchMode="contains" [searchTimeout]="500" [showClearButton]="true">
+                    </dx-autocomplete>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

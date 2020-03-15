@@ -1,0 +1,40 @@
+.contenedor {
+    padding: 7px 0 0 10px;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+
+.title {
+    color: #00aaff !important;
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+.btnSend {
+    margin-bottom: 1em;
+}
+
+.close {
+    margin-bottom: -0.3em;
+    margin-top: -0.5em;
+    margin-right: -3px;
+    font-size: 2em;
+}
+
+.close span {
+    color: black;
+}
+
+.text {
+    font-size: 15px !important;
+    text-align: left !important;
+}
+
+.dataGridSettings {
+    display: block;
+}
+
+#data-container {
+    min-height: 30rem;
+}

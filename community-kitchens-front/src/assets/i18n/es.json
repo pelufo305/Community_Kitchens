@@ -102,6 +102,8 @@
     "Meter": "Metro",
     "Active": "Activo",
     "PersonInCharge": "Conductor",
-    "PreOrder": "Pre-pedido"
+    "PreOrder": "Pre-pedido",
+    "SelectRoom": "Selecionar comedor",
+    "SelectRecipe": "Selecionar receta"
 
 }
