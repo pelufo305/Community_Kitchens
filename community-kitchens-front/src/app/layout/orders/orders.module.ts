@@ -13,6 +13,11 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { PreordersComponent } from './pages/preorders/preorders.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DisponibilityService } from 'src/app/shared/services/managers/disponibility.service';
+import { ProductService } from 'src/app/shared/services/managers/product.service';
+import { IngredientService } from 'src/app/shared/services/managers/ingredient.service';
+import { RecipeService } from 'src/app/shared/services/managers/recipe.service';
+import { DinnersService } from 'src/app/shared/services/managers/dinners.service';
 
 @NgModule({
   declarations: [PreordersComponent, OrdersComponent],
@@ -31,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     DxAutocompleteModule,
     DxTemplateModule,
     HttpClientModule
-  ]
+  ],
+  providers: [RecipeService, IngredientService, DisponibilityService, ProductService, DinnersService]
 })
 export class OrdersModule { }
