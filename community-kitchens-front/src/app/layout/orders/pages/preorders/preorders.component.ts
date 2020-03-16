@@ -149,7 +149,7 @@ export class PreordersComponent implements OnInit {
         ID: obj.IDProduct.ID,
         Code: obj.IDProduct.Code,
         Name: obj.IDProduct.Name,
-        MeasurementUnit: this.lstUnitMeasure.filter(objs => objs.code === obj.IDProduct.MeasurementUnit)[0].name,
+        MeasurementUnit: obj.IDProduct.MeasurementUnit,
         Quantity: obj.Quantity
       };
       return rObj;

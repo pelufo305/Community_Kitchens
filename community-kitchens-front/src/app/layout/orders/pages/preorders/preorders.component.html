@@ -50,6 +50,8 @@
         <dxi-column dataField="Name" [caption]="'Name' | translate" [allowEditing]="false" sortOrder="desc" [allowSorting]="false">
         </dxi-column>
         <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate" [allowEditing]="false" [allowSorting]="false">
+            <dxo-lookup [dataSource]="lstUnitMeasure" valueExpr="code" displayExpr="name">
+            </dxo-lookup>
         </dxi-column>
         <dxi-column dataField="Quantity" [caption]="'Quantity' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
