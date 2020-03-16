@@ -4,20 +4,29 @@
         <div class="col-xs-12" id="data-container">
             <div style="position:initial;">
             </div>
-            <div class="dx-field">
-                <div class="dx-field-label">{{ 'DiningRooms' | translate }}</div>
-                <div class="dx-field-value">
-                    <dx-autocomplete [placeholder]="'SelectRoom' | translate" [(value)]="selectRoom" [dataSource]="lstRoom" (onValueChanged)="onValueRoom($event)" displayValue="Name" searchMode="contains" [searchTimeout]="500" [showClearButton]="true">
-                    </dx-autocomplete>
-                </div>
-            </div>
-            <div class="dx-field">
-                <div class="dx-field-label">{{ 'Recipes' | translate }}</div>
-                <div class="dx-field-value">
-                    <dx-autocomplete [placeholder]="'SelectRecipe' | translate" [(value)]="selectRecipe" [dataSource]="lsRecipe" (onValueChanged)="onValueRecipe($event)" displayValue="Name" searchMode="contains" [searchTimeout]="500" [showClearButton]="true">
-                    </dx-autocomplete>
-                </div>
-            </div>
         </div>
     </div>
+    <br>
+    <br>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ 'DiningRooms' | translate }}</label>
+        <div class="col-sm-3">
+            <dx-autocomplete [placeholder]="'SelectRoom' | translate" valueExpr="Name" [dataSource]="lstRoom" [(value)]="selectRoom" (onSelectionChanged)="onValueRoom($event)" [showClearButton]="true">
+                <div *dxTemplate="let item of 'item'">
+                    <span>{{item.Code}} - {{item.Name}}</span>
+                </div>
+            </dx-autocomplete>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ 'Recipes' | translate }}</label>
+        <div class="col-sm-3">
+            <dx-autocomplete [placeholder]="'SelectRecipe' | translate" valueExpr="Name" [dataSource]="lsRecipe" [(value)]="selectRecipe" (onSelectionChanged)="onValueRecipe($event)" [showClearButton]="true">
+                <div *dxTemplate="let item of 'item'">
+                    <span>{{item.Code}} - {{item.Name}}</span>
+                </div>
+            </dx-autocomplete>
+        </div>
+    </div>
+
 </div>

@@ -43,9 +43,11 @@ export class PreordersComponent implements OnInit {
   }
 
   onValueRoom(e) {
+    console.log(e);
   }
 
   onValueRecipe(e) {
+    console.log(e);
   }
 
  async loadCatalog() {
@@ -58,7 +60,7 @@ export class PreordersComponent implements OnInit {
     await this.dinnersService
       .GetAll()
       .then(response => {
-        this.selectRoom = response;
+        this.lstRoom = response;
       })
       .catch(error => {
         console.error(error);
@@ -69,7 +71,7 @@ export class PreordersComponent implements OnInit {
     await this.recipeService
       .GetAll()
       .then(response => {
-        this.selectRecipe = response;
+        this.lsRecipe = response;
       })
       .catch(error => {
         console.error(error);
