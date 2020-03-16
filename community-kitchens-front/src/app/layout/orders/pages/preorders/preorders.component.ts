@@ -41,6 +41,7 @@ export class PreordersComponent implements OnInit {
   public textDeleteConfirm;
   public refreshMode: any;
   public nameFiltersRow = {};
+  public data = [];
   constructor(public translate: TranslateService,
               private router: Router,
               private recipeService: RecipeService,
@@ -96,11 +97,13 @@ export class PreordersComponent implements OnInit {
   }
 
   onValueRoom(e) {
-    console.log(e);
   }
 
   onValueRecipe(e) {
     console.log(e);
+     if (e.selectedItem){
+      this.getIngredient(e.selectedItem.ID);
+     }
   }
 
  async loadCatalog() {
@@ -154,7 +157,7 @@ export class PreordersComponent implements OnInit {
       };
       return rObj;
     });
-    return lstingredients;
+  this.data = lstingredients;
   }
 
   async loadEnumUnitMeasure() {
