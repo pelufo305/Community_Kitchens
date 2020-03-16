@@ -29,4 +29,32 @@
         </div>
     </div>
 
+    <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%" [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true" [dataSource]="lstIngredient" (onRowInserting)="onRowInsertingIngredients($event)"
+        (onRowUpdating)="onRowUpdatingIngredients($event)" (onRowUpdated)="onRowUpdatedIngredients($event)" (onRowInserted)="onRowInsertedIngredients($event)" (onInitNewRow)="onInitNewRowIngredients($event)" (onRowRemoved)="onRowRemovedIngredients($event)"
+        (onCellPrepared)="onCellPrepared($event)" (onKeyDown)="onKeyDown($event)" class="dataGridSettings" #gridConfigIng>
+        <!-- 'batch' | 'cell' | 'form' | 'popup' -->
+        <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
+            <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
+            </dxo-texts>
+        </dxo-editing>
+        <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow" [resetOperationText]="textFilterReset"></dxo-filter-row>
+        <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
+        <dxo-paging [pageSize]="100"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
+        </dxo-pager>
+        <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
+        <dxi-column dataField="ID" [visible]="false" [allowEditing]="false" [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="Code" [caption]="'Code' | translate" [allowEditing]="false" [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="Name" [caption]="'Name' | translate" [allowEditing]="false" sortOrder="desc" [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate" [allowEditing]="false" [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="Quantity" [caption]="'Quantity' | translate">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+            <dxi-validation-rule type="numeric"></dxi-validation-rule>
+        </dxi-column>
+    </dx-data-grid>
+
 </div>

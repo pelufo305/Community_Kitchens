@@ -32,13 +32,64 @@ export class PreordersComponent implements OnInit {
   public selectRoom: any;
   public lstUnitMeasure = [];
   public selectRecipe: any ;
+  public textFilterReset;
+  public textSaveRow;
+  public textCancelRow;
+  public textCancelAllRow;
+  public textEditRow;
+  public textDeleteRow;
+  public textDeleteConfirm;
+  public refreshMode: any;
+  public nameFiltersRow = {};
   constructor(public translate: TranslateService,
               private router: Router,
               private recipeService: RecipeService,
               private ingredientService: IngredientService,
               private disponibilityService: DisponibilityService,
               private productService: ProductService,
-              private dinnersService: DinnersService) { }
+              private dinnersService: DinnersService) {
+                this.refreshMode = 'reshape';
+
+    if (
+      this.translate.currentLang === 'es'
+    ) {
+
+      /*https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/MasterDetailView/Angular/Light/*/
+      // Lenguaje grilla devExpress
+      loadMessages(esMessages);
+      locale('es');
+      this.nameFiltersRow = {
+        between: 'Entre',
+        contains: 'Contiene',
+        endsWith: 'Termina con',
+        equal: 'Igual',
+        greaterThan: 'Mayor que',
+        greaterThanOrEqual: 'Mayor o igual que',
+        lessThan: 'Menor que',
+        lessThanOrEqual: 'Menor o igual que',
+        notContains: 'No contiene',
+        notEqual: 'No es igual',
+        startsWith: 'Empieza con'
+      };
+      this.textSaveRow = 'Guardar';
+      this.textEditRow = 'Editar';
+      this.textDeleteRow = 'Eliminar';
+      this.textFilterReset = 'Limpiar';
+      this.textCancelRow = 'Cancelar';
+      this.textCancelAllRow = 'Cancelar';
+      this.textDeleteConfirm = '¿Desea eliminar el registro?';
+    } else {
+      locale('en');
+      this.textFilterReset = 'Reset';
+      this.textSaveRow = 'Save';
+      this.textEditRow = 'Edit';
+      this.textDeleteRow = 'Delete';
+      this.textCancelRow = 'Cancel';
+      this.textCancelAllRow = 'Cancel';
+      this.textDeleteConfirm = 'Do you want to delete the record?';
+    }
+
+  }
 
   ngOnInit() {
     this.loadCatalog();
