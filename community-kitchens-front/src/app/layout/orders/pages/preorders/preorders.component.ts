@@ -44,6 +44,8 @@ export class PreordersComponent implements OnInit {
   public refreshMode: any;
   public nameFiltersRow = {};
   public data = [];
+  public Message: any;
+  public Title: any;
   constructor(public translate: TranslateService,
     private router: Router,
     private recipeService: RecipeService,
@@ -92,6 +94,12 @@ export class PreordersComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
+    this.translate.get('SendPreOrder').subscribe((res: string) => {
+      this.Title = res;
+    });
+    this.translate.get('MessagePreOrder').subscribe((res: string) => {
+      this.Message = res;
+    });
 
   }
 
@@ -119,9 +127,9 @@ export class PreordersComponent implements OnInit {
 
 
   onClick(e) {
-    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
+    this.confirmationDialogService.confirm( this.Title, this.Message)
       .then((confirmed) => console.log('User confirmed:', confirmed))
-      .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+      .catch(() => console.log('error'));
 
   }
   async loadProducts() {

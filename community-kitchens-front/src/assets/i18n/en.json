@@ -106,7 +106,9 @@
     "SelectRoom": "Select dining room",
     "SelectRecipe": "Select recipe",
     "RecommendedProduct":"Recommended product",
-    "Send":"Send"
+    "Send":"Send",
+    "SendPreOrder":"Send pre-order",
+    "MessagePreOrder":"After sending the pre-order, it cannot be modified"
 
 
 

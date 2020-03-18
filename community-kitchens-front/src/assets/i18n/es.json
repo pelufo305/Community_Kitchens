@@ -106,6 +106,8 @@
     "SelectRoom": "Selecionar comedor",
     "SelectRecipe": "Selecionar receta",
     "RecommendedProduct":"Productos recomendados",
-    "Send":"Enviar"
+    "Send":"Enviar",
+    "SendPreOrder":"Enviar Pre-pedido",
+    "MessagePreOrder":"Después de enviar el pre-pedido no se podrá modificar"
 
 }
