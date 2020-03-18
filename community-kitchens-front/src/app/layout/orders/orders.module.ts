@@ -18,6 +18,9 @@ import { ProductService } from 'src/app/shared/services/managers/product.service
 import { IngredientService } from 'src/app/shared/services/managers/ingredient.service';
 import { RecipeService } from 'src/app/shared/services/managers/recipe.service';
 import { DinnersService } from 'src/app/shared/services/managers/dinners.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
 
 @NgModule({
   declarations: [PreordersComponent, OrdersComponent],
@@ -35,8 +38,10 @@ import { DinnersService } from 'src/app/shared/services/managers/dinners.service
     TranslateModule,
     DxAutocompleteModule,
     DxTemplateModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
+  bootstrap:    [ PreordersComponent, OrdersComponent ],
   providers: [RecipeService, IngredientService, DisponibilityService, ProductService, DinnersService]
 })
 export class OrdersModule { }

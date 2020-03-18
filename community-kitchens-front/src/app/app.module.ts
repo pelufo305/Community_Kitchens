@@ -8,6 +8,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogService } from './confirmation-dialog/confirmation-dialog.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -15,12 +18,14 @@ import { AuthGuard } from './shared';
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        ToastrModule.forRoot(), // ToastrModule added
+        ToastrModule.forRoot(),
         LanguageTranslationModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NgbModule.forRoot()
     ],
-    declarations: [AppComponent],
-    providers: [AuthGuard],
-    bootstrap: [AppComponent]
+    declarations: [AppComponent, ConfirmationDialogComponent],
+    providers: [AuthGuard, ConfirmationDialogService],
+    bootstrap: [AppComponent],
+    entryComponents: [ ConfirmationDialogComponent ]
 })
 export class AppModule {}

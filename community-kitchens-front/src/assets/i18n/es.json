@@ -104,6 +104,8 @@
     "PersonInCharge": "Conductor",
     "PreOrder": "Pre-pedido",
     "SelectRoom": "Selecionar comedor",
-    "SelectRecipe": "Selecionar receta"
+    "SelectRecipe": "Selecionar receta",
+    "RecommendedProduct":"Productos recomendados",
+    "Send":"Enviar"
 
 }

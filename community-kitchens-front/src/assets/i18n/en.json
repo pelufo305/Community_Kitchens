@@ -104,7 +104,9 @@
     "PersonInCharge": "Person In Charge",
     "PreOrder": "Pre-order",
     "SelectRoom": "Select dining room",
-    "SelectRecipe": "Select recipe"
+    "SelectRecipe": "Select recipe",
+    "RecommendedProduct":"Recommended product",
+    "Send":"Send"
 
 
 

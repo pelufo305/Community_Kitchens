@@ -18,6 +18,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { TypePreservationEnum, TypeUnitMeasureEnum } from 'src/app/shared/util/enum';
 import DataSource from 'devextreme/data/data_source';
 import ArrayStore from 'devextreme/data/array_store';
+import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
 
 
 @Component({
@@ -29,9 +30,10 @@ export class PreordersComponent implements OnInit {
   public lstRoom = [];
   public lsRecipe = [];
   public lstIngredient = [];
+  public lstProducts = [];
   public selectRoom: any;
   public lstUnitMeasure = [];
-  public selectRecipe: any ;
+  public selectRecipe: any;
   public textFilterReset;
   public textSaveRow;
   public textCancelRow;
@@ -43,13 +45,14 @@ export class PreordersComponent implements OnInit {
   public nameFiltersRow = {};
   public data = [];
   constructor(public translate: TranslateService,
-              private router: Router,
-              private recipeService: RecipeService,
-              private ingredientService: IngredientService,
-              private disponibilityService: DisponibilityService,
-              private productService: ProductService,
-              private dinnersService: DinnersService) {
-                this.refreshMode = 'reshape';
+    private router: Router,
+    private recipeService: RecipeService,
+    private ingredientService: IngredientService,
+    private disponibilityService: DisponibilityService,
+    private productService: ProductService,
+    private dinnersService: DinnersService,
+    private confirmationDialogService: ConfirmationDialogService) {
+    this.refreshMode = 'reshape';
 
     if (
       this.translate.currentLang === 'es'
@@ -99,17 +102,39 @@ export class PreordersComponent implements OnInit {
   onValueRoom(e) {
   }
 
-  onValueRecipe(e) {
+  async onValueRecipe(e) {
     console.log(e);
-     if (e.selectedItem){
+    if (e.selectedItem.ID) {
       this.getIngredient(e.selectedItem.ID);
-     }
+      await this.loadProducts();
+    }
   }
 
- async loadCatalog() {
-  await this.getDataRoom();
-  await this.getDataRecipes();
- }
+  async loadCatalog() {
+    await this.loadEnumUnitMeasure();
+    await this.getDataRoom();
+    await this.getDataRecipes();
+    await this.getDataIngredients();
+  }
+
+
+  onClick(e) {
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
+      .then((confirmed) => console.log('User confirmed:', confirmed))
+      .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+
+  }
+  async loadProducts() {
+    await this.productService
+      .GetAll()
+      .then(response => {
+        this.lstProducts = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
 
 
   async getDataRoom() {
@@ -157,7 +182,7 @@ export class PreordersComponent implements OnInit {
       };
       return rObj;
     });
-  this.data = lstingredients;
+    this.data = lstingredients;
   }
 
   async loadEnumUnitMeasure() {
