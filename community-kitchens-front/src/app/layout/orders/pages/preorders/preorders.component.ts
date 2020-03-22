@@ -19,6 +19,7 @@ import { TypePreservationEnum, TypeUnitMeasureEnum } from 'src/app/shared/util/e
 import DataSource from 'devextreme/data/data_source';
 import ArrayStore from 'devextreme/data/array_store';
 import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -28,9 +29,11 @@ import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmat
 })
 export class PreordersComponent implements OnInit {
   public lstRoom = [];
+  public selectedRowKeysGrid = [];
   public lsRecipe = [];
   public lstIngredient = [];
   public lstProducts = [];
+  public lstSelectedProducts = [];
   public selectRoom: any;
   public lstUnitMeasure = [];
   public selectRecipe: any;
@@ -45,7 +48,14 @@ export class PreordersComponent implements OnInit {
   public nameFiltersRow = {};
   public data = [];
   public Message: any;
+  public MessageNot: any;
+  public MessageNotField: any;
   public Title: any;
+  private IDDiningRoom = 0;
+  private IDRecipe = 0;
+
+  @ViewChild('gridConfigIng') gridConfigIng: DxDataGridComponent;
+  @ViewChild('gridConfigproduct') gridConfigproduct: DxDataGridComponent;
   constructor(public translate: TranslateService,
     private router: Router,
     private recipeService: RecipeService,
@@ -53,6 +63,7 @@ export class PreordersComponent implements OnInit {
     private disponibilityService: DisponibilityService,
     private productService: ProductService,
     private dinnersService: DinnersService,
+    private toastr: ToastrService,
     private confirmationDialogService: ConfirmationDialogService) {
     this.refreshMode = 'reshape';
 
@@ -101,6 +112,14 @@ export class PreordersComponent implements OnInit {
       this.Message = res;
     });
 
+    this.translate.get('MessageNotPreorder').subscribe((res: string) => {
+      this.MessageNot = res;
+    });
+
+    this.translate.get('MessageNotField').subscribe((res: string) => {
+      this.MessageNotField = res;
+    });
+
   }
 
   ngOnInit() {
@@ -108,14 +127,32 @@ export class PreordersComponent implements OnInit {
   }
 
   onValueRoom(e) {
+    if (e.selectedItem) {
+      if (e.selectedItem.ID) {
+        this.IDDiningRoom = e.selectedItem.ID;
+      }
+    }
   }
 
   async onValueRecipe(e) {
-    console.log(e);
-    if (e.selectedItem.ID) {
-      this.getIngredient(e.selectedItem.ID);
-      await this.loadProducts();
+    if (e.selectedItem) {
+      if (e.selectedItem.ID) {
+        this.IDRecipe = e.selectedItem.ID;
+        this.getIngredient(this.IDRecipe);
+        await this.loadProducts();
+      }
+
     }
+  }
+
+  validateFields(): boolean {
+    if (this.IDRecipe === 0) {
+      return false;
+    }
+    if (this.IDDiningRoom === 0) {
+      return false;
+    }
+    return true;
   }
 
   async loadCatalog() {
@@ -127,14 +164,77 @@ export class PreordersComponent implements OnInit {
 
 
   onClick(e) {
-    this.confirmationDialogService.confirm( this.Title, this.Message)
-      .then((confirmed) => console.log('User confirmed:', confirmed))
-      .catch(() => console.log('error'));
+
+    if (this.validateFields()) {
+      this.confirmationDialogService.confirm(this.Title, this.Message)
+        .then((confirmed) => {
+          if (confirmed) {
+
+            const lstSelected = this.gridConfigproduct.instance.getSelectedRowsData();
+            const lstNotSelected = this.gridConfigproduct.instance.getSelectedRowsData().
+              filter(data => data.Quantity === 0 || data.Quantity === undefined);
+
+            if (lstSelected.length > 0 && lstNotSelected.length > 0) {
+              this.toastr.error(this.MessageNot);
+            } else {
+              this.processPreOrder();
+            }
+
+          }
+        })
+        .catch(() => console.log('error'));
+    } else {
+      this.toastr.error(this.MessageNotField);
+    }
+
 
   }
+
+  onRowUpdating(e) {
+    const Quantity = e.newData.Quantity;
+    if (Quantity <= 0) {
+      e.cancel = true;
+      e.isValid = false;
+      this.toastr.error(this.MessageNot);
+    }
+  }
+
+  onSelectionChanged(e) {
+
+  }
+
+  processPreOrder() {
+    this.lstSelectedProducts = [];
+    this.createListProduct();
+    const model = this.createObject();
+
+  }
+
+
+  createListProduct() {
+    const lstIngredents: any = this.gridConfigIng.dataSource;
+    const lstProducts: any = this.gridConfigproduct.instance.getSelectedRowsData();
+    lstIngredents.forEach(object => {
+      this.lstSelectedProducts.push(object);
+    });
+    lstProducts.forEach(object => {
+      this.lstSelectedProducts.push(object);
+    });
+
+  }
+  createObject() {
+    const model = {
+      IDDiningRoom: this.IDDiningRoom,
+      IDRecipe: this.IDRecipe,
+      IDProduct: this.lstSelectedProducts
+    };
+    return model;
+  }
+
+
   async loadProducts() {
     await this.productService
-      .GetAll()
+      .GetRecomendedProducts()
       .then(response => {
         this.lstProducts = response;
       })
@@ -158,7 +258,7 @@ export class PreordersComponent implements OnInit {
 
   async getDataRecipes() {
     await this.recipeService
-      .GetAll()
+      .GetRecomendedRecipes()
       .then(response => {
         this.lsRecipe = response;
       })
@@ -185,6 +285,7 @@ export class PreordersComponent implements OnInit {
         ID: obj.IDProduct.ID,
         Code: obj.IDProduct.Code,
         Name: obj.IDProduct.Name,
+        Preservation: obj.IDProduct.Preservation,
         MeasurementUnit: obj.IDProduct.MeasurementUnit,
         Quantity: obj.Quantity
       };

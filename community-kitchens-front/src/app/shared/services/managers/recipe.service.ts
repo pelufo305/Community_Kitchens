@@ -33,6 +33,12 @@ GetAll() {
   ).toPromise();
  }
 
+ GetRecomendedRecipes() {
+  return this.http.get<any>(
+    this.api + 'GetRecomendedRecipes', { headers: this.headers }
+  ).toPromise();
+ }
+
  GetByCode(code) {
     return this.http.get<any>(
       this.api + 'GetByCode?Code=' + code, { headers: this.headers }

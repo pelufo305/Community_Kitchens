@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {  DxDataGridModule, DxPieChartModule,  DxSelectBoxModule,  DxCheckBoxModule,  DxAutocompleteModule,
-  DxTemplateModule } from 'devextreme-angular';
+  DxTemplateModule, 
+  DxValidatorModule} from 'devextreme-angular';
   import { DxLookupModule } from 'devextreme-angular';
   import { BrowserModule } from '@angular/platform-browser';
   import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -39,6 +40,7 @@ import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmat
     DxAutocompleteModule,
     DxTemplateModule,
     HttpClientModule,
+    DxValidatorModule,
     NgbModule.forRoot()
   ],
   bootstrap:    [ PreordersComponent, OrdersComponent ],

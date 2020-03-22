@@ -11,64 +11,50 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">{{ 'DiningRooms' | translate }}</label>
         <div class="col-sm-3">
-            <dx-autocomplete [placeholder]="'SelectRoom' | translate" valueExpr="Name" [dataSource]="lstRoom" [(value)]="selectRoom" (onSelectionChanged)="onValueRoom($event)" [showClearButton]="true">
+            <dx-autocomplete [placeholder]="'SelectRoom' | translate" valueExpr="Name" [dataSource]="lstRoom"
+                [(value)]="selectRoom" (onSelectionChanged)="onValueRoom($event)" [showClearButton]="true">
                 <div *dxTemplate="let item of 'item'">
                     <span>{{item.Code}} - {{item.Name}}</span>
                 </div>
-            </dx-autocomplete>
+                <dx-validator>
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dx-validator>
+             </dx-autocomplete>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">{{ 'Recipes' | translate }}</label>
         <div class="col-sm-3">
-            <dx-autocomplete [placeholder]="'SelectRecipe' | translate" valueExpr="Name" [dataSource]="lsRecipe" [(value)]="selectRecipe" (onSelectionChanged)="onValueRecipe($event)" [showClearButton]="true">
+            <dx-autocomplete [placeholder]="'SelectRecipe' | translate" valueExpr="Name" [dataSource]="lsRecipe"
+                [(value)]="selectRecipe" (onSelectionChanged)="onValueRecipe($event)" [showClearButton]="true">
                 <div *dxTemplate="let item of 'item'">
                     <span>{{item.Code}} - {{item.Name}}</span>
                 </div>
+                <dx-validator>
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dx-validator>
             </dx-autocomplete>
         </div>
     </div>
-     <br>
-    <button type="button" class="btn btn-success" (click)="onClick($event)">{{ 'Send' | translate }}</button> 
     <br>
+    <button type="button" class="btn btn-success" (click)="onClick($event)">{{ 'Send' | translate }}</button>
     <br>
-<dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%" [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true" [dataSource]="data" class="dataGridSettings" #gridConfigIng> 
-    <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
-        <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
-        </dxo-texts>
-    </dxo-editing>
-    <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow" [resetOperationText]="textFilterReset"></dxo-filter-row>
-    <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
-    <dxo-paging [pageSize]="100"></dxo-paging>
-    <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
-    </dxo-pager>
-    <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
-    <dxi-column dataField="ID" [visible]="false" [allowEditing]="false" [allowSorting]="false">
-    </dxi-column>
-    <dxi-column dataField="Code" [caption]="'Code' | translate" [allowEditing]="false" [allowSorting]="false">
-    </dxi-column>
-    <dxi-column dataField="Name" [caption]="'Name' | translate" [allowEditing]="false" sortOrder="desc" [allowSorting]="false">
-    </dxi-column>
-    <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate" [allowEditing]="false" [allowSorting]="false">
-        <dxo-lookup [dataSource]="lstUnitMeasure" valueExpr="code" displayExpr="name">
-        </dxo-lookup>
-    </dxi-column>
-    <dxi-column dataField="Quantity" [caption]="'Quantity' | translate">
-        <dxi-validation-rule type="required"></dxi-validation-rule>
-        <dxi-validation-rule type="numeric"></dxi-validation-rule>
-    </dxi-column>
-    </dx-data-grid>
     <br>
 
-    <h5 class="text-dark">{{ 'RecommendedProduct' | translate }}</h5> 
+    <div class="divGrid">
+    <h5 class="text-dark">{{ 'Ingredients' | translate }}</h5>
 
     <br>
-    <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%" [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true" [dataSource]="lstProducts" class="dataGridSettings" #gridConfigproduct> 
+    <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
+        [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
+        (onRowUpdating)="onRowUpdating($event)" [dataSource]="data" class="dataGridSettings" #gridConfigIng>
         <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
-            <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
+            <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow"
+                [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
             </dxo-texts>
         </dxo-editing>
-        <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow" [resetOperationText]="textFilterReset"></dxo-filter-row>
+        <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow"
+            [resetOperationText]="textFilterReset"></dxo-filter-row>
         <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
         <dxo-paging [pageSize]="100"></dxo-paging>
         <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
@@ -78,9 +64,11 @@
         </dxi-column>
         <dxi-column dataField="Code" [caption]="'Code' | translate" [allowEditing]="false" [allowSorting]="false">
         </dxi-column>
-        <dxi-column dataField="Name" [caption]="'Name' | translate" [allowEditing]="false" sortOrder="desc" [allowSorting]="false">
+        <dxi-column dataField="Name" [caption]="'Name' | translate" [allowEditing]="false" sortOrder="desc"
+            [allowSorting]="false">
         </dxi-column>
-        <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate" [allowEditing]="false" [allowSorting]="false">
+        <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate" [allowEditing]="false"
+            [allowSorting]="false">
             <dxo-lookup [dataSource]="lstUnitMeasure" valueExpr="code" displayExpr="name">
             </dxo-lookup>
         </dxi-column>
@@ -88,5 +76,45 @@
             <dxi-validation-rule type="required"></dxi-validation-rule>
             <dxi-validation-rule type="numeric"></dxi-validation-rule>
         </dxi-column>
-        </dx-data-grid>
+    </dx-data-grid>
+    <br>
+
+    <h5 class="text-dark">{{ 'RecommendedProduct' | translate }}</h5>
+
+    <br>
+    <dx-data-grid [repaintChangesOnly]="true" [selectedRowKeys]="selectedRowKeysGrid" keyExpr="ID"
+        [allowColumnReordering]="false" height="100%" [allowColumnResizing]="true" [columnAutoWidth]="true"
+        [showBorders]="true" [hoverStateEnabled]="true" [dataSource]="lstProducts" class="dataGridSettings"
+        (onSelectionChanged)="onSelectionChanged($event)" (onRowUpdating)="onRowUpdating($event)" #gridConfigproduct>
+        <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
+            <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow"
+                [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
+            </dxo-texts>
+        </dxo-editing>
+        <dxo-selection mode="multiple" selectAllMode="allPages" showCheckBoxesMode="always"></dxo-selection>
+        <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow"
+            [resetOperationText]="textFilterReset"></dxo-filter-row>
+        <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
+        <dxo-paging [pageSize]="100"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
+        </dxo-pager>
+        <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
+        <dxi-column dataField="ID" [visible]="false" [allowEditing]="false" [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="Code" [caption]="'Code' | translate" [allowEditing]="false" [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="Name" [caption]="'Name' | translate" [allowEditing]="false" sortOrder="desc"
+            [allowSorting]="false">
+        </dxi-column>
+        <dxi-column dataField="MeasurementUnit" [caption]="'UnitMeasure' | translate" [allowEditing]="false"
+            [allowSorting]="false">
+            <dxo-lookup [dataSource]="lstUnitMeasure" valueExpr="code" displayExpr="name">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="Quantity" [caption]="'Quantity' | translate">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+            <dxi-validation-rule type="numeric"></dxi-validation-rule>
+        </dxi-column>
+    </dx-data-grid>
+</div>
 </div>

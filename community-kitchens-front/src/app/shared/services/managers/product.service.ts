@@ -9,46 +9,52 @@ export class ProductService {
   api: any;
   headers: any;
   constructor(protected http: HttpClient) {
-  this.api = 'http://localhost:64119/api/Product/';
-  this.headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  });
-}
-Insert(data) {
-  return this.http.post<any>(
-    this.api + 'Insert' , data, { headers: this.headers }
-  ).toPromise();
-}
+    this.api = 'http://localhost:64119/api/Product/';
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+  }
+  Insert(data) {
+    return this.http.post<any>(
+      this.api + 'Insert', data, { headers: this.headers }
+    ).toPromise();
+  }
 
-Update(data) {
-  return this.http.put<any>(
-    this.api + 'Update' , data, { headers: this.headers }
-  ).toPromise();
-}
+  Update(data) {
+    return this.http.put<any>(
+      this.api + 'Update', data, { headers: this.headers }
+    ).toPromise();
+  }
 
-GetAll() {
-  return this.http.get<any>(
-    this.api + 'GetAll', { headers: this.headers }
-  ).toPromise();
- }
+  GetAll() {
+    return this.http.get<any>(
+      this.api + 'GetAll', { headers: this.headers }
+    ).toPromise();
+  }
 
- GetByCode(code) {
+  GetRecomendedProducts() {
+    return this.http.get<any>(
+      this.api + 'GetRecomendedProducts', { headers: this.headers }
+    ).toPromise();
+  }
+
+  GetByCode(code) {
     return this.http.get<any>(
       this.api + 'GetByCode?Code=' + code, { headers: this.headers }
     ).toPromise();
-}
+  }
 
   GetByID(ID) {
-  return this.http.get<any>(
-    this.api + 'GetByID?ID=' + ID, { headers: this.headers }
-  ).toPromise();
-}
+    return this.http.get<any>(
+      this.api + 'GetByID?ID=' + ID, { headers: this.headers }
+    ).toPromise();
+  }
 
 
-Delete(ID) {
-return this.http.delete<any>(
-  this.api + 'Delete?ID=' + ID, { headers: this.headers }
-).toPromise();
-}
+  Delete(ID) {
+    return this.http.delete<any>(
+      this.api + 'Delete?ID=' + ID, { headers: this.headers }
+    ).toPromise();
+  }
 }
