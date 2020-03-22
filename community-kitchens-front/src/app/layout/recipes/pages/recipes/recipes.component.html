@@ -14,7 +14,7 @@
             (onInitNewRow)="onInitNewRow($event)" (onRowRemoved)="onRowRemoved($event)" class="dataGridSettings"
             [masterDetail]="{ enabled: true, template: 'detail' }" #gridConfig>
             <!-- 'batch' | 'cell' | 'form' | 'popup' -->
-            <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
+            <dxo-editing mode="popup" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
               [allowDeleting]="true">
               <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow"
                 [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
@@ -71,7 +71,7 @@
         (onRowRemoved)="onRowRemovedIngredients($event)" (onCellPrepared)="onCellPrepared($event)"
         (onKeyDown)="onKeyDown($event)" class="dataGridSettings" #gridConfigIng>
         <!-- 'batch' | 'cell' | 'form' | 'popup' -->
-        <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
+        <dxo-editing mode="popup" [refreshMode]="refreshMode" [allowAdding]="true" [allowUpdating]="true"
           [allowDeleting]="true">
           <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow" [editRow]="textEditRow"
             [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow" [cancelRowChanges]="textCancelRow">
