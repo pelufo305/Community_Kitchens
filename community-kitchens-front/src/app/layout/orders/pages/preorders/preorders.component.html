@@ -129,7 +129,7 @@
     </mat-tab>
 
     <mat-tab label="{{ 'HistoricPreOrder' | translate }}">
-        <dx-data-grid [repaintChangesOnly]="true" keyExpr="Id" [allowColumnReordering]="false" height="100%"
+        <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
             [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
             [dataSource]="dataHistoric" class="dataGridSettings" [masterDetail]="{ enabled: true, template: 'detail' }"
             #gridConfigHistoric>

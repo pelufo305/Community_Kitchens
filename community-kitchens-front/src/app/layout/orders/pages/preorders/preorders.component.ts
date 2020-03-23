@@ -221,7 +221,7 @@ export class PreordersComponent implements OnInit {
       .Insert(model)
       .then(response => {
         this.getDataHistoric(model.IDDiningRoom);
-        this.toastr.error(this.MessagSend);
+        this.toastr.success(this.MessagSend);
       })
       .catch(error => {
         console.error(error);
