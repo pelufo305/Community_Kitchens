@@ -20,6 +20,7 @@ import DataSource from 'devextreme/data/data_source';
 import ArrayStore from 'devextreme/data/array_store';
 import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
 import { ToastrService } from 'ngx-toastr';
+import { PreOrderService } from 'src/app/shared/services/managers/pre-order.service';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class PreordersComponent implements OnInit {
   public Title: any;
   private IDDiningRoom = 0;
   private IDRecipe = 0;
+  private MessagSend: any;
 
   @ViewChild('gridConfigIng') gridConfigIng: DxDataGridComponent;
   @ViewChild('gridConfigproduct') gridConfigproduct: DxDataGridComponent;
@@ -66,6 +68,7 @@ export class PreordersComponent implements OnInit {
     private productService: ProductService,
     private dinnersService: DinnersService,
     private toastr: ToastrService,
+    private preOrderService: PreOrderService,
     private confirmationDialogService: ConfirmationDialogService) {
     this.refreshMode = 'reshape';
 
@@ -120,6 +123,9 @@ export class PreordersComponent implements OnInit {
 
     this.translate.get('MessageNotField').subscribe((res: string) => {
       this.MessageNotField = res;
+    });
+    this.translate.get('MessageSend').subscribe((res: string) => {
+      this.MessagSend = res;
     });
 
   }
@@ -207,10 +213,19 @@ export class PreordersComponent implements OnInit {
 
   }
 
-  processPreOrder() {
+  async processPreOrder() {
     this.lstSelectedProducts = [];
     this.createListProduct();
     const model = this.createObject();
+    await this.preOrderService
+      .Insert(model)
+      .then(response => {
+        this.getDataHistoric(model.IDDiningRoom);
+        this.toastr.error(this.MessagSend);
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
   }
 
@@ -262,8 +277,8 @@ export class PreordersComponent implements OnInit {
 
 
   async getDataHistoric(IDDiningRoom) {
-    await this.dinnersService
-      .GetAll()
+    await this.preOrderService
+      .GetPreorderByDinningRoom(IDDiningRoom)
       .then(response => {
         this.dataHistoric = response;
       })

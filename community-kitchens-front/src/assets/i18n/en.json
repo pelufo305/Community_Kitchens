@@ -111,7 +111,8 @@
     "MessagePreOrder":"After sending the pre-order, it cannot be modified",
     "MessageNotPreorder": "There are products with quantity 0",
     "MessageNotField": "Dining room and recipe are required fields",
-    "HistoricPreOrder": "Historic pre-order"
+    "HistoricPreOrder": "Historic pre-order",
+    "MessageSend": "Successful delivery"
 
 
 
