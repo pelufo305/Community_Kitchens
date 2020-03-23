@@ -110,5 +110,6 @@
     "SendPreOrder": "Enviar Pre-pedido",
     "MessagePreOrder": "Después de enviar el pre-pedido no se podrá modificar",
     "MessageNotPreorder": "Hay productos con cantidad 0",
-    "MessageNotField": "Comedor y receta son campos obligatorios"
+    "MessageNotField": "Comedor y receta son campos obligatorios",
+    "HistoricPreOrder": "Histórico pre-pedido"
 }

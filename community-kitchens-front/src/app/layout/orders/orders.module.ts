@@ -22,6 +22,8 @@ import { DinnersService } from 'src/app/shared/services/managers/dinners.service
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { PreOrderService } from 'src/app/shared/services/managers/pre-order.service';
 
 @NgModule({
   declarations: [PreordersComponent, OrdersComponent],
@@ -41,9 +43,10 @@ import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmat
     DxTemplateModule,
     HttpClientModule,
     DxValidatorModule,
+    MatTabsModule,
     NgbModule.forRoot()
   ],
   bootstrap:    [ PreordersComponent, OrdersComponent ],
-  providers: [RecipeService, IngredientService, DisponibilityService, ProductService, DinnersService]
+  providers: [RecipeService, IngredientService, DisponibilityService, ProductService, DinnersService, PreOrderService]
 })
 export class OrdersModule { }

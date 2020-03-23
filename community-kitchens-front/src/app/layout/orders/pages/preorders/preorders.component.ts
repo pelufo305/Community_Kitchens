@@ -31,6 +31,7 @@ export class PreordersComponent implements OnInit {
   public lstRoom = [];
   public selectedRowKeysGrid = [];
   public lsRecipe = [];
+  public lsRecipeAll = [];
   public lstIngredient = [];
   public lstProducts = [];
   public lstSelectedProducts = [];
@@ -47,6 +48,7 @@ export class PreordersComponent implements OnInit {
   public refreshMode: any;
   public nameFiltersRow = {};
   public data = [];
+  public dataHistoric = [];
   public Message: any;
   public MessageNot: any;
   public MessageNotField: any;
@@ -126,10 +128,11 @@ export class PreordersComponent implements OnInit {
     this.loadCatalog();
   }
 
-  onValueRoom(e) {
+  async onValueRoom(e) {
     if (e.selectedItem) {
       if (e.selectedItem.ID) {
         this.IDDiningRoom = e.selectedItem.ID;
+        await this.getDataHistoric(this.IDDiningRoom);
       }
     }
   }
@@ -159,6 +162,7 @@ export class PreordersComponent implements OnInit {
     await this.loadEnumUnitMeasure();
     await this.getDataRoom();
     await this.getDataRecipes();
+    await this.getDataRecipesAll();
     await this.getDataIngredients();
   }
 
@@ -256,6 +260,18 @@ export class PreordersComponent implements OnInit {
       });
   }
 
+
+  async getDataHistoric(IDDiningRoom) {
+    await this.dinnersService
+      .GetAll()
+      .then(response => {
+        this.dataHistoric = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   async getDataRecipes() {
     await this.recipeService
       .GetRecomendedRecipes()
@@ -266,6 +282,18 @@ export class PreordersComponent implements OnInit {
         console.error(error);
       });
   }
+
+  async getDataRecipesAll() {
+    await this.recipeService
+      .GetAll()
+      .then(response => {
+        this.lsRecipeAll = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
 
   async getDataIngredients() {
     await this.ingredientService
@@ -307,6 +335,12 @@ export class PreordersComponent implements OnInit {
         this.lstUnitMeasure.push(objEnumValue);
       }
     }
+  }
+
+  calculateSortValue(data) {
+    const column = this as any;
+    const value = column.calculateCellValue(data);
+    return column.lookup.calculateCellValue(value);
   }
 
 }
