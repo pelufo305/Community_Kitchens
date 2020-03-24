@@ -337,6 +337,12 @@ export class PreordersComponent implements OnInit {
     this.data = lstingredients;
   }
 
+
+ assingUnit(code) {
+  const found = this.lstUnitMeasure.find(element => element.code == code).name;
+  return found;
+ }
+
   async loadEnumUnitMeasure() {
     const enumT = TypeUnitMeasureEnum;
     const opts: string[] = Object.keys(enumT);
