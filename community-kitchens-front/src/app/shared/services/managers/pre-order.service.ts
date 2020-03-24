@@ -21,9 +21,9 @@ export class PreOrderService {
         ).toPromise();
     }
 
-    GetByDate(date) {
+    GetByDate(Date) {
         return this.http.get<any>(
-            this.api + 'GetByDate?Id=' + date, { headers: this.headers }
+            this.api + 'GetByDate?Date=' + Date, { headers: this.headers }
         ).toPromise();
     }
 
@@ -38,9 +38,9 @@ export class PreOrderService {
         ).toPromise();
     }
 
-    GetPreorderByDinningRoom(ID) {
+    GetPreorderByDinningRoom(IdDinner) {
         return this.http.get<any>(
-            this.api + 'GetPreorderByDinningRoom?Id=' + ID, { headers: this.headers }
+            this.api + 'GetPreorderByDinningRoom?IdDinner=' + IdDinner, { headers: this.headers }
         ).toPromise();
     }
 

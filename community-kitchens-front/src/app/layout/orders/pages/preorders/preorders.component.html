@@ -51,7 +51,7 @@
                     [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
                     [hoverStateEnabled]="true" (onRowUpdating)="onRowUpdating($event)" [dataSource]="data"
                     class="dataGridSettings" #gridConfigIng>
-                    <dxo-editing mode="popup" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
+                    <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
                         <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow"
                             [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow"
                             [cancelRowChanges]="textCancelRow">
@@ -92,7 +92,7 @@
                     [showBorders]="true" [hoverStateEnabled]="true" [dataSource]="lstProducts" class="dataGridSettings"
                     (onSelectionChanged)="onSelectionChanged($event)" (onRowUpdating)="onRowUpdating($event)"
                     #gridConfigproduct>
-                    <dxo-editing mode="popup" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
+                    <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowUpdating]="true" [allowDeleting]="true">
                         <dxo-texts [confirmDeleteMessage]="textDeleteConfirm" [deleteRow]="textDeleteRow"
                             [editRow]="textEditRow" [saveRowChanges]="textSaveRow" [cancelAllChanges]="textCancelAllRow"
                             [cancelRowChanges]="textCancelRow">
