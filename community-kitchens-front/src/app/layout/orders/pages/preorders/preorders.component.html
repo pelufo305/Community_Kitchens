@@ -1,7 +1,7 @@
 <mat-tab-group>
     <mat-tab label="{{ 'PreOrder' | translate }}">
         <div class="contenedor">
-           
+
             <div class="row">
                 <div class="col-xs-12" id="data-container">
                     <div style="position:initial;">
@@ -155,7 +155,10 @@
                 </dxo-lookup>
                 <dxi-validation-rule type="required"></dxi-validation-rule>
             </dxi-column>
-
+            <dxi-column dataField="PreOrderDate" [caption]="'Date' | translate" dataType="date" format="yyyy-MM-dd">
+            </dxi-column>
+            <dxi-column dataField="Accepted" [caption]="'Accepted' | translate" dataType="boolean">
+            </dxi-column>
             <div *dxTemplate="let historic of 'detail'">
                 <div class="card-body table-responsive">
                     <table class="table">

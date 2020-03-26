@@ -112,5 +112,7 @@
     "MessageNotPreorder": "Hay productos con cantidad 0",
     "MessageNotField": "Comedor y receta son campos obligatorios",
     "HistoricPreOrder": "Histórico pre-pedido",
-    "MessageSend": "Envio exitoso"
+    "MessageSend": "Envio exitoso",
+    "Date": "Fecha",
+    "Accepted": "Aceptado"
 }

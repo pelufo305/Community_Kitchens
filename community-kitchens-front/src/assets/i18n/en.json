@@ -112,7 +112,9 @@
     "MessageNotPreorder": "There are products with quantity 0",
     "MessageNotField": "Dining room and recipe are required fields",
     "HistoricPreOrder": "Historic pre-order",
-    "MessageSend": "Successful delivery"
+    "MessageSend": "Successful delivery",
+    "Date": "Date",
+    "Accepted": "Accepted"
 
 
 
