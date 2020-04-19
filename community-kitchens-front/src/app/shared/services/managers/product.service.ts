@@ -33,9 +33,9 @@ export class ProductService {
     ).toPromise();
   }
 
-  GetRecomendedProducts() {
+  GetRecomendedProducts(ChildNumber: any) {
     return this.http.get<any>(
-      this.api + 'GetRecomendedProducts', { headers: this.headers }
+      this.api + 'GetRecomendedProducts?countChildren=' + ChildNumber, { headers: this.headers }
     ).toPromise();
   }
 

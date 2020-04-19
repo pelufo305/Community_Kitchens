@@ -138,6 +138,8 @@ export class PreordersComponent implements OnInit {
     if (e.selectedItem) {
       if (e.selectedItem.ID) {
         this.IDDiningRoom = e.selectedItem.ID;
+        await this.getDataRecipes(e.selectedItem.ChildNumber);
+        await this.loadProducts(e.selectedItem.ChildNumber);
         await this.getDataHistoric(this.IDDiningRoom);
       }
     }
@@ -148,7 +150,6 @@ export class PreordersComponent implements OnInit {
       if (e.selectedItem.ID) {
         this.IDRecipe = e.selectedItem.ID;
         this.getIngredient(this.IDRecipe);
-        await this.loadProducts();
       }
 
     }
@@ -167,7 +168,6 @@ export class PreordersComponent implements OnInit {
   async loadCatalog() {
     await this.loadEnumUnitMeasure();
     await this.getDataRoom();
-    await this.getDataRecipes();
     await this.getDataRecipesAll();
     await this.getDataIngredients();
   }
@@ -251,9 +251,9 @@ export class PreordersComponent implements OnInit {
   }
 
 
-  async loadProducts() {
+  async loadProducts(ChildNumber: any) {
     await this.productService
-      .GetRecomendedProducts()
+      .GetRecomendedProducts(ChildNumber)
       .then(response => {
         this.lstProducts = response;
       })
@@ -287,9 +287,9 @@ export class PreordersComponent implements OnInit {
       });
   }
 
-  async getDataRecipes() {
+  async getDataRecipes(ChildNumber: any) {
     await this.recipeService
-      .GetRecomendedRecipes()
+      .GetRecomendedRecipes(ChildNumber)
       .then(response => {
         this.lsRecipe = response;
       })

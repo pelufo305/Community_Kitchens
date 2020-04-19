@@ -33,9 +33,9 @@ GetAll() {
   ).toPromise();
  }
 
- GetRecomendedRecipes() {
+ GetRecomendedRecipes(ChildNumber: any) {
   return this.http.get<any>(
-    this.api + 'GetRecomendedRecipes', { headers: this.headers }
+    this.api + 'GetRecomendedRecipes?countChildren=' + ChildNumber, { headers: this.headers }
   ).toPromise();
  }
 
