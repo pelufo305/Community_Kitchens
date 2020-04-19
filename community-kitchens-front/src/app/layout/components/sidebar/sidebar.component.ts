@@ -30,7 +30,8 @@ export class SidebarComponent implements OnInit {
             }
         });
 
-        this.boolTypeUser = localStorage.getItem('TypeUser') == TypeUserEnum.Suppliers.toString()  ? true : false;
+        this.boolTypeUser = localStorage.getItem('TypeUser') == TypeUserEnum.Suppliers.toString() ||
+                            localStorage.getItem('TypeUser') == TypeUserEnum.DiningRooms.toString()   ? true : false;
         this.boolTypeSupplier = localStorage.getItem('TypeSupplier') == TypeSupplierEnum.Transport.toString() ? true : false;
         this.boolTypeDinnig = localStorage.getItem('TypeUser') == TypeUserEnum.DiningRooms.toString()  ? false : true;
     }
