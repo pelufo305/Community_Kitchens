@@ -221,7 +221,12 @@ export class PreordersComponent implements OnInit {
       .Insert(model)
       .then(response => {
         this.getDataHistoric(model.IDDiningRoom);
-        this.toastr.success(this.MessagSend);
+        const result = response.toString().split('|');
+        if (result[0] === '1') {
+          this.toastr.success(this.MessagSend);
+        } else {
+          this.toastr.error(result[1]);
+        }
       })
       .catch(error => {
         console.error(error);
@@ -338,10 +343,10 @@ export class PreordersComponent implements OnInit {
   }
 
 
- assingUnit(code) {
-  const found = this.lstUnitMeasure.find(element => element.code == code).name;
-  return found;
- }
+  assingUnit(code) {
+    const found = this.lstUnitMeasure.find(element => element.code === code).name;
+    return found;
+  }
 
   async loadEnumUnitMeasure() {
     const enumT = TypeUnitMeasureEnum;
