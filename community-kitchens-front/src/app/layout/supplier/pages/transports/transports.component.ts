@@ -153,12 +153,12 @@ export class TransportsComponent implements OnInit {
     };
     if (settingsId > 0) {
       await this.transportService
-      .Delete(settingsId)
-      .then(response => {
-      })
-      .catch(error => {
-        console.error(error);
-      });
+        .Delete(settingsId)
+        .then(response => {
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }
 
@@ -300,10 +300,11 @@ export class TransportsComponent implements OnInit {
   customizeText(e) {
     if (e.value) {
       return '$' + e.value;
-     }
+    }
   }
   async loadEnumUnitMeasure() {
     const enumT = TypeUnitMeasureEnum;
+    const Measure = [];
     const opts: string[] = Object.keys(enumT);
     const excludeid: any[] = [];
     for (const itemEnum in enumT) {
@@ -312,9 +313,11 @@ export class TransportsComponent implements OnInit {
           code: Number(itemEnum),
           name: this.translate.instant(enumT[itemEnum])
         };
-        this.lstUnitMeasure.push(objEnumValue);
+        Measure.push(objEnumValue);
       }
     }
+
+    this.lstUnitMeasure = Measure.filter(x => x.code === 8);
   }
 
   calculateSortValue(data) {
