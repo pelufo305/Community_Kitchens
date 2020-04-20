@@ -13,6 +13,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { DinnersService } from 'src/app/shared/services/managers/dinners.service';
+import { NomenclaturaEnum } from 'src/app/shared/util/enum';
 
 @Component({
   selector: 'app-dining-rooms',
@@ -33,6 +34,7 @@ export class DiningRoomsComponent implements OnInit {
   public data;
   public Viewdisabled = true;
   public lstCity = [];
+  public lstNomenclatura = [];
   public excelTitle = '';
   public isAllowDeleting = true;
 
@@ -180,7 +182,7 @@ export class DiningRoomsComponent implements OnInit {
       ID: updated ? e.data.ID : -1,
       Code: e.data.Code,
       Name: e.data.Name,
-      Address: e.data.Address,
+      Address: e.data.Nomenclature + ' ' + e.data.ViaNumber + ' ' + e.data.HouseNumber,
       Phone: e.data.Phone,
       Email: e.data.Email,
       Contact: e.data.Contact,
@@ -239,6 +241,7 @@ export class DiningRoomsComponent implements OnInit {
   }
 
   async loadCatalog() {
+    await this.loadEnumNomenclatura();
     await this.getData();
   }
 
@@ -259,7 +262,25 @@ export class DiningRoomsComponent implements OnInit {
     await this.dinnersService
       .GetAll()
       .then(response => {
-        this.data = response;
+        this.data = response.map(obj => {
+          return {
+            ID: obj.ID,
+            Code: obj.Code,
+            Name: obj.Name,
+            Nomenclature: obj.Address.toString().split(' ')[0],
+            ViaNumber: obj.Address.toString().split(' ')[1],
+            HouseNumber: obj.Address.toString().split(' ')[2],
+            Phone: obj.Phone,
+            Email: obj.Email,
+            Contact: obj.Contact,
+            ContactEmail: obj.ContactEmail,
+            ContactPhone: obj.ContactPhone,
+            ChildNumber: obj.ChildNumber,
+            ScheduleReception: obj.ScheduleReception,
+            City: obj.City,
+            Neiborhood: obj.Neiborhood
+          };
+        });
       })
       .catch(error => {
         console.error(error);
@@ -276,6 +297,21 @@ export class DiningRoomsComponent implements OnInit {
     const column = this as any;
     const value = column.calculateCellValue(data);
     return column.lookup.calculateCellValue(value);
+  }
+
+  async loadEnumNomenclatura() {
+    const enumT = NomenclaturaEnum;
+    const opts: string[] = Object.keys(enumT);
+    const excludeid: any[] = [];
+    for (const itemEnum in enumT) {
+      if (enumT.hasOwnProperty(itemEnum) && isNaN(Number(itemEnum)) === false) {
+        const objEnumValue = {
+          code: enumT[itemEnum],
+          name: enumT[itemEnum]
+        };
+        this.lstNomenclatura.push(objEnumValue);
+      }
+    }
   }
 
 }

@@ -46,9 +46,19 @@
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
 
-                <dxi-column dataField="Address" [caption]="'Direction' | translate">
+                <dxi-column dataField="Nomenclature" [caption]="'Nomenclature' | translate"  [calculateSortValue]="calculateSortValue">
+                    <dxo-lookup [dataSource]="lstNomenclatura" valueExpr="code" displayExpr="name">
+                    </dxo-lookup>
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
+                
+                <dxi-column dataField="ViaNumber" [caption]="'ViaNumber' | translate">
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dxi-column>
+                <dxi-column dataField="HouseNumber" [caption]="'HouseNumber' | translate">
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dxi-column>
+
                 <dxi-column dataField="Contact" [caption]="'Contact' | translate">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>

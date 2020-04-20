@@ -40,3 +40,13 @@ export enum TypeUnitMeasureEnum {
     Kilometer = 8,
     Meter = 9
 }
+
+export enum NomenclaturaEnum {
+    Calle = 0,
+    Carrera = 1,
+    Transversal= 2,
+    Diagonal = 3,
+    Avenida = 4
+}
+
+

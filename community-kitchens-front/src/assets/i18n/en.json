@@ -114,7 +114,10 @@
     "HistoricPreOrder": "Historic pre-order",
     "MessageSend": "Successful delivery",
     "Date": "Date",
-    "Accepted": "Accepted"
+    "Accepted": "Accepted",
+    "Nomenclature": "Nomenclature",
+    "ViaNumber": "Via number",
+    "HouseNumber": "House number"
 
 
 

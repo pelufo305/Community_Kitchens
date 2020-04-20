@@ -46,9 +46,8 @@
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                     <dxi-validation-rule type="numeric"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="Email" [caption]="'E-mail' | translate">
-                    <dxi-validation-rule type="required"></dxi-validation-rule>
-                    <dxi-validation-rule type="email"></dxi-validation-rule>
+                <dxi-column dataField="EnterpriseMail" [caption]="'EnterpriseMail' | translate">
+                       <dxi-validation-rule type="email"></dxi-validation-rule>
                 </dxi-column>
                 <dxi-column dataField="City" [caption]="'City' | translate" [setCellValue]="setStateValueCountry"
                     [calculateSortValue]="calculateSortValue">
@@ -61,9 +60,20 @@
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
 
-                <dxi-column dataField="Address" [caption]="'Direction' | translate">
+                <dxi-column dataField="Nomenclature" [caption]="'Nomenclature' | translate"  [calculateSortValue]="calculateSortValue">
+                    <dxo-lookup [dataSource]="lstNomenclatura" valueExpr="code" displayExpr="name">
+                    </dxo-lookup>
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
+                
+                <dxi-column dataField="ViaNumber" [caption]="'ViaNumber' | translate">
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dxi-column>
+                <dxi-column dataField="HouseNumber" [caption]="'HouseNumber' | translate">
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dxi-column>
+
+
                 <dxi-column dataField="Contact" [caption]="'Contact' | translate">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                 </dxi-column>
@@ -77,10 +87,7 @@
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                     <dxi-validation-rule type="numeric"></dxi-validation-rule>
                 </dxi-column>
-                <dxi-column dataField="EnterpriseMail" [caption]="'EnterpriseMail' | translate">
-
-                    <dxi-validation-rule type="email"></dxi-validation-rule>
-                </dxi-column>
+               
                 <dxi-column dataField="Type" [caption]="'Type' | translate" [setCellValue]="setStateValueCountry"
                     [calculateSortValue]="calculateSortValue">
                     <dxo-lookup [dataSource]="lstTypeUser" valueExpr="code" displayExpr="name">

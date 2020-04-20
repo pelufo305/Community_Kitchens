@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { TypeUserEnum, TypeSupplierEnum } from 'src/app/shared/util/enum';
+import { TypeUserEnum, TypeSupplierEnum, NomenclaturaEnum } from 'src/app/shared/util/enum';
 
 @Component({
   selector: 'app-suppliers',
@@ -34,6 +34,7 @@ export class SuppliersComponent implements OnInit {
   public data;
   public Viewdisabled = true;
   public lstCity = [];
+  public lstNomenclatura = [];
   public lstTypeUser = [];
   public excelTitle = '';
   public isAllowDeleting = true;
@@ -181,7 +182,7 @@ export class SuppliersComponent implements OnInit {
       ID: updated ? e.data.ID : -1,
       Code: e.data.Code,
       Name: e.data.Name,
-      Address: e.data.Address,
+      Address: e.data.Nomenclature + ' ' + e.data.ViaNumber + ' ' + e.data.HouseNumber,
       Phone: e.data.Phone,
       Email: e.data.Email,
       Contact: e.data.Contact,
@@ -241,6 +242,7 @@ export class SuppliersComponent implements OnInit {
   }
 
   async loadCatalog() {
+    await this.loadEnumNomenclatura();
     await this.loadEnumTypeUser();
     await this.getData();
 
@@ -263,7 +265,26 @@ export class SuppliersComponent implements OnInit {
     await this.providerService
       .GetAll()
       .then(response => {
-        this.data = response;
+        this.data = response.map(obj => {
+          return {
+            ID: obj.ID,
+            Code: obj.Code,
+            Name: obj.Name,
+            Phone: obj.Phone,
+            Email: obj.Email,
+            Contact: obj.Contact,
+            ContactMail: obj.ContactMail,
+            ContactPhone: obj.ContactPhone,
+            NIT: obj.NIT,
+            Type: obj.Type,
+            City: obj.City,
+            EnterpriseMail: obj.EnterpriseMail,
+            Neiborhood: obj.Neiborhood,
+            Nomenclature: obj.Address.toString().split(' ')[0],
+            ViaNumber: obj.Address.toString().split(' ')[1],
+            HouseNumber: obj.Address.toString().split(' ')[2]
+          };
+        });
       })
       .catch(error => {
         console.error(error);
@@ -282,6 +303,20 @@ export class SuppliersComponent implements OnInit {
     return column.lookup.calculateCellValue(value);
   }
 
+  async loadEnumNomenclatura() {
+    const enumT = NomenclaturaEnum;
+    const opts: string[] = Object.keys(enumT);
+    const excludeid: any[] = [];
+    for (const itemEnum in enumT) {
+      if (enumT.hasOwnProperty(itemEnum) && isNaN(Number(itemEnum)) === false) {
+        const objEnumValue = {
+          code: enumT[itemEnum],
+          name: enumT[itemEnum]
+        };
+        this.lstNomenclatura.push(objEnumValue);
+      }
+    }
+  }
   async loadEnumTypeUser() {
     const enumT = TypeSupplierEnum;
     const opts: string[] = Object.keys(enumT);
