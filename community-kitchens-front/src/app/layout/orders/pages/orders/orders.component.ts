@@ -5,10 +5,13 @@ import { DisponibilityService } from 'src/app/shared/services/managers/disponibi
 import { DinnersService } from 'src/app/shared/services/managers/dinners.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { MatTabGroup } from '@angular/material';
 import {
   Component,
   ViewChild,
-  OnInit
+  OnInit,
+  ChangeDetectorRef,
+  TemplateRef
 } from '@angular/core';
 import { DxDataGridComponent, DxLookupComponent } from 'devextreme-angular';
 // Lenguaje
@@ -20,6 +23,7 @@ import DataSource from 'devextreme/data/data_source';
 import ArrayStore from 'devextreme/data/array_store';
 import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PreOrderService } from 'src/app/shared/services/managers/pre-order.service';
 
 
@@ -29,6 +33,8 @@ import { PreOrderService } from 'src/app/shared/services/managers/pre-order.serv
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
+  @ViewChild('content') templateRef: TemplateRef<any>;
+  @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
   public lstRoom = [];
   public selectedRowKeysGrid = [];
   public lsRecipe = [];
@@ -55,14 +61,15 @@ export class OrdersComponent implements OnInit {
   public MessageNot: any;
   public MessageNotField: any;
   public Title: any;
-  private IDDiningRoom = 0;
-  private IDRecipe = 0;
-  private MessagSend: any;
+  public selectedIndex = 0;
+  public closeResult = '';
 
   @ViewChild('gridConfigIng') gridConfigIng: DxDataGridComponent;
   @ViewChild('gridConfigproduct') gridConfigproduct: DxDataGridComponent;
   constructor(public translate: TranslateService,
     private router: Router,
+    private modalService: NgbModal,
+    private change: ChangeDetectorRef,
     private recipeService: RecipeService,
     private ingredientService: IngredientService,
     private disponibilityService: DisponibilityService,
@@ -108,23 +115,7 @@ export class OrdersComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
-    this.translate.get('SendPreOrder').subscribe((res: string) => {
-      this.Title = res;
-    });
-    this.translate.get('MessagePreOrder').subscribe((res: string) => {
-      this.Message = res;
-    });
-
-    this.translate.get('MessageNotPreorder').subscribe((res: string) => {
-      this.MessageNot = res;
-    });
-
-    this.translate.get('MessageNotField').subscribe((res: string) => {
-      this.MessageNotField = res;
-    });
-    this.translate.get('MessageSend').subscribe((res: string) => {
-      this.MessagSend = res;
-    });
+    this.detailsBtnClick = this.detailsBtnClick.bind(this);
 
   }
 
@@ -152,6 +143,8 @@ export class OrdersComponent implements OnInit {
         console.error(error);
       });
   }
+  onTabChanged(e) {
+  }
 
   async getDataHistoric() {
     await this.preOrderService
@@ -174,6 +167,11 @@ export class OrdersComponent implements OnInit {
       });
   }
 
+  detailsBtnClick(e) {
+    alert(e.row.data.ID);
+    //this.open(this.templateRef);
+    this.selectedIndex = 1;
+  }
   getDateActual(): string {
     const today = new Date();
     const dd = today.getDate();
@@ -230,4 +228,5 @@ export class OrdersComponent implements OnInit {
     return column.lookup.calculateCellValue(value);
   }
 
+ 
 }
