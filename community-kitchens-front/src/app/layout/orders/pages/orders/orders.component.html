@@ -5,7 +5,7 @@
         
         <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
         [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
-        [dataSource]="dataHistoric" class="dataGridSettings" [masterDetail]="{ enabled: true, template: 'detail' }"
+        [dataSource]="dataDate" class="dataGridSettings" [masterDetail]="{ enabled: true, template: 'detail' }"
         #gridConfigOrder>
 
         <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow"
@@ -61,19 +61,7 @@
     <mat-tab label="{{ 'HistoricPreOrder' | translate }}">
         <br>
         <br>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{ 'DiningRooms' | translate }}</label>
-            <div class="col-sm-3">
-                <dx-autocomplete [placeholder]="'SelectRoom' | translate" valueExpr="Name" [dataSource]="lstRoom"
-                    [(value)]="selectRoom" (onSelectionChanged)="onValueRoom($event)" [showClearButton]="true">
-                    <div *dxTemplate="let item of 'item'">
-                        <span>{{item.Code}} - {{item.Name}}</span>
-                    </div>
-                </dx-autocomplete>
-            </div>
-        </div>
-
-        <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
+      <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
             [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
             [dataSource]="dataHistoric" class="dataGridSettings" [masterDetail]="{ enabled: true, template: 'detail' }"
             #gridConfigHistoric>

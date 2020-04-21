@@ -50,6 +50,7 @@ export class OrdersComponent implements OnInit {
   public nameFiltersRow = {};
   public data = [];
   public dataHistoric = [];
+  public dataDate = [];
   public Message: any;
   public MessageNot: any;
   public MessageNotField: any;
@@ -131,28 +132,15 @@ export class OrdersComponent implements OnInit {
     this.loadCatalog();
   }
 
-  async onValueRoom(e) {
-    if (e.selectedItem) {
-      if (e.selectedItem.ID) {
-        this.IDDiningRoom = e.selectedItem.ID;
-           await this.getDataHistoric(this.IDDiningRoom);
-      }
-    }
-  }
+
   async loadCatalog() {
+    await this.getDataRoom();
     await this.getDataRecipesAll();
     await this.loadEnumUnitMeasure();
-    await this.getDataRoom();
-  }
-
-
-  onClick(e) {
+    await this.getDataDate();
+    await this.getDataHistoric();
 
   }
-  onSelectionChanged(e) {
-
-  }
-
 
   async getDataRoom() {
     await this.dinnersService
@@ -165,10 +153,9 @@ export class OrdersComponent implements OnInit {
       });
   }
 
-
-  async getDataHistoric(IDDiningRoom) {
+  async getDataHistoric() {
     await this.preOrderService
-      .GetPreorderByDinningRoom(IDDiningRoom)
+      .GetAll()
       .then(response => {
         this.dataHistoric = response;
       })
@@ -176,7 +163,34 @@ export class OrdersComponent implements OnInit {
         console.error(error);
       });
   }
+  async getDataDate() {
+    await this.preOrderService
+      .GetByDate(this.getDateActual())
+      .then(response => {
+        this.dataDate = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 
+  getDateActual(): string {
+    const today = new Date();
+    const dd = today.getDate();
+    let strdd = dd.toString();
+    const mm = today.getMonth() + 1;
+    let strmm = mm.toString();
+    const yyyy = today.getFullYear();
+    if (dd < 10) {
+      strdd = '0' + dd.toString();
+    }
+
+    if (mm < 10) {
+      strmm = '0' + mm.toString();
+    }
+    return yyyy + '-' + strmm + '-' + strdd;
+
+  }
 
   async getDataRecipesAll() {
     await this.recipeService
