@@ -129,7 +129,7 @@ export class OrdersComponent implements OnInit {
     await this.getDataRecipesAll();
     await this.loadEnumUnitMeasure();
     await this.getDataDate();
-    await this.getDataHistoric();
+    
 
   }
 
@@ -169,7 +169,6 @@ export class OrdersComponent implements OnInit {
 
   detailsBtnClick(e) {
     alert(e.row.data.ID);
-    //this.open(this.templateRef);
     this.selectedIndex = 1;
   }
   getDateActual(): string {

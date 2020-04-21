@@ -63,62 +63,6 @@
     </mat-tab>
     <mat-tab label="{{ 'Process' | translate }}">
     </mat-tab>
-    <mat-tab label="{{ 'HistoricPreOrder' | translate }}">
-        <br>
-        <br>
-        <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
-            [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
-            [dataSource]="dataHistoric" class="dataGridSettings" [masterDetail]="{ enabled: true, template: 'detail' }"
-            #gridConfigHistoric>
-
-            <dxo-filter-row [visible]="true" [operationDescriptions]="nameFiltersRow"
-                [resetOperationText]="textFilterReset"></dxo-filter-row>
-            <dxo-header-filter [visible]="true" [allowSearch]="true"></dxo-header-filter>
-            <dxo-paging [pageSize]="100"></dxo-paging>
-            <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
-            </dxo-pager>
-            <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
-            <dxi-column dataField="ID" [visible]="false" sortOrder="desc" [allowEditing]="false" [allowSorting]="false">
-            </dxi-column>
-            <dxi-column dataField="IDDiningRoom" [caption]="'DiningRooms' | translate"
-                [calculateSortValue]="calculateSortValue">
-                <dxo-lookup [dataSource]="lstRoom" valueExpr="ID" displayExpr="Name">
-                </dxo-lookup>
-                <dxi-validation-rule type="required"></dxi-validation-rule>
-            </dxi-column>
-            <dxi-column dataField="IDRecipe" [caption]="'Recipes' | translate"
-                [calculateSortValue]="calculateSortValue">
-                <dxo-lookup [dataSource]="lsRecipeAll" valueExpr="ID" displayExpr="Name">
-                </dxo-lookup>
-                <dxi-validation-rule type="required"></dxi-validation-rule>
-            </dxi-column>
-            <dxi-column dataField="PreOrderDate" [caption]="'Date' | translate" dataType="date" format="yyyy-MM-dd">
-            </dxi-column>
-            <dxi-column dataField="Accepted" [caption]="'Accepted' | translate" dataType="boolean">
-            </dxi-column>
-            <div *dxTemplate="let historic of 'detail'">
-                <div class="card-body table-responsive">
-                    <table class="table">
-                        <thead class="thead-inverse">
-                            <tr>
-                                <th>{{ 'Code' | translate }}</th>
-                                <th>{{ 'Name' | translate }}</th>
-                                <th>{{ 'UnitMeasure' | translate }}</th>
-                                <th>{{ 'Quantity' | translate }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of historic.data.IDProduct">
-                                <td>{{item.Code}}</td>
-                                <td>{{item.Name}}</td>
-                                <td>{{assingUnit(item.MeasurementUnit)}}</td>
-                                <td>{{item.Quantity}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </dx-data-grid>
-    </mat-tab>
+   
 </mat-tab-group>
 
