@@ -6,7 +6,7 @@ import { OrdersComponent } from './pages/orders/orders.component';
 
 const routes: Routes =
 [{path: 'preorder', component:  PreordersComponent},
-{path:  '',  component: OrdersComponent}]
+{path:  '',  component: OrdersComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
