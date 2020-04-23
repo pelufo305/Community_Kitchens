@@ -82,7 +82,7 @@
                 </dxi-column>
 
                 <dxi-column dataField="PaymentValue" [caption]="'Value' | translate" dataType="number"
-                    [customizeText]="customizeText">
+                    format="currency">
                     <dxi-validation-rule type="required"></dxi-validation-rule>
                     <dxi-validation-rule type="numeric"></dxi-validation-rule>
                 </dxi-column>

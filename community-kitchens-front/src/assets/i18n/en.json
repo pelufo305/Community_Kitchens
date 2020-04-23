@@ -41,6 +41,7 @@
     "Suppliers": "Suppliers",
     "Products": "Products",
     "Transport": "Transport",
+    "DiningRoom": "Dining Room",
     "Donations": "Donations",
     "Users": "Users",
     "AvailabilityProducts": "Availability",
@@ -105,10 +106,10 @@
     "PreOrder": "Pre-order",
     "SelectRoom": "Select dining room",
     "SelectRecipe": "Select recipe",
-    "RecommendedProduct":"Recommended product",
-    "Send":"Send",
-    "SendPreOrder":"Send pre-order",
-    "MessagePreOrder":"After sending the pre-order, it cannot be modified",
+    "RecommendedProduct": "Recommended product",
+    "Send": "Send",
+    "SendPreOrder": "Send pre-order",
+    "MessagePreOrder": "After sending the pre-order, it cannot be modified",
     "MessageNotPreorder": "There are products with quantity 0",
     "MessageNotField": "Dining room and recipe are required fields",
     "HistoricPreOrder": "Historic pre-order",
@@ -119,8 +120,9 @@
     "ViaNumber": "Via number",
     "HouseNumber": "House number",
     "Order": "Order",
-    "Process": "Process"
-
-
-
+    "Process": "Process",
+    "Cost": "Cost",
+    "ExpirationDays": "Expiration Days",
+    "DateOrder": "Pre-order",
+    "TotalCost": "Total cost"
 }

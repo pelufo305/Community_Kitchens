@@ -55,6 +55,7 @@ export class OrdersComponent implements OnInit {
   public refreshMode: any;
   public nameFiltersRow = {};
   public data = [];
+  public dataProcess = [];
   public dataHistoric = [];
   public dataDate = [];
   public Message: any;
@@ -63,9 +64,12 @@ export class OrdersComponent implements OnInit {
   public Title: any;
   public selectedIndex = 0;
   public closeResult = '';
+  public strComedor = '';
+  public strDateOrder = '';
+  public TotalCost = 0;
 
-  @ViewChild('gridConfigIng') gridConfigIng: DxDataGridComponent;
-  @ViewChild('gridConfigproduct') gridConfigproduct: DxDataGridComponent;
+  @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
+  @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
   constructor(public translate: TranslateService,
     private router: Router,
     private modalService: NgbModal,
@@ -129,7 +133,6 @@ export class OrdersComponent implements OnInit {
     await this.getDataRecipesAll();
     await this.loadEnumUnitMeasure();
     await this.getDataDate();
-    
 
   }
 
@@ -144,6 +147,13 @@ export class OrdersComponent implements OnInit {
       });
   }
   onTabChanged(e) {
+    if (e.index === 0) {
+      this.dataProcess = [];
+      this.strComedor = '';
+      this.strDateOrder = '';
+      this.TotalCost = 0;
+    }
+    this.selectedIndex = e.index;
   }
 
   async getDataHistoric() {
@@ -167,10 +177,97 @@ export class OrdersComponent implements OnInit {
       });
   }
 
-  detailsBtnClick(e) {
-    alert(e.row.data.ID);
+  async detailsBtnClick(e) {
+    const Id = e.row.data.ID;
     this.selectedIndex = 1;
+    this.strComedor = this.lstRoom.find(element => element.ID === e.row.data.IDDiningRoom).Name;
+    this.strDateOrder = e.row.data.PreOrderDate;
+    await this.loadProcess(Id);
+
   }
+
+  async loadProcess(Id: any) {
+    const response = {
+      'TotalCost': 140055500.0,
+      'DisponibilityProcesses': [
+        {
+          'ProductName': 'papa',
+          'IDProvider': 11,
+          'ID': 2,
+          'IDProduct': 4,
+          'Quantity': 420.0,
+          'UnitValue': 90000.0,
+          'Cost': 37800000.0,
+          'ExpirationDays': 43.0,
+          'DurationValue': 1397.0,
+          'DurationText': '23 min',
+          'DistanceValue': 7823.0,
+          'DistanceText': '7,8 km',
+          'Effectiveness': 9.1444629891278714E-10,
+          'IDTransport': 2,
+          'CostTransport': 39115000.0
+        },
+        {
+          'ProductName': 'agua',
+          'IDProvider': 6,
+          'ID': 3,
+          'IDProduct': 5,
+          'Quantity': 100.0,
+          'UnitValue': 155000.0,
+          'Cost': 15500000.0,
+          'ExpirationDays': 109.0,
+          'DurationValue': 1671.0,
+          'DurationText': '28 min',
+          'DistanceValue': 13058.0,
+          'DistanceText': '13,1 km',
+          'Effectiveness': 4.4728238904032685E-10,
+          'IDTransport': 4,
+          'CostTransport': 45703000.0
+        },
+        {
+          'ProductName': 'agua',
+          'IDProvider': 11,
+          'ID': 7,
+          'IDProduct': 5,
+          'Quantity': 100.0,
+          'UnitValue': 1000.0,
+          'Cost': 100000.0,
+          'ExpirationDays': 170.0,
+          'DurationValue': 1397.0,
+          'DurationText': '23 min',
+          'DistanceValue': 7823.0,
+          'DistanceText': '7,8 km',
+          'Effectiveness': 3.7563680789548638E-10,
+          'IDTransport': 4,
+          'CostTransport': 27380500.0
+        },
+        {
+          'ProductName': 'yuca',
+          'IDProvider': 11,
+          'ID': 4,
+          'IDProduct': 6,
+          'Quantity': 480.0,
+          'UnitValue': 42000.0,
+          'Cost': 20160000.0,
+          'ExpirationDays': 137.0,
+          'DurationValue': 1397.0,
+          'DurationText': '23 min',
+          'DistanceValue': 7823.0,
+          'DistanceText': '7,8 km',
+          'Effectiveness': 9.1444629838267107E-10,
+          'IDTransport': 2,
+          'CostTransport': 39115000.0
+        }
+      ]
+    };
+    this.TotalCost =  response.TotalCost;
+    this.dataProcess = response.DisponibilityProcesses;
+  }
+
+  customizeText(e) {
+    return e.value;
+  }
+
   getDateActual(): string {
     const today = new Date();
     const dd = today.getDate();
@@ -220,12 +317,14 @@ export class OrdersComponent implements OnInit {
       }
     }
   }
-
+  totalConcatenate(val) {
+    return val.CostTransport + val.Cost;
+  }
   calculateSortValue(data) {
     const column = this as any;
     const value = column.calculateCellValue(data);
     return column.lookup.calculateCellValue(value);
   }
 
- 
+
 }

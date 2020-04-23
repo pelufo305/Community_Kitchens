@@ -38,6 +38,7 @@
     "Register": "Registrarse",
     "Log in": "Entrar",
     "DiningRooms": "Comedores",
+    "DiningRoom": "Comedor",
     "Suppliers": "Proveedores",
     "Products": "Productos",
     "Donations": "Donaciones",
@@ -119,6 +120,13 @@
     "ViaNumber": "Numero vía",
     "HouseNumber": "Numero casa",
     "Order": "Pedido",
-    "Process": "Procesar"
+    "Process": "Procesar",
+    "Cost": "Costo",
+    "ExpirationDays":"Días de vencimiento",
+    "DurationTour":"Duración recorrido",
+    "DistanceTraveled":"Distancia recorrido",
+    "TransportationCost":"Costo transporte",
+    "DateOrder": "Pre-pedido",
+    "TotalCost": "Costo total" 
 
 }
