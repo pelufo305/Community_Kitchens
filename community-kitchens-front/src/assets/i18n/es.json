@@ -122,11 +122,11 @@
     "Order": "Pedido",
     "Process": "Procesar",
     "Cost": "Costo",
-    "ExpirationDays":"Días de vencimiento",
-    "DurationTour":"Duración recorrido",
-    "DistanceTraveled":"Distancia recorrido",
-    "TransportationCost":"Costo transporte",
+    "ExpirationDays": "Días de vencimiento",
+    "DurationTour": "Duración recorrido",
+    "DistanceTraveled": "Distancia recorrido",
+    "TransportationCost": "Costo transporte",
     "DateOrder": "Pre-pedido",
-    "TotalCost": "Costo total" 
-
+    "TotalCost": "Costo total",
+    "Reject": "Rechazar"
 }

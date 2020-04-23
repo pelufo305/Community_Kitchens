@@ -67,6 +67,10 @@
         <h6 class="text-dark">{{ 'DateOrder' | translate }} : {{strDateOrder}} </h6>
         <h6 class="text-dark">{{ 'TotalCost' | translate }} : {{TotalCost | currency:'COP'}} </h6>
         <br>
+        <button type="button" class="btn btn-success" (click)="onClickSend($event)">{{ 'Send' | translate }}</button>
+        &nbsp; &nbsp;
+        <button type="button" class="btn btn-danger" (click)="onClickReject($event)">{{ 'Reject' | translate }}</button>
+
         <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
             [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
             [dataSource]="dataProcess" class="dataGridSettings" #gridConProcess>
@@ -101,6 +105,10 @@
             <dxi-column dataField="CostTransport" format="currency" [caption]="'TransportationCost' | translate">
             </dxi-column>
             <dxi-column dataField="Total" format="currency" [calculateCellValue]="totalConcatenate" caption="Total">
+            </dxi-column>
+            <dxi-column dataField="AcceptedProvider" [caption]="'Suppliers' | translate" dataType="boolean">
+            </dxi-column>
+            <dxi-column dataField="AcceptedTransport" [caption]="'Transport' | translate" dataType="boolean">
             </dxi-column>
             <dxo-summary>
                 <dxi-total-item column="Quantity" [customizeText]="customizeText" summaryType="sum">

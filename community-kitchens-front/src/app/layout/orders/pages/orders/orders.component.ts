@@ -186,6 +186,11 @@ export class OrdersComponent implements OnInit {
 
   }
 
+  onClickSend(e){
+  }
+  onClickReject(e){
+  }
+
   async loadProcess(Id: any) {
     const response = {
       'TotalCost': 140055500.0,

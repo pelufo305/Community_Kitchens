@@ -124,5 +124,6 @@
     "Cost": "Cost",
     "ExpirationDays": "Expiration Days",
     "DateOrder": "Pre-order",
-    "TotalCost": "Total cost"
+    "TotalCost": "Total cost",
+    "Reject": "Reject"
 }
