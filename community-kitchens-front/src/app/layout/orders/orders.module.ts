@@ -1,7 +1,9 @@
+import { TransportService } from './../../shared/services/managers/transport.service';
+import { ProviderService } from './../../shared/services/managers/provider.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {  DxDataGridModule, DxPieChartModule,  DxSelectBoxModule,  DxCheckBoxModule,  DxAutocompleteModule,
-  DxTemplateModule, 
+  DxTemplateModule,
   DxValidatorModule} from 'devextreme-angular';
   import { DxLookupModule } from 'devextreme-angular';
   import { BrowserModule } from '@angular/platform-browser';
@@ -24,6 +26,7 @@ import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirm
 import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PreOrderService } from 'src/app/shared/services/managers/pre-order.service';
+import { OrderService } from 'src/app/shared/services/managers/order.service';
 
 @NgModule({
   declarations: [PreordersComponent, OrdersComponent],
@@ -47,6 +50,8 @@ import { PreOrderService } from 'src/app/shared/services/managers/pre-order.serv
     NgbModule.forRoot()
   ],
   bootstrap:    [ PreordersComponent, OrdersComponent ],
-  providers: [RecipeService, IngredientService, DisponibilityService, ProductService, DinnersService, PreOrderService]
+  providers: [RecipeService, IngredientService, DisponibilityService,
+              ProductService, DinnersService, PreOrderService,
+              OrderService, ProviderService, TransportService]
 })
 export class OrdersModule { }
