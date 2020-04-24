@@ -25,6 +25,7 @@ import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmat
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PreOrderService } from 'src/app/shared/services/managers/pre-order.service';
+import { OrderService } from 'src/app/shared/services/managers/order.service';
 
 
 @Component({
@@ -80,6 +81,7 @@ export class OrdersComponent implements OnInit {
     private productService: ProductService,
     private dinnersService: DinnersService,
     private toastr: ToastrService,
+    private orderService: OrderService,
     private preOrderService: PreOrderService,
     private confirmationDialogService: ConfirmationDialogService) {
     this.refreshMode = 'reshape';
@@ -186,87 +188,21 @@ export class OrdersComponent implements OnInit {
 
   }
 
-  onClickSend(e){
+  onClickSend(e) {
   }
-  onClickReject(e){
+  onClickReject(e) {
   }
 
   async loadProcess(Id: any) {
-    const response = {
-      'TotalCost': 140055500.0,
-      'DisponibilityProcesses': [
-        {
-          'ProductName': 'papa',
-          'IDProvider': 11,
-          'ID': 2,
-          'IDProduct': 4,
-          'Quantity': 420.0,
-          'UnitValue': 90000.0,
-          'Cost': 37800000.0,
-          'ExpirationDays': 43.0,
-          'DurationValue': 1397.0,
-          'DurationText': '23 min',
-          'DistanceValue': 7823.0,
-          'DistanceText': '7,8 km',
-          'Effectiveness': 9.1444629891278714E-10,
-          'IDTransport': 2,
-          'CostTransport': 39115000.0
-        },
-        {
-          'ProductName': 'agua',
-          'IDProvider': 6,
-          'ID': 3,
-          'IDProduct': 5,
-          'Quantity': 100.0,
-          'UnitValue': 155000.0,
-          'Cost': 15500000.0,
-          'ExpirationDays': 109.0,
-          'DurationValue': 1671.0,
-          'DurationText': '28 min',
-          'DistanceValue': 13058.0,
-          'DistanceText': '13,1 km',
-          'Effectiveness': 4.4728238904032685E-10,
-          'IDTransport': 4,
-          'CostTransport': 45703000.0
-        },
-        {
-          'ProductName': 'agua',
-          'IDProvider': 11,
-          'ID': 7,
-          'IDProduct': 5,
-          'Quantity': 100.0,
-          'UnitValue': 1000.0,
-          'Cost': 100000.0,
-          'ExpirationDays': 170.0,
-          'DurationValue': 1397.0,
-          'DurationText': '23 min',
-          'DistanceValue': 7823.0,
-          'DistanceText': '7,8 km',
-          'Effectiveness': 3.7563680789548638E-10,
-          'IDTransport': 4,
-          'CostTransport': 27380500.0
-        },
-        {
-          'ProductName': 'yuca',
-          'IDProvider': 11,
-          'ID': 4,
-          'IDProduct': 6,
-          'Quantity': 480.0,
-          'UnitValue': 42000.0,
-          'Cost': 20160000.0,
-          'ExpirationDays': 137.0,
-          'DurationValue': 1397.0,
-          'DurationText': '23 min',
-          'DistanceValue': 7823.0,
-          'DistanceText': '7,8 km',
-          'Effectiveness': 9.1444629838267107E-10,
-          'IDTransport': 2,
-          'CostTransport': 39115000.0
-        }
-      ]
-    };
-    this.TotalCost =  response.TotalCost;
-    this.dataProcess = response.DisponibilityProcesses;
+    await this.orderService
+      .ProcessOrder(Id)
+      .then(response => {
+        this.TotalCost = response.TotalCost;
+        this.dataProcess = response.DisponibilityProcesses;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   customizeText(e) {

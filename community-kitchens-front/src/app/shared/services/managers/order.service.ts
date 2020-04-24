@@ -15,9 +15,10 @@ export class OrderService {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         });
     }
+
     ProcessOrder(ID) {
-        return this.http.post<any>(
-            this.api + 'ProcessOrder', ID, { headers: this.headers }
+        return this.http.get<any>(
+            this.api + 'ProcessOrder?ID=' + ID, { headers: this.headers }
         ).toPromise();
     }
 }
