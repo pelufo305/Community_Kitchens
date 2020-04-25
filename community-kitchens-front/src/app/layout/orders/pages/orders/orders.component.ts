@@ -1,3 +1,5 @@
+import { TransportService } from './../../../../shared/services/managers/transport.service';
+import { ProviderService } from 'src/app/shared/services/managers/provider.service';
 import { RecipeService } from 'src/app/shared/services/managers/recipe.service';
 import { IngredientService } from 'src/app/shared/services/managers/ingredient.service';
 import { ProductService } from 'src/app/shared/services/managers/product.service';
@@ -63,6 +65,8 @@ export class OrdersComponent implements OnInit {
   public MessageNot: any;
   public MessageNotField: any;
   public Title: any;
+  public lstTransport = [];
+  public lstSupplier = [];
   public selectedIndex = 0;
   public closeResult = '';
   public strComedor = '';
@@ -81,6 +85,8 @@ export class OrdersComponent implements OnInit {
     private productService: ProductService,
     private dinnersService: DinnersService,
     private toastr: ToastrService,
+    private providerService: ProviderService,
+    private transportService: TransportService,
     private orderService: OrderService,
     private preOrderService: PreOrderService,
     private confirmationDialogService: ConfirmationDialogService) {
@@ -122,6 +128,9 @@ export class OrdersComponent implements OnInit {
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
     this.detailsBtnClick = this.detailsBtnClick.bind(this);
+    this.getFilterProducts = this.getFilterProducts.bind(this);
+    this.getFilterSuppliers = this.getFilterSuppliers.bind(this);
+    this.getFilterTransport = this.getFilterTransport.bind(this);
 
   }
 
@@ -131,6 +140,9 @@ export class OrdersComponent implements OnInit {
 
 
   async loadCatalog() {
+    await this.loadProducts();
+    await this.loadSuppliers();
+    await this.loadTransport();
     await this.getDataRoom();
     await this.getDataRecipesAll();
     await this.loadEnumUnitMeasure();
@@ -265,6 +277,65 @@ export class OrdersComponent implements OnInit {
     const column = this as any;
     const value = column.calculateCellValue(data);
     return column.lookup.calculateCellValue(value);
+  }
+
+
+  async loadProducts() {
+    await this.productService
+      .GetAll()
+      .then(response => {
+        this.lstProducts = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
+  async loadTransport() {
+    await this.transportService
+      .GetAll()
+      .then(response => {
+        this.lstTransport = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
+
+  getFilterProducts() {
+    return {
+      store: this.lstProducts,
+      paginate: true,
+      loadMode: 'raw'
+    };
+  }
+  getFilterSuppliers() {
+    return {
+      store: this.lstSupplier,
+      paginate: true,
+      loadMode: 'raw'
+    };
+  }
+
+  getFilterTransport() {
+    return {
+      store: this.lstTransport,
+      paginate: true,
+      loadMode: 'raw'
+    };
+  }
+
+  async loadSuppliers() {
+    await this.providerService
+      .GetAll()
+      .then(response => {
+        this.lstSupplier = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
   }
 
 
