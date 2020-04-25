@@ -85,11 +85,11 @@
             <dxi-column dataField="ID" [visible]="false" sortOrder="desc" [allowEditing]="false" [allowSorting]="false">
             </dxi-column>
             <dxi-column dataField="IDProduct" [caption]="'Products' | translate">
-                <dxo-lookup [dataSource]="getFilterProducts" valueExpr="ID" displayExpr="Name">
+                <dxo-lookup [dataSource]="lstProducts" valueExpr="ID" displayExpr="Name">
                 </dxo-lookup>
             </dxi-column>
             <dxi-column dataField="IDProvider" [caption]="'Suppliers' | translate">
-                <dxo-lookup [dataSource]="getFilterSuppliers" valueExpr="ID" displayExpr="Name">
+                <dxo-lookup [dataSource]="lstSupplier" valueExpr="ID" displayExpr="Name">
                 </dxo-lookup>
             </dxi-column>
             <dxi-column dataField="Quantity" [caption]="'Quantity' | translate">
@@ -105,7 +105,7 @@
             <dxi-column dataField="DistanceText" [caption]="'DistanceTraveled' | translate">
             </dxi-column>
             <dxi-column dataField="IDTransport" [caption]="'Transport' | translate">
-                <dxo-lookup [dataSource]="getFilterTransport" valueExpr="ID" displayExpr="Name">
+                <dxo-lookup [dataSource]="lstTransport" valueExpr="ID" displayExpr="CarPlate">
                 </dxo-lookup>
             </dxi-column>
             <dxi-column dataField="CostTransport" format="currency" [caption]="'TransportationCost' | translate">

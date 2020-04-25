@@ -127,6 +127,10 @@ export class OrdersComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
+    this.loadProducts();
+    this.loadSuppliers();
+    this.loadTransport();
+
     this.detailsBtnClick = this.detailsBtnClick.bind(this);
     this.getFilterProducts = this.getFilterProducts.bind(this);
     this.getFilterSuppliers = this.getFilterSuppliers.bind(this);
@@ -140,9 +144,6 @@ export class OrdersComponent implements OnInit {
 
 
   async loadCatalog() {
-    await this.loadProducts();
-    await this.loadSuppliers();
-    await this.loadTransport();
     await this.getDataRoom();
     await this.getDataRecipesAll();
     await this.loadEnumUnitMeasure();
