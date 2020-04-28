@@ -129,5 +129,7 @@
     "DateOrder": "Pre-pedido",
     "TotalCost": "Costo total",
     "Reject": "Rechazar",
-    "Observation": "Observación"
+    "Observation": "Observación",
+    "DeeleteProcess": "Se ha eliminado el proceso",
+    "ProcessActive": "Usted tiene un proceso activo"
 }

@@ -36,4 +36,10 @@ export class OrderService {
         ).toPromise();
     }
 
+    Delete(ID) {
+        return this.http.delete<any>(
+          this.apiItem + 'Delete?Id=' + ID, { headers: this.headers }
+        ).toPromise();
+      }
+
 }

@@ -126,5 +126,7 @@
     "DateOrder": "Pre-order",
     "TotalCost": "Total cost",
     "Reject": "Reject",
-    "Observation": "Observation"
+    "Observation": "Observation",
+    "DeeleteProcess": "The process has been removed",
+    "ProcessActive": "You have an active process"
 }

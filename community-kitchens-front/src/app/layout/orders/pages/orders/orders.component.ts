@@ -74,6 +74,9 @@ export class OrdersComponent implements OnInit {
   public TotalCost = 0;
   private IDPreOrder = 0;
   private MessagSend: string;
+  private MessagDelte: string;
+  private boolProcess = true;
+  private ProcessActive: string ;
 
   @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
   @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
@@ -136,6 +139,14 @@ export class OrdersComponent implements OnInit {
     this.translate.get('MessageSend').subscribe((res: string) => {
       this.MessagSend = res;
     });
+    this.translate.get('DeeleteProcess').subscribe((res: string) => {
+      this.MessagDelte = res;
+    });
+    this.translate.get('ProcessActive').subscribe((res: string) => {
+      this.ProcessActive = res;
+    });
+
+
     this.detailsBtnClick = this.detailsBtnClick.bind(this);
     this.getFilterProducts = this.getFilterProducts.bind(this);
     this.getFilterSuppliers = this.getFilterSuppliers.bind(this);
@@ -206,11 +217,15 @@ export class OrdersComponent implements OnInit {
     await this.loadProcessOrder(this.IDPreOrder);
     if (this.dataProcess.length === 0) {
       await this.loadProcess(this.IDPreOrder);
+      this.boolProcess = false;
     }
 
   }
 
   async onClickSend(e) {
+    if (this.boolProcess) {
+      this.toastr.error(this.ProcessActive);
+    } else {
     const data: any = this.gridConProcess.dataSource;
     const dataModel = data.map(obj => {
       return {
@@ -232,9 +247,17 @@ export class OrdersComponent implements OnInit {
       };
     });
     await this.ProceesInsert(dataModel);
+    this.boolProcess = true;
+   }
   }
 
-  onClickReject(e) {
+  async onClickReject(e) {
+    await this.DelteProcess(this.IDPreOrder);
+    this.boolProcess = false;
+    this.dataProcess = [];
+    await this.getDataDate();
+    this.selectedIndex = 0;
+
   }
 
   async loadProcess(Id: any) {
@@ -243,6 +266,17 @@ export class OrdersComponent implements OnInit {
       .then(response => {
         this.TotalCost = response.TotalCost;
         this.dataProcess = response.DisponibilityProcesses;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  async DelteProcess(Id: any) {
+    await this.orderService
+      .Delete(Id)
+      .then(response => {
+        this.toastr.success(this.MessagDelte);
       })
       .catch(error => {
         console.error(error);
@@ -329,7 +363,7 @@ export class OrdersComponent implements OnInit {
         resultTra = 'Transporte sin confirmar';
       }
 
-    const res = `${resultPro} \n ${resultTra}`;
+    const res = `\n ${resultPro}. \n ${resultTra}`;
     return res;
   }
   calculateSortValue(data) {
