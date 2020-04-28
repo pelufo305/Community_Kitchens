@@ -27,9 +27,10 @@ import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmat
 import { MatTabsModule } from '@angular/material/tabs';
 import { PreOrderService } from 'src/app/shared/services/managers/pre-order.service';
 import { OrderService } from 'src/app/shared/services/managers/order.service';
+import { OrderProviderComponent } from './pages/order-provider/order-provider.component';
 
 @NgModule({
-  declarations: [PreordersComponent, OrdersComponent],
+  declarations: [PreordersComponent, OrdersComponent, OrderProviderComponent],
   imports: [
     CommonModule,
     OrdersRoutingModule,
