@@ -125,5 +125,6 @@
     "ExpirationDays": "Expiration Days",
     "DateOrder": "Pre-order",
     "TotalCost": "Total cost",
-    "Reject": "Reject"
+    "Reject": "Reject",
+    "Observation": "Observation"
 }

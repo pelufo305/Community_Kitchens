@@ -128,5 +128,6 @@
     "TransportationCost": "Costo transporte",
     "DateOrder": "Pre-pedido",
     "TotalCost": "Costo total",
-    "Reject": "Rechazar"
+    "Reject": "Rechazar",
+    "Observation": "Observación"
 }

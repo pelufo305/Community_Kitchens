@@ -116,6 +116,8 @@
             </dxi-column>
             <dxi-column dataField="AcceptedTransport" [caption]="'Transport' | translate" dataType="boolean">
             </dxi-column>
+            <dxi-column dataField="Observer" [caption]="'Observation' | translate" [calculateCellValue]="ObserverConcatenate">
+            </dxi-column>
             <dxo-summary>
                 <dxi-total-item column="Quantity" [customizeText]="customizeText" summaryType="sum">
                 </dxi-total-item>

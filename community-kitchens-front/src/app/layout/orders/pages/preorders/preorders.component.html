@@ -159,6 +159,8 @@
             </dxi-column>
             <dxi-column dataField="Accepted" [caption]="'Accepted' | translate" dataType="boolean">
             </dxi-column>
+            <dxi-column dataField="Observer" [caption]="'Observation' | translate" [calculateCellValue]="ObserverConcatenate">
+            </dxi-column>
             <div *dxTemplate="let historic of 'detail'">
                 <div class="card-body table-responsive">
                     <table class="table">

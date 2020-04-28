@@ -72,6 +72,8 @@ export class OrdersComponent implements OnInit {
   public strComedor = '';
   public strDateOrder = '';
   public TotalCost = 0;
+  private IDPreOrder = 0;
+  private MessagSend: string;
 
   @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
   @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
@@ -131,6 +133,9 @@ export class OrdersComponent implements OnInit {
     this.loadSuppliers();
     this.loadTransport();
 
+    this.translate.get('MessageSend').subscribe((res: string) => {
+      this.MessagSend = res;
+    });
     this.detailsBtnClick = this.detailsBtnClick.bind(this);
     this.getFilterProducts = this.getFilterProducts.bind(this);
     this.getFilterSuppliers = this.getFilterSuppliers.bind(this);
@@ -193,16 +198,42 @@ export class OrdersComponent implements OnInit {
   }
 
   async detailsBtnClick(e) {
-    const Id = e.row.data.ID;
+
+    this.IDPreOrder = e.row.data.ID;
     this.selectedIndex = 1;
     this.strComedor = this.lstRoom.find(element => element.ID === e.row.data.IDDiningRoom).Name;
     this.strDateOrder = e.row.data.PreOrderDate;
-    await this.loadProcess(Id);
+    await this.loadProcessOrder(this.IDPreOrder);
+    if (this.dataProcess.length === 0) {
+      await this.loadProcess(this.IDPreOrder);
+    }
 
   }
 
-  onClickSend(e) {
+  async onClickSend(e) {
+    const data: any = this.gridConProcess.dataSource;
+    const dataModel = data.map(obj => {
+      return {
+        ID: obj.ID,
+        IDProduct: obj.IDProduct,
+        IDProvider: obj.IDProvider,
+        IDPreOrder: this.IDPreOrder,
+        Quantity: obj.Quantity,
+        UnitValue: obj.UnitValue,
+        ExpirationDays: obj.ExpirationDays,
+        Cost: obj.Cost,
+        DurationText: obj.DurationText,
+        DistanceText: obj.DistanceText,
+        IDTransport: obj.IDTransport,
+        CostTransport: obj.CostTransport,
+        AcceptedProvider: obj.AcceptedProvider,
+        AcceptedTransport: obj.AcceptedTransport,
+
+      };
+    });
+    await this.ProceesInsert(dataModel);
   }
+
   onClickReject(e) {
   }
 
@@ -274,6 +305,33 @@ export class OrdersComponent implements OnInit {
   totalConcatenate(val) {
     return val.CostTransport + val.Cost;
   }
+  ObserverConcatenate(val) {
+   let resultPro = '';
+   let resultTra = '';
+   switch (val.AcceptedProvider) {
+    case false:
+      resultPro = 'Proveedor ha rechazado';
+      break;
+    case true:
+      resultPro = 'Proveedor  confirmardo';
+      break;
+     default:
+      resultPro = 'Proveedor sin confirmar';
+    }
+    switch (val.AcceptedTransport) {
+      case false:
+        resultTra = 'Transporte ha rechazado';
+      break;
+      case true:
+        resultTra = 'Transporte  confirmardo';
+        break;
+       default:
+        resultTra = 'Transporte sin confirmar';
+      }
+
+    const res = `${resultPro} \n ${resultTra}`;
+    return res;
+  }
   calculateSortValue(data) {
     const column = this as any;
     const value = column.calculateCellValue(data);
@@ -292,6 +350,32 @@ export class OrdersComponent implements OnInit {
       });
 
   }
+
+  async loadProcessOrder(ID) {
+    await this.orderService
+      .ProcessPreOrder(ID)
+      .then(response => {
+        this.dataProcess = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
+
+
+  async ProceesInsert(data) {
+    await this.orderService
+      .Insert(data)
+      .then(response => {
+        this.toastr.success(this.MessagSend);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
+
   async loadTransport() {
     await this.transportService
       .GetAll()

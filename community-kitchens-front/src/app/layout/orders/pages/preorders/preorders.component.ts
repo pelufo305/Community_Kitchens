@@ -363,6 +363,22 @@ export class PreordersComponent implements OnInit {
     }
   }
 
+  ObserverConcatenate(val) {
+    let resultPro = '';
+    switch (val.Accepted) {
+      case false:
+        resultPro = 'Administrador ha rechazado';
+        break;
+      case true:
+        resultPro = 'Administrador  confirmardo';
+        break;
+      default:
+        resultPro = 'Administrador sin confirmar';
+    }
+    const res = `${resultPro}`;
+    return res;
+  }
+
   calculateSortValue(data) {
     const column = this as any;
     const value = column.calculateCellValue(data);
