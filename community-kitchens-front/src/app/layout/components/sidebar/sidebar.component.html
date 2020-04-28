@@ -1,18 +1,22 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group">
-        <a routerLink="/dining-rooms" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a routerLink="/dining-rooms" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-address-card"></i>&nbsp;
             <span>{{ 'DiningRooms' | translate }}</span>
         </a>
-        <a [routerLink]="['/products']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/products']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-product-hunt"></i>&nbsp;
             <span>{{ 'Products' | translate }}</span>
         </a>
-        <a [routerLink]="['/recipes']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/recipes']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-coffee"></i>&nbsp;
             <span>{{ 'Recipes' | translate }}</span>
         </a>
-        <a [routerLink]="['/users']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/users']" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-users"></i>&nbsp;
             <span>{{ 'Users' | translate }}</span>
         </a>
@@ -44,16 +48,24 @@
                 </ul>
             </li>
         </div>
-        <a routerLink="/order/preorder" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a routerLink="/order/preorder" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-address-card"></i>&nbsp;
             <span>{{ 'PreOrder' | translate }}</span>
         </a>
-        <a routerLink="/order/preorder" [hidden]="boolTypeDinnig" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a routerLink="/order/preorder" [hidden]="boolTypeDinnig" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
             <i class="fa fa-address-card"></i>&nbsp;
             <span>{{ 'PreOrder' | translate }}</span>
         </a>
-        <a routerLink="/order" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-address-card"></i>&nbsp;
+        <a routerLink="/order" [hidden]="boolTypeUser" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
+            <i class="fa fa-first-order"></i>&nbsp;
+            <span>{{ 'Order' | translate }}</span>
+        </a>
+        <a routerLink="/order/provider" [hidden]="boolProvider" [routerLinkActive]="['router-link-active']"
+            class="list-group-item">
+            <i class="fa fa-first-order"></i>&nbsp;
             <span>{{ 'Order' | translate }}</span>
         </a>
         <div class="header-fields">
