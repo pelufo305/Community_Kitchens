@@ -30,6 +30,12 @@ export class OrderService {
         ).toPromise();
     }
 
+    ResponseProvider(data) {
+        return this.http.post<any>(
+            this.apiItem + 'ResponseProvider', data, { headers: this.headers }
+        ).toPromise();
+    }
+
     ProcessPreOrder(ID) {
         return this.http.get<any>(
             this.apiItem + 'GetOrderItemByPreorder?Id=' + ID, { headers: this.headers }

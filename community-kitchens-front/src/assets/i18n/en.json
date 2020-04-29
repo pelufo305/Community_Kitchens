@@ -128,5 +128,6 @@
     "Reject": "Reject",
     "Observation": "Observation",
     "DeeleteProcess": "The process has been removed",
-    "ProcessActive": "You have an active process"
+    "ProcessActive": "You have an active process",
+    "ResponseSend": "The response has been sent to the administrator"
 }

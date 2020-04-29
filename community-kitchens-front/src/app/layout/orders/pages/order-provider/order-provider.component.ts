@@ -78,7 +78,8 @@ export class OrderProviderComponent implements OnInit {
   private MessagSend: string;
   private MessagDelte: string;
   private boolProcess = true;
-  private ProcessActive: string ;
+  private ProcessActive: string;
+  private IDprovider;
 
   @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
   @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
@@ -134,26 +135,12 @@ export class OrderProviderComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
-    this.loadProducts();
-    this.loadSuppliers();
-    this.loadTransport();
 
-    this.translate.get('MessageSend').subscribe((res: string) => {
+    this.translate.get('ResponseSend').subscribe((res: string) => {
       this.MessagSend = res;
     });
-    this.translate.get('DeeleteProcess').subscribe((res: string) => {
-      this.MessagDelte = res;
-    });
-    this.translate.get('ProcessActive').subscribe((res: string) => {
-      this.ProcessActive = res;
-    });
-
-
-    this.detailsBtnClick = this.detailsBtnClick.bind(this);
-    this.getFilterProducts = this.getFilterProducts.bind(this);
-    this.getFilterSuppliers = this.getFilterSuppliers.bind(this);
-    this.getFilterTransport = this.getFilterTransport.bind(this);
-
+    this.AceptClick = this.AceptClick.bind(this);
+    this.RejectClick = this.RejectClick.bind(this);
   }
 
   ngOnInit() {
@@ -175,8 +162,8 @@ export class OrderProviderComponent implements OnInit {
     await this.getDataRoom();
     await this.getDataRecipesAll();
     await this.loadEnumUnitMeasure();
-    const provider = localStorage.getItem('IDProvider');
-    await this.getDataDate(provider);
+    this.IDprovider = localStorage.getItem('IDProvider');
+    await this.getDataDate(this.IDprovider);
 
   }
 
@@ -202,35 +189,27 @@ export class OrderProviderComponent implements OnInit {
       });
   }
 
-  async detailsBtnClick(e) {
-
+  async AceptClick(e) {
     this.IDPreOrder = e.row.data.ID;
-    this.selectedIndex = 1;
-    this.strComedor = this.lstRoom.find(element => element.ID === e.row.data.IDDiningRoom).Name;
-    this.strDateOrder = e.row.data.PreOrderDate;
-    await this.loadProcessOrder(this.IDPreOrder);
-    if (this.dataProcess.length === 0) {
-      await this.loadProcess(this.IDPreOrder);
-      this.boolProcess = false;
-    }
-
+    const model = this.createObject(this.IDprovider, this.IDPreOrder, true);
+    await this.ResponseProvider(model);
   }
 
- 
- 
-
-  async loadProcess(Id: any) {
-    await this.orderService
-      .ProcessOrder(Id)
-      .then(response => {
-        this.TotalCost = response.TotalCost;
-        this.dataProcess = response.DisponibilityProcesses;
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  async RejectClick(e) {
+    this.IDPreOrder = e.row.data.ID;
+    const model = this.createObject(this.IDprovider, this.IDPreOrder, false);
+    await this.ResponseProvider(model);
   }
 
+
+  createObject(ID, IDPreorder, Response) {
+    const model = {
+      ID: ID,
+      IDPreOrden: IDPreorder,
+      Response: Response
+    };
+    return model;
+  }
 
 
   customizeText(e) {
@@ -297,83 +276,13 @@ export class OrderProviderComponent implements OnInit {
   }
 
 
-  async loadProducts() {
-    await this.productService
-      .GetAll()
-      .then(response => {
-        this.lstProducts = response;
-      })
-      .catch(error => {
-        console.error(error);
-      });
 
-  }
-
-  async loadProcessOrder(ID) {
+  async ResponseProvider(data) {
     await this.orderService
-      .ProcessPreOrder(ID)
-      .then(response => {
-        this.dataProcess = response;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-  }
-
-
-  async ProceesInsert(data) {
-    await this.orderService
-      .Insert(data)
+      .ResponseProvider(data)
       .then(response => {
         this.toastr.success(this.MessagSend);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-  }
-
-  async loadTransport() {
-    await this.transportService
-      .GetAll()
-      .then(response => {
-        this.lstTransport = response;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-  }
-
-  getFilterProducts() {
-    return {
-      store: this.lstProducts,
-      paginate: true,
-      loadMode: 'raw'
-    };
-  }
-  getFilterSuppliers() {
-    return {
-      store: this.lstSupplier,
-      paginate: true,
-      loadMode: 'raw'
-    };
-  }
-
-  getFilterTransport() {
-    return {
-      store: this.lstTransport,
-      paginate: true,
-      loadMode: 'raw'
-    };
-  }
-
-  async loadSuppliers() {
-    await this.providerService
-      .GetAll()
-      .then(response => {
-        this.lstSupplier = response;
+        this.getDataDate(this.IDprovider);
       })
       .catch(error => {
         console.error(error);
@@ -382,3 +291,11 @@ export class OrderProviderComponent implements OnInit {
   }
 
 }
+
+
+
+
+
+
+
+

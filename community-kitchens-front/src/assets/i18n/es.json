@@ -131,5 +131,6 @@
     "Reject": "Rechazar",
     "Observation": "Observación",
     "DeeleteProcess": "Se ha eliminado el proceso",
-    "ProcessActive": "Usted tiene un proceso activo"
+    "ProcessActive": "Usted tiene un proceso activo",
+    "ResponseSend": "Se ha enviado la respuesta al administrador"
 }

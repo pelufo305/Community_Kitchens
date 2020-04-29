@@ -33,9 +33,13 @@
             <dxi-column dataField="PreOrderDate" [caption]="'Date' | translate" dataType="date" format="yyyy-MM-dd">
             </dxi-column>
             <dxi-column type="buttons">
-                <dxi-button name="process" [text]="'Process' | translate" [onClick]="detailsBtnClick">
+                <dxi-button name="process"  icon="check" [onClick]="AceptClick">
                 </dxi-button>
             </dxi-column>
+            <dxi-column type="buttons">
+              <dxi-button name="process"  icon="close"  [onClick]="RejectClick">
+              </dxi-button>
+          </dxi-column>
             <div *dxTemplate="let historic of 'detail'">
                 <div class="card-body table-responsive">
                     <table class="table">
