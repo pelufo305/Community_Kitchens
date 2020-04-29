@@ -140,8 +140,8 @@ export class OrderProviderComponent implements OnInit {
     this.translate.get('ResponseSend').subscribe((res: string) => {
       this.MessagSend = res;
     });
-    this.AceptClick = this.AceptClick.bind(this);
-    this.RejectClick = this.RejectClick.bind(this);
+    this.onClickAccept = this.onClickAccept.bind(this);
+    this.onClickReject = this.onClickReject.bind(this);
   }
 
   ngOnInit() {
@@ -210,35 +210,34 @@ export class OrderProviderComponent implements OnInit {
       });
   }
 
-  async AceptClick(e) {
-    this.IDPreOrder = e.row.data.ID;
-    const model = this.createObject(this.IDprovider, this.IDPreOrder, true);
+
+   async onClickAccept(e, item) {
+    this.IDPreOrder = item.IDPreOrder;
     if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
-      await this.ResponseTransport(model);
-      await this.getDataDateTransport(this.IDprovider);
-    } else {
-      await this.ResponseProvider(model);
-      await this.getDataDate(this.IDprovider);
-    }
+     const model = this.createObject(item.ID, item.IDTransport, this.IDPreOrder, true);
+       await this.ResponseTransport(model);
+     } else {
+       const model = this.createObject(item.ID, this.IDprovider, this.IDPreOrder, true);
+       await this.ResponseProvider(model);
+     }
 
   }
 
-  async RejectClick(e) {
-    this.IDPreOrder = e.row.data.ID;
-    const model = this.createObject(this.IDprovider, this.IDPreOrder, false);
-    if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
-      await this.ResponseTransport(model);
-      await this.getDataDateTransport(this.IDprovider);
+  async onClickReject(e, item) {
+    this.IDPreOrder = item.IDPreOrder;
+   if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
+    const model = this.createObject(item.ID, item.IDTransport, this.IDPreOrder, false);
+     await this.ResponseTransport(model);
     } else {
+      const model = this.createObject(item.ID, this.IDprovider, this.IDPreOrder, false);
       await this.ResponseProvider(model);
-      await this.getDataDate(this.IDprovider);
     }
   }
 
-
-  createObject(ID, IDPreorder, Response) {
+  createObject(ID, IDProvider, IDPreorder, Response) {
     const model = {
       ID: ID,
+      IDProvider: IDProvider,
       IDPreOrden: IDPreorder,
       Response: Response
     };
