@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', response.token);
         localStorage.setItem('TypeUser', response.UserType);
         localStorage.setItem('TypeSupplier', response.provider != null ? response.provider.Type : null);
+        localStorage.setItem('IDProvider', response.provider != null ? response.provider.ID : null);
         localStorage.setItem('isLoggedin', 'true');
         this.router.navigateByUrl('/dashboard');
       })

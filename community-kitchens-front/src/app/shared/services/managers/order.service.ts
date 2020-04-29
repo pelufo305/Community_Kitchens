@@ -41,5 +41,10 @@ export class OrderService {
           this.apiItem + 'Delete?Id=' + ID, { headers: this.headers }
         ).toPromise();
       }
+      GetOrderItemByProvider(ID, Date) {
+        return this.http.get<any>(
+            this.apiItem + 'GetOrderItemByProvider?Id=' + ID + '&Date=' + Date, { headers: this.headers }
+        ).toPromise();
+    }
 
 }
