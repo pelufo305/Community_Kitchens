@@ -81,6 +81,7 @@ export class OrderProviderComponent implements OnInit {
   private ProcessActive: string;
   private IDprovider;
   public TypeSupplier;
+  public NameProvider;
 
   @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
   @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
@@ -168,6 +169,7 @@ export class OrderProviderComponent implements OnInit {
     await this.loadEnumUnitMeasure();
     this.IDprovider = localStorage.getItem('IDProvider');
     this.TypeSupplier = localStorage.getItem('TypeSupplier');
+    this.NameProvider = localStorage.getItem('NameProvider');
     if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
       await this.getDataDateTransport(this.IDprovider);
     } else {
