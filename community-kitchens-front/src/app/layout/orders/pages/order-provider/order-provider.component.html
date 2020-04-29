@@ -61,6 +61,17 @@
                                 <td>{{item.Cost}}</td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Totales</td>
+                            <td>{{sumQuantity(historic.data.IDProduct)}}</td>
+                            <td>{{sumCost(historic.data.IDProduct) | currency:'COP'}}</td>
+                          </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

@@ -160,6 +160,16 @@ export class OrderProviderComponent implements OnInit {
     this.loadCatalog();
   }
 
+  sumCost(lst) {
+    return lst.reduce((prev, cur) => prev + cur.Cost, 0);
+  }
+  sumQuantity(lst) {
+    return lst.reduce((prev, cur) => prev + cur.Quantity, 0);
+  }
+  sumUnitValue(lst) {
+    return lst.reduce((prev, cur) => prev + cur.UnitValue, 0);
+  }
+
 
   async loadCatalog() {
     await this.getDataRoom();
