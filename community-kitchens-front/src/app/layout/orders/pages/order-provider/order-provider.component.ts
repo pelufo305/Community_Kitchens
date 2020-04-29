@@ -198,7 +198,13 @@ export class OrderProviderComponent implements OnInit {
       });
   }
 
-
+  async onClickRecharge(e) {
+    if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
+      await this.getDataDateTransport(this.IDprovider);
+    } else {
+      await this.getDataDate(this.IDprovider);
+    }
+  }
   async getDataDateTransport(ID) {
     await this.orderService
       .GetOrderItemByTransport(ID, this.getDateActual())

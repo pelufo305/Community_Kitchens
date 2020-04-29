@@ -134,5 +134,6 @@
     "ProcessActive": "Usted tiene un proceso activo",
     "ResponseSend": "Se ha enviado la respuesta al administrador",
     "Origin":"Origen",
-    "Destination": "Destino"
+    "Destination": "Destino",
+    "Recharge":"Recargar"
 }

@@ -131,5 +131,6 @@
     "ProcessActive": "You have an active process",
     "ResponseSend": "The response has been sent to the administrator",
     "Origin":"Origin",
-    "Destination": "Destination"
+    "Destination": "Destination",
+    "Recharge":"Recharge"
 }
