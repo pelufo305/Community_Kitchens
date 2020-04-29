@@ -129,5 +129,7 @@
     "Observation": "Observation",
     "DeeleteProcess": "The process has been removed",
     "ProcessActive": "You have an active process",
-    "ResponseSend": "The response has been sent to the administrator"
+    "ResponseSend": "The response has been sent to the administrator",
+    "Origin":"Origin",
+    "Destination": "Destination"
 }

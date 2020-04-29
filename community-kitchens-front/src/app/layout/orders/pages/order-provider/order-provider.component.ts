@@ -20,7 +20,7 @@ import { DxDataGridComponent, DxLookupComponent } from 'devextreme-angular';
 import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { TypePreservationEnum, TypeUnitMeasureEnum } from 'src/app/shared/util/enum';
+import { TypePreservationEnum, TypeUnitMeasureEnum, TypeSupplierEnum } from 'src/app/shared/util/enum';
 import DataSource from 'devextreme/data/data_source';
 import ArrayStore from 'devextreme/data/array_store';
 import { ConfirmationDialogService } from 'src/app/confirmation-dialog/confirmation-dialog.service';
@@ -80,6 +80,7 @@ export class OrderProviderComponent implements OnInit {
   private boolProcess = true;
   private ProcessActive: string;
   private IDprovider;
+  public TypeSupplier;
 
   @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
   @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
@@ -150,6 +151,9 @@ export class OrderProviderComponent implements OnInit {
   sumCost(lst) {
     return lst.reduce((prev, cur) => prev + cur.Cost, 0);
   }
+  sumCostTransport(lst) {
+    return lst.reduce((prev, cur) => prev + cur.CostTransport, 0);
+  }
   sumQuantity(lst) {
     return lst.reduce((prev, cur) => prev + cur.Quantity, 0);
   }
@@ -163,7 +167,12 @@ export class OrderProviderComponent implements OnInit {
     await this.getDataRecipesAll();
     await this.loadEnumUnitMeasure();
     this.IDprovider = localStorage.getItem('IDProvider');
-    await this.getDataDate(this.IDprovider);
+    this.TypeSupplier = localStorage.getItem('TypeSupplier');
+    if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
+      await this.getDataDateTransport(this.IDprovider);
+    } else {
+      await this.getDataDate(this.IDprovider);
+    }
 
   }
 
@@ -189,16 +198,41 @@ export class OrderProviderComponent implements OnInit {
       });
   }
 
+
+  async getDataDateTransport(ID) {
+    await this.orderService
+      .GetOrderItemByTransport(ID, this.getDateActual())
+      .then(response => {
+        this.dataDate = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   async AceptClick(e) {
     this.IDPreOrder = e.row.data.ID;
     const model = this.createObject(this.IDprovider, this.IDPreOrder, true);
-    await this.ResponseProvider(model);
+    if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
+      await this.ResponseTransport(model);
+      await this.getDataDateTransport(this.IDprovider);
+    } else {
+      await this.ResponseProvider(model);
+      await this.getDataDate(this.IDprovider);
+    }
+
   }
 
   async RejectClick(e) {
     this.IDPreOrder = e.row.data.ID;
     const model = this.createObject(this.IDprovider, this.IDPreOrder, false);
-    await this.ResponseProvider(model);
+    if (this.TypeSupplier === TypeSupplierEnum.Transport.toString()) {
+      await this.ResponseTransport(model);
+      await this.getDataDateTransport(this.IDprovider);
+    } else {
+      await this.ResponseProvider(model);
+      await this.getDataDate(this.IDprovider);
+    }
   }
 
 
@@ -282,7 +316,18 @@ export class OrderProviderComponent implements OnInit {
       .ResponseProvider(data)
       .then(response => {
         this.toastr.success(this.MessagSend);
-        this.getDataDate(this.IDprovider);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
+
+  async ResponseTransport(data) {
+    await this.orderService
+      .ResponseTransport(data)
+      .then(response => {
+        this.toastr.success(this.MessagSend);
       })
       .catch(error => {
         console.error(error);

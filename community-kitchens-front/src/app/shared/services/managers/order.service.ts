@@ -36,6 +36,12 @@ export class OrderService {
         ).toPromise();
     }
 
+    ResponseTransport(data) {
+        return this.http.post<any>(
+            this.apiItem + 'ResponseTransport', data, { headers: this.headers }
+        ).toPromise();
+    }
+
     ProcessPreOrder(ID) {
         return this.http.get<any>(
             this.apiItem + 'GetOrderItemByPreorder?Id=' + ID, { headers: this.headers }
@@ -50,6 +56,12 @@ export class OrderService {
       GetOrderItemByProvider(ID, Date) {
         return this.http.get<any>(
             this.apiItem + 'GetOrderItemByProvider?Id=' + ID + '&Date=' + Date, { headers: this.headers }
+        ).toPromise();
+    }
+
+    GetOrderItemByTransport(ID, Date) {
+        return this.http.get<any>(
+            this.apiItem + 'GetOrderItemByTransport?Id=' + ID + '&Date=' + Date, { headers: this.headers }
         ).toPromise();
     }
 
