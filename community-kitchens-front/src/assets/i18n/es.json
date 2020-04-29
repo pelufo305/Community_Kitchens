@@ -135,5 +135,7 @@
     "ResponseSend": "Se ha enviado la respuesta al administrador",
     "Origin":"Origen",
     "Destination": "Destino",
-    "Recharge":"Recargar"
+    "Recharge":"Recargar",
+    "OrderMessage": "¿Desea enviar el pedido a los proveedores?",
+    "OrderMessageNot": "¿Desea rechazar el pedido?"
 }

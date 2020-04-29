@@ -76,7 +76,7 @@ export class OrdersComponent implements OnInit {
   private MessagSend: string;
   private MessagDelte: string;
   private boolProcess = true;
-  private ProcessActive: string ;
+  private ProcessActive: string;
 
   @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
   @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
@@ -145,7 +145,16 @@ export class OrdersComponent implements OnInit {
     this.translate.get('ProcessActive').subscribe((res: string) => {
       this.ProcessActive = res;
     });
+    this.translate.get('Order').subscribe((res: string) => {
+      this.Title = res;
+    });
+    this.translate.get('OrderMessage').subscribe((res: string) => {
+      this.Message = res;
+    });
 
+    this.translate.get('OrderMessageNot').subscribe((res: string) => {
+      this.MessageNot = res;
+    });
 
     this.detailsBtnClick = this.detailsBtnClick.bind(this);
     this.getFilterProducts = this.getFilterProducts.bind(this);
@@ -177,12 +186,13 @@ export class OrdersComponent implements OnInit {
         console.error(error);
       });
   }
-  onTabChanged(e) {
+  async onTabChanged(e) {
     if (e.index === 0) {
       this.dataProcess = [];
       this.strComedor = '';
       this.strDateOrder = '';
       this.TotalCost = 0;
+      await this.getDataDate();
     }
     this.selectedIndex = e.index;
   }
@@ -226,37 +236,50 @@ export class OrdersComponent implements OnInit {
     if (this.boolProcess) {
       this.toastr.error(this.ProcessActive);
     } else {
-    const data: any = this.gridConProcess.dataSource;
-    const dataModel = data.map(obj => {
-      return {
-        ID: obj.ID,
-        IDProduct: obj.IDProduct,
-        IDProvider: obj.IDProvider,
-        IDPreOrder: this.IDPreOrder,
-        Quantity: obj.Quantity,
-        UnitValue: obj.UnitValue,
-        ExpirationDays: obj.ExpirationDays,
-        Cost: obj.Cost,
-        DurationText: obj.DurationText,
-        DistanceText: obj.DistanceText,
-        IDTransport: obj.IDTransport,
-        CostTransport: obj.CostTransport,
-        AcceptedProvider: obj.AcceptedProvider,
-        AcceptedTransport: obj.AcceptedTransport,
+      const data: any = this.gridConProcess.dataSource;
+      const dataModel = data.map(obj => {
+        return {
+          ID: obj.ID,
+          IDProduct: obj.IDProduct,
+          IDProvider: obj.IDProvider,
+          IDPreOrder: this.IDPreOrder,
+          Quantity: obj.Quantity,
+          UnitValue: obj.UnitValue,
+          ExpirationDays: obj.ExpirationDays,
+          Cost: obj.Cost,
+          DurationText: obj.DurationText,
+          DistanceText: obj.DistanceText,
+          IDTransport: obj.IDTransport,
+          CostTransport: obj.CostTransport,
+          AcceptedProvider: obj.AcceptedProvider,
+          AcceptedTransport: obj.AcceptedTransport,
 
-      };
-    });
-    await this.ProceesInsert(dataModel);
-    this.boolProcess = true;
-   }
+        };
+      });
+
+      await this.confirmationDialogService.confirm(this.Title, this.Message)
+        .then((confirmed) => {
+          if (confirmed) {
+            this.ProceesInsert(dataModel);
+            this.boolProcess = true;
+          }
+        })
+        .catch(() => console.log('error'));
+    }
   }
 
   async onClickReject(e) {
-    await this.DelteProcess(this.IDPreOrder);
-    this.boolProcess = false;
-    this.dataProcess = [];
-    await this.getDataDate();
-    this.selectedIndex = 0;
+
+    await this.confirmationDialogService.confirm(this.Title, this.MessageNot)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.DelteProcess(this.IDPreOrder);
+          this.boolProcess = false;
+          this.dataProcess = [];
+          this.selectedIndex = 0;
+        }
+      })
+      .catch(() => console.log('error'));
 
   }
 
@@ -340,28 +363,28 @@ export class OrdersComponent implements OnInit {
     return val.CostTransport + val.Cost;
   }
   ObserverConcatenate(val) {
-   let resultPro = '';
-   let resultTra = '';
-   switch (val.AcceptedProvider) {
-    case false:
-      resultPro = 'Proveedor ha rechazado';
-      break;
-    case true:
-      resultPro = 'Proveedor  confirmardo';
-      break;
-     default:
-      resultPro = 'Proveedor sin confirmar';
+    let resultPro = '';
+    let resultTra = '';
+    switch (val.AcceptedProvider) {
+      case false:
+        resultPro = 'Proveedor ha rechazado';
+        break;
+      case true:
+        resultPro = 'Proveedor  confirmardo';
+        break;
+      default:
+        resultPro = 'Proveedor sin confirmar';
     }
     switch (val.AcceptedTransport) {
       case false:
         resultTra = 'Transporte ha rechazado';
-      break;
+        break;
       case true:
         resultTra = 'Transporte  confirmardo';
         break;
-       default:
+      default:
         resultTra = 'Transporte sin confirmar';
-      }
+    }
 
     const res = `\n ${resultPro}. \n ${resultTra}`;
     return res;

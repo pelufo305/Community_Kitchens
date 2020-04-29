@@ -132,5 +132,7 @@
     "ResponseSend": "The response has been sent to the administrator",
     "Origin":"Origin",
     "Destination": "Destination",
-    "Recharge":"Recharge"
+    "Recharge":"Recharge",
+    "OrderMessage": "Do you want to send the order to the suppliers?",
+    "OrderMessageNot": "Do you want to reject the order?"
 }
