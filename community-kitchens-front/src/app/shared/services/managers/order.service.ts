@@ -65,4 +65,22 @@ export class OrderService {
         ).toPromise();
     }
 
+    ProcessOrderRejected(ID) {
+        return this.http.get<any>(
+            this.api + 'ProcessOrderRejected?ID=' + ID, { headers: this.headers }
+        ).toPromise();
+    }
+
+    ProcessOrderRejectedTransport(ID) {
+        return this.http.get<any>(
+            this.api + 'ProcessOrderRejectedTransport?ID=' + ID, { headers: this.headers }
+        ).toPromise();
+    }
+
+    Accepted(ID) {
+        return this.http.get<any>(
+            this.api + 'Accepted?ID=' + ID, { headers: this.headers }
+        ).toPromise();
+    }
+
 }

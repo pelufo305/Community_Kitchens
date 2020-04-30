@@ -77,6 +77,10 @@ export class OrdersComponent implements OnInit {
   private MessagDelte: string;
   private boolProcess = true;
   private ProcessActive: string;
+  public ReprocessMessage;
+  public AcceptedMessage;
+  public FinalyMessage;
+  public AcceptedMessageNot;
 
   @ViewChild('gridConfigOrder') gridConfigOrder: DxDataGridComponent;
   @ViewChild('gridConProcess') gridConProcess: DxDataGridComponent;
@@ -132,10 +136,25 @@ export class OrdersComponent implements OnInit {
       this.textCancelAllRow = 'Cancel';
       this.textDeleteConfirm = 'Do you want to delete the record?';
     }
+    this.loadMessage();
+
     this.loadProducts();
     this.loadSuppliers();
     this.loadTransport();
 
+
+    this.detailsBtnClick = this.detailsBtnClick.bind(this);
+    this.getFilterProducts = this.getFilterProducts.bind(this);
+    this.getFilterSuppliers = this.getFilterSuppliers.bind(this);
+    this.getFilterTransport = this.getFilterTransport.bind(this);
+
+  }
+
+  ngOnInit() {
+    this.loadCatalog();
+  }
+
+  loadMessage() {
     this.translate.get('MessageSend').subscribe((res: string) => {
       this.MessagSend = res;
     });
@@ -156,17 +175,23 @@ export class OrdersComponent implements OnInit {
       this.MessageNot = res;
     });
 
-    this.detailsBtnClick = this.detailsBtnClick.bind(this);
-    this.getFilterProducts = this.getFilterProducts.bind(this);
-    this.getFilterSuppliers = this.getFilterSuppliers.bind(this);
-    this.getFilterTransport = this.getFilterTransport.bind(this);
 
+    this.translate.get('ReprocessMessage').subscribe((res: string) => {
+      this.ReprocessMessage = res;
+    });
+
+    this.translate.get('AcceptedMessage').subscribe((res: string) => {
+      this.AcceptedMessage = res;
+    });
+
+    this.translate.get('FinalyMessage').subscribe((res: string) => {
+      this.FinalyMessage = res;
+    });
+
+    this.translate.get('AcceptedMessageNot').subscribe((res: string) => {
+      this.AcceptedMessageNot = res;
+    });
   }
-
-  ngOnInit() {
-    this.loadCatalog();
-  }
-
 
   async loadCatalog() {
     await this.getDataRoom();
@@ -276,8 +301,7 @@ export class OrdersComponent implements OnInit {
           this.DelteProcess(this.IDPreOrder);
           this.boolProcess = false;
           this.dataProcess = [];
-          this.selectedIndex = 0;
-        }
+         }
       })
       .catch(() => console.log('error'));
 
@@ -289,6 +313,39 @@ export class OrdersComponent implements OnInit {
       .then(response => {
         this.TotalCost = response.TotalCost;
         this.dataProcess = response.DisponibilityProcesses;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  async ProcessOrderRejected(Id: any) {
+    await this.orderService
+      .ProcessOrderRejected(Id)
+      .then(response => {
+        this.TotalCost = response.TotalCost;
+        this.dataProcess = response.DisponibilityProcesses;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  async ProcessOrderRejectedTransport(Id: any) {
+    await this.orderService
+      .ProcessOrderRejectedTransport(Id)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  async Accepted(Id: any) {
+    await this.orderService
+      .Accepted(Id)
+      .then(response => {
+        this.toastr.success(this.FinalyMessage);
       })
       .catch(error => {
         console.error(error);
@@ -477,6 +534,40 @@ export class OrdersComponent implements OnInit {
       .catch(error => {
         console.error(error);
       });
+
+  }
+  async onClickReprocess(e) {
+    await this.confirmationDialogService.confirm(this.Title, this.ReprocessMessage)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.ProcessOrderRejectedTransport(this.IDPreOrder);
+          this.ProcessOrderRejected(this.IDPreOrder);
+        }
+      })
+      .catch(() => console.log('error'));
+
+  }
+
+  async onClickAccepted(e) {
+    await this.confirmationDialogService.confirm(this.Title, this.AcceptedMessage)
+      .then((confirmed) => {
+        if (confirmed) {
+
+          const data: any = this.gridConProcess.dataSource;
+          const result = data.every(function (e) {
+            return e.AcceptedProvider === true && e.AcceptedTransport === true;
+          });
+
+          if (result === true) {
+            this.Accepted(this.IDPreOrder);
+            this.getDataDate();
+          } else {
+            this.toastr.error(this.AcceptedMessageNot);
+          }
+
+        }
+      })
+      .catch(() => console.log('error'));
 
   }
 

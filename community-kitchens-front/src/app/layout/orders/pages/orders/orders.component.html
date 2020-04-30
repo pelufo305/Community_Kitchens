@@ -70,7 +70,10 @@
         <button type="button" class="btn btn-success" (click)="onClickSend($event)">{{ 'Send' | translate }}</button>
         &nbsp; &nbsp;
         <button type="button" class="btn btn-danger" (click)="onClickReject($event)">{{ 'Reject' | translate }}</button>
-
+        &nbsp; &nbsp;
+        <button type="button" class="btn btn-warning" (click)="onClickReprocess($event)">{{ 'Reprocess' | translate }}</button>
+        &nbsp; &nbsp;
+        <button type="button" class="btn btn-info" (click)="onClickAccepted($event)">{{ 'Accepted' | translate }}</button>
         <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
             [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
             [dataSource]="dataProcess" class="dataGridSettings" #gridConProcess>

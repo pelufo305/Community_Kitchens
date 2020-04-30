@@ -134,5 +134,10 @@
     "Destination": "Destination",
     "Recharge":"Recharge",
     "OrderMessage": "Do you want to send the order to the suppliers?",
-    "OrderMessageNot": "Do you want to reject the order?"
+    "OrderMessageNot": "Do you want to reject the order?",
+    "Reprocess":"Reprocess",
+    "ReprocessMessage":"Do you want to process the items that have not been accepted, will they be sent directly to the recommended provider?",
+    "AcceptedMessage": "Do you want to accept the order and make the discount available?",
+    "FinalyMessage": "The corresponding order has been accepted, if you wish you can download the Excel",
+    "AcceptedMessageNot":"Order cannot be accepted, all products have to be approved by suppliers"
 }
