@@ -71,9 +71,11 @@
         &nbsp; &nbsp;
         <button type="button" class="btn btn-danger" (click)="onClickReject($event)">{{ 'Reject' | translate }}</button>
         &nbsp; &nbsp;
-        <button type="button" class="btn btn-warning" (click)="onClickReprocess($event)">{{ 'Reprocess' | translate }}</button>
+        <button type="button" class="btn btn-warning"
+            (click)="onClickReprocess($event)">{{ 'Reprocess' | translate }}</button>
         &nbsp; &nbsp;
-        <button type="button" class="btn btn-info" (click)="onClickAccepted($event)">{{ 'Accepted' | translate }}</button>
+        <button type="button" class="btn btn-info"
+            (click)="onClickAccepted($event)">{{ 'Accepted' | translate }}</button>
         <dx-data-grid [repaintChangesOnly]="true" keyExpr="ID" [allowColumnReordering]="false" height="100%"
             [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true" [hoverStateEnabled]="true"
             [dataSource]="dataProcess" class="dataGridSettings" #gridConProcess>
@@ -85,7 +87,7 @@
             </dxo-pager>
             <dxo-export [enabled]="true" [fileName]="strComedor+ '-' +strDateOrder"></dxo-export>
             <dxo-scrolling mode="standart" showScrollbar="always" [useNative]="true"></dxo-scrolling>
-            <dxi-column dataField="ID" [visible]="false"  [allowEditing]="false" [allowSorting]="false">
+            <dxi-column dataField="ID" [visible]="false" [allowEditing]="false" [allowSorting]="false">
             </dxi-column>
             <dxi-column dataField="IDProduct" [caption]="'Products' | translate">
                 <dxo-lookup [dataSource]="lstProducts" valueExpr="ID" displayExpr="Name">
@@ -119,7 +121,8 @@
             </dxi-column>
             <dxi-column dataField="AcceptedTransport" [caption]="'Transport' | translate" dataType="boolean">
             </dxi-column>
-            <dxi-column dataField="Observer" [caption]="'Observation' | translate" [calculateCellValue]="ObserverConcatenate">
+            <dxi-column dataField="Observer" [caption]="'Observation' | translate"
+                [calculateCellValue]="ObserverConcatenate">
             </dxi-column>
             <dxo-summary>
                 <dxi-total-item column="Quantity" [customizeText]="customizeText" summaryType="sum">

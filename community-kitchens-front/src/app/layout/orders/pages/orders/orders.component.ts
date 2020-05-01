@@ -301,7 +301,7 @@ export class OrdersComponent implements OnInit {
           this.DelteProcess(this.IDPreOrder);
           this.boolProcess = false;
           this.dataProcess = [];
-         }
+        }
       })
       .catch(() => console.log('error'));
 
@@ -335,6 +335,7 @@ export class OrdersComponent implements OnInit {
     await this.orderService
       .ProcessOrderRejectedTransport(Id)
       .then(response => {
+        this.ProcessOrderRejected(this.IDPreOrder);
       })
       .catch(error => {
         console.error(error);
@@ -541,7 +542,7 @@ export class OrdersComponent implements OnInit {
       .then((confirmed) => {
         if (confirmed) {
           this.ProcessOrderRejectedTransport(this.IDPreOrder);
-          this.ProcessOrderRejected(this.IDPreOrder);
+         
         }
       })
       .catch(() => console.log('error'));
