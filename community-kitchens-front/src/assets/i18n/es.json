@@ -106,7 +106,7 @@
     "PreOrder": "Pre-pedido",
     "SelectRoom": "Selecionar comedor",
     "SelectRecipe": "Selecionar receta",
-    "RecommendedProduct": "Productos recomendados",
+    "RecommendedProduct": "Productos disponibles para el comedor",
     "Send": "Enviar",
     "SendPreOrder": "Enviar Pre-pedido",
     "MessagePreOrder": "Después de enviar el pre-pedido no se podrá modificar",
@@ -133,14 +133,14 @@
     "DeeleteProcess": "Se ha eliminado el proceso",
     "ProcessActive": "Usted tiene un proceso activo",
     "ResponseSend": "Se ha enviado la respuesta al administrador",
-    "Origin":"Origen",
+    "Origin": "Origen",
     "Destination": "Destino",
-    "Recharge":"Recargar",
+    "Recharge": "Recargar",
     "OrderMessage": "¿Desea enviar el pedido a los proveedores?",
     "OrderMessageNot": "¿Desea rechazar el pedido?",
-    "Reprocess":"Reprocesar",
-    "ReprocessMessage":"¿Desea procesar los elementos que no han sido aceptados, se enviaran directamente al proveedor recomendado?",
+    "Reprocess": "Reprocesar",
+    "ReprocessMessage": "¿Desea procesar los elementos que no han sido aceptados, se enviaran directamente al proveedor recomendado?",
     "AcceptedMessage": "¿Desea aceptar el pedido y que se haga el descuento en disponibilidad?",
     "FinalyMessage": "Se ha aceptado el pedido correspondiente, si lo desea puede descargar el Excel",
-    "AcceptedMessageNot":"No se puede aceptar el pedido, todos los productos tienen que ser aprovados por proveedores"
+    "AcceptedMessageNot": "No se puede aceptar el pedido, todos los productos tienen que ser aprovados por proveedores"
 }
