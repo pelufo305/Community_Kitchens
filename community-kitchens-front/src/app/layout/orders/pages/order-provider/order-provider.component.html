@@ -81,6 +81,7 @@
                             <thead class="thead-inverse">
                                 <tr>
                                     <th>{{ 'Code' | translate }}</th>
+                                    <th>{{ 'Plate' | translate }}</th>
                                     <th>{{ 'Name' | translate }}</th>
                                     <th>{{ 'UnitMeasure' | translate }}</th>
                                     <th>{{ 'Quantity' | translate }}</th>
@@ -97,6 +98,7 @@
                             <tbody>
                                 <tr *ngFor="let item of historic.data.IDProduct">
                                     <td>{{item.Code}}</td>
+                                    <td>{{item.CarPlate}}</td>
                                     <td>{{item.NameProduct}}</td>
                                     <td>{{assingUnit(item.UnitMeasure)}}</td>
                                     <td>{{item.Quantity}}</td>
@@ -115,6 +117,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td>Totales</td>
                                     <td></td>
