@@ -28,7 +28,7 @@
     "@ngx-translate/core": "11.0.1",
     "@ngx-translate/http-loader": "4.0.0",
     "acorn": "^6.1.1",
-    "chart.js": "2.7.3",
+    "chart.js": "2.9.4",
     "core-js": "^2.5.4",
     "country-state-city": "^1.0.4",
     "devextreme": "19.1.5-build-19186-1854",
